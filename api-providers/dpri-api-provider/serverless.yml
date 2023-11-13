@@ -25,7 +25,7 @@ provider:
   runtime: nodejs18.x
 
 # you can overwrite defaults here
-  stage: dev
+  # stage: dev
   region: ap-southeast-1
 
 # you can add statements to the Lambda function's IAM Role here

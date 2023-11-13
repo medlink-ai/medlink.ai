@@ -9,7 +9,7 @@
         "reference": "https://dpri.doh.gov.ph/downloads/2023-DPRI-AS-OF-AUG31.pdf",
         "drugs": [
             {
-                "generic_name": "Acetazolamide",
+                "generic_name": "acetazolamide",
                 "concentration": "250 mg",
                 "form": "Tablet",
                 "dpri_range": {
@@ -19,7 +19,7 @@
                 }
             },
             {
-                "generic_name": "Azathioprine",
+                "generic_name": "azathioprine",
                 "concentration": "50 mg",
                 "form": "Tablet",
                 "dpri_range": {
@@ -29,7 +29,7 @@
                 }
             },
             {
-                "generic_name": "Bromocriptine",
+                "generic_name": "bromocriptine",
                 "concentration": "2.5 mg",
                 "form": "Tablet",
                 "dpri_range": {
@@ -39,7 +39,7 @@
                 }
             },
             {
-                "generic_name": "Desmopressin",
+                "generic_name": "desmopressin",
                 "concentration": "0.1 mg",
                 "form": "Tablet",
                 "dpri_range": {
@@ -49,7 +49,7 @@
                 }
             },
             {
-                "generic_name": "Tiotropium Bromide",
+                "generic_name": "tiotropium Bromide",
                 "concentration": "18 mcg/ inhalation",
                 "form": "Capsule",
                 "dpri_range": {
