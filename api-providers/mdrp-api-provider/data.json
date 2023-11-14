@@ -1,0 +1,192 @@
+[
+    {
+        "version": "1.0.0",
+        "country": "Philippines",
+        "official_currency": "Php",
+        "author": "Department of Health",
+        "effectivity_date": "March 23, 2022",
+        "reference": "https://pharma.doh.gov.ph/maximum-drug-retail-price/",
+        "drugs": [
+            {
+                "generic_name": "acetazolamide",
+                "brand_name": "cetamid",
+                "concentration": "250 mg",
+                "form": "tablet",
+                "provider": "watsons pharmacy",
+                "provider_type": "drug store",
+                "maximum_retail_price": 18.50,
+                "prescription": true
+            },
+            {
+                "generic_name": "acetazolamide",
+                "brand_name": "cetamid",
+                "concentration": "250 mg",
+                "form": "tablet",
+                "provider": "southstar drug",
+                "provider_type": "drug store",
+                "maximum_retail_price": 18.50,
+                "prescription": true
+            },
+            {
+                "generic_name": "acetazolamide",
+                "brand_name": "zolmide",
+                "concentration": "250 mg",
+                "form": "tablet",
+                "provider": "southstar drug",
+                "provider_type": "drug store",
+                "maximum_retail_price": 18.50,
+                "prescription": true
+            },
+            {
+                "generic_name": "acetazolamide",
+                "brand_name": "cetamid",
+                "concentration": "250 mg",
+                "form": "tablet",
+                "provider": "asian hospital medical center",
+                "provider_type": "hospital",
+                "maximum_retail_price": 18.50,
+                "prescription": true
+            },
+            {
+                "generic_name": "acetazolamide",
+                "brand_name": "cetamid",
+                "concentration": "250 mg",
+                "form": "tablet",
+                "provider": "mercury drug",
+                "provider_type": "drug store",
+                "maximum_retail_price": 18.50,
+                "prescription": true
+            },
+            {
+                "generic_name": "acetazolamide",
+                "brand_name": "cetamid",
+                "concentration": "250 mg",
+                "form": "tablet",
+                "provider": "makati medical center",
+                "provider_type": "hospital",
+                "maximum_retail_price": 18.50,
+                "prescription": true
+            },
+            {
+                "generic_name": "acetazolamide",
+                "brand_name": "cetamid",
+                "concentration": "250 mg",
+                "form": "tablet",
+                "provider": "batangas medical center",
+                "provider_type": "hospital",
+                "maximum_retail_price": 13.33,
+                "prescription": true
+            },
+            {
+                "generic_name": "acetazolamide",
+                "brand_name": "cetamid",
+                "concentration": "250 mg",
+                "form": "tablet",
+                "provider": "jose reyes medical center center",
+                "provider_type": "hospital",
+                "maximum_retail_price": 13.33,
+                "prescription": true
+            },
+            {
+                "generic_name": "acetazolamide",
+                "brand_name": "cetamid",
+                "concentration": "250 mg",
+                "form": "tablet",
+                "provider": "ilocos training and regional medical center",
+                "provider_type": "hospital",
+                "maximum_retail_price": 13.33,
+                "prescription": true
+            },
+            {
+                "generic_name": "acetazolamide",
+                "brand_name": "cetamid",
+                "concentration": "250 mg",
+                "form": "tablet",
+                "provider": "east aveneu medical center",
+                "provider_type": "hospital",
+                "maximum_retail_price": 13.33,
+                "prescription": true
+            },
+            {
+                "generic_name": "acetazolamide",
+                "brand_name": "cetamid",
+                "concentration": "250 mg",
+                "form": "tablet",
+                "provider": "southern isabela general",
+                "provider_type": "hospital",
+                "maximum_retail_price": 13.33,
+                "prescription": true
+            },
+            {
+                "generic_name": "acetazolamide",
+                "brand_name": "cetamid",
+                "concentration": "250 mg",
+                "form": "tablet",
+                "provider": "philippine general hospital",
+                "provider_type": "hospital",
+                "maximum_retail_price": 13.33,
+                "prescription": true
+            },
+            {
+                "generic_name": "acetazolamide",
+                "brand_name": "cetamid",
+                "concentration": "250 mg",
+                "form": "tablet",
+                "provider": "southern isabela general",
+                "provider_type": "hospital",
+                "maximum_retail_price": 13.33,
+                "prescription": true
+            },
+            {
+                "generic_name": "acetazolamide",
+                "brand_name": "cetamid",
+                "concentration": "250 mg",
+                "form": "tablet",
+                "provider": "philippine children's hospital",
+                "provider_type": "hospital",
+                "maximum_retail_price": 13.33,
+                "prescription": true
+            },
+            {
+                "generic_name": "acetazolamide",
+                "brand_name": "cetamid",
+                "concentration": "250 mg",
+                "form": "tablet",
+                "provider": "las pinas general and satellite trauma center",
+                "provider_type": "hospital",
+                "maximum_retail_price": 13.33,
+                "prescription": true
+            },
+            {
+                "generic_name": "acetazolamide",
+                "brand_name": "cetamid",
+                "concentration": "250 mg",
+                "form": "tablet",
+                "provider": "western visayas medical center",
+                "provider_type": "hospital",
+                "maximum_retail_price": 13.33,
+                "prescription": true
+            },
+            {
+                "generic_name": "acetazolamide",
+                "brand_name": "cetamid",
+                "concentration": "250 mg",
+                "form": "tablet",
+                "provider": "eastern visayas regional medical center",
+                "provider_type": "hospital",
+                "maximum_retail_price": 13.33,
+                "prescription": true
+            },
+            {
+                "generic_name": "acetazolamide",
+                "brand_name": "cetamid",
+                "concentration": "250 mg",
+                "form": "tablet",
+                "provider": "bicol region general hospital and geriatric medical center",
+                "provider_type": "hospital",
+                "maximum_retail_price": 13.33,
+                "prescription": true
+            }
+        ]
+    }
+]
