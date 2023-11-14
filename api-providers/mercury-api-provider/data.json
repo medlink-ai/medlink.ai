@@ -3,39 +3,52 @@
         "version": "1.0.0",
         "country": "Philippines",
         "official_currency": "Php",
-        "author": "Department of Health",
-        "effectivity_date": "March 23, 2022",
-        "reference": "https://pharma.doh.gov.ph/maximum-drug-retail-price/",
+        "created_at": "2023-11-14T09:21:42.317Z",
+        "updated_at": "2023-11-14T09:21:42.317Z",
+        "last_modified": "",
+        "provider": "Mercury Drug",
+        "provider_type": "Drug Store",
+        "category": "Restricted",
         "drugs": [
             {
                 "generic_name": "acetazolamide",
+                "brand_name": "cetamid",
                 "concentration": "250 mg",
                 "form": "tablet",
-                "maximum_retail_price": 18.50
+                "price": 18.50,
+                "prescription": true
             },
             {
                 "generic_name": "azathioprine",
+                "brand_name": "imuran",
                 "concentration": "50 mg",
                 "form": "tablet",
-                "maximum_retail_price": 37.95
+                "price": 37.25,
+                "prescription": true
             },
             {
                 "generic_name": "bromocriptine",
+                "brand_name": "parlodel",
                 "concentration": "2.5 mg",
                 "form": "tablet",
-                "maximum_retail_price": 97.65
+                "price": 97.65,
+                "prescription": true
             },
             {
                 "generic_name": "desmopressin",
+                "brand_name": "minirin",
                 "concentration": "0.1 mg",
                 "form": "tablet",
-                "maximum_retail_price": 70.75
+                "price": 70.75,
+                "prescription": true
             },
             {
                 "generic_name": "tiotropium bromide",
+                "brand_name": "spiriva",
                 "concentration": "18 mcg/ inhalation",
                 "form": "tablet",
-                "maximum_retail_price": 460.00
+                "price": 460.00,
+                "prescription": true
             }
         ]
     }

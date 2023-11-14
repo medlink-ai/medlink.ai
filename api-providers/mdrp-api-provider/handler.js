@@ -1,30 +1,24 @@
 const data = require('./data.json');
 'use strict';
 
-async function maximumPrice(drug_name) {
+async function maximumPrice(generic_name) {
   try {
-    let result = [];
     for (var i = 0; i < data[0].drugs.length; i++) {
-      if (data[0].drugs[i].generic_name === drug_name || data[0].drugs[i].brand_name === drug_name) {
-        result.push({
-          provider: data[0].drugs[i].provider,
-          maximum_retail_price: data[0].drugs[i].maximum_retail_price,
-          prescription: data[0].drugs[i].prescription
-        });
+      if (data[0].drugs[i].generic_name === generic_name) {
+        return data[0].drugs[i].maximum_retail_price;
       }
-      
     }
-    return result.length > 0 ? result : "Medicine not available";
+    return "Medicine not available";
   } catch (error) {
     console.log(error);
   }
 }
 
 module.exports.mdrp = async (event) => {
-  const drug_name = event.queryStringParameters.drug_name;
-  const details = await maximumPrice(drug_name);
+  const maximum_retail_price = event.queryStringParameters.generic_name;
+  const price = await maximumPrice(maximum_retail_price);
   return {
     statusCode: 200,
-    body: JSON.stringify(details),
+    body: JSON.stringify(price),
   };
 };
