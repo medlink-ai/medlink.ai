@@ -11,7 +11,7 @@ async function retailPrice(drug_name) {
           brand_name: data[0].drugs[i].brand_name,
           concentration: data[0].drugs[i].concentration,
           form: data[0].drugs[i].form,
-          maximum_retail_price: data[0].drugs[i].maximum_retail_price,
+          price: data[0].drugs[i].price,
           prescription: data[0].drugs[i].prescription
         });
       }

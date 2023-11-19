@@ -23,6 +23,9 @@ frameworkVersion: "3"
 provider:
   name: aws
   runtime: nodejs18.x
+  memorySize: 512
+  timeout: 10
+  lambdaHashingVersion: 20201221
 
 # you can overwrite defaults here
   # stage: dev

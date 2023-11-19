@@ -20,7 +20,7 @@ const makeRequestMumbai = async () => {
     .readFileSync(path.resolve(__dirname, "source.js"))
     .toString();
 
-  const args = ["acetazolamide"];
+  const args = ["desmopressin"];
   const gasLimit = 300000;
 
   // Initialize ethers signer and provider to interact with the contracts onchain
@@ -95,7 +95,7 @@ const makeRequestMumbai = async () => {
     )} LINK`
   );
 
-  //////// MAKE REQUEST ////////
+  ////// MAKE REQUEST ////////
 
   console.log("\nMake request...");
 
