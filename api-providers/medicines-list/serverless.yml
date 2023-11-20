@@ -1,0 +1,27 @@
+#serverless.yml
+
+service: medicines-list
+
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  memorySize: 512
+  timeout: 20
+
+
+# you can overwrite defaults here
+  stage: dev
+  region: ap-southeast-1
+
+functions:
+  watsons:
+    handler: handler.medList
+    events:
+    - http:
+        path: /v1/ph/medlist
+        method: get
+    runtime: nodejs18.x
+    memorySize: 512
+    timeout: 20

@@ -13,6 +13,7 @@ async function searchProduct(productName, data_source) {
             generic_name: data_source.drugs[i].generic_name,
             dosage_strength: data_source.drugs[i].dosage_strength,
             dosage_form: data_source.drugs[i].dosage_form,
+            indication: data_source.drugs[i].indication,
             price: data_source.drugs[i].price,
             discounted_price: data_source.drugs[i].discounted_price
           };
@@ -27,7 +28,7 @@ async function searchProduct(productName, data_source) {
     if (result.length > 0) {
       let groups = {};
       for (let i = 0; i < result.length; i++) {
-        let key = result[i].generic_name + result[i].dosage_strength + result[i].dosage_form;
+        let key = `${result[i].generic_name} ${result[i].dosage_strength} ${result[i].dosage_form}`;
         if (!groups[key]) {
           groups[key] = [];
         }
@@ -53,12 +54,14 @@ async function searchProduct(productName, data_source) {
           generic_name: group[0].generic_name,
           dosage_strength: group[0].dosage_strength,
           dosage_form: group[0].dosage_form,
+          indication: group[0].indication,
           lowest_price: lowestPrice,
           median_price: medianPrice,
           highest_price: highestPrice
         });
       }
 
+      console.log(finalResult);
       return finalResult;
     } else {
       return "Product not available";
@@ -68,11 +71,13 @@ async function searchProduct(productName, data_source) {
   }
 }
 
-module.exports.watson = async (event) => {
-  const productName = event.queryStringParameters.product_name;
-  const details = await searchProduct(productName, watsons);
+const watson = async (event) => {
+  // const productName = event.queryStringParameters.product_name;
+  const details = await searchProduct(event, watsons);
   return {
     statusCode: 200,
     body: JSON.stringify(details),
   };
 };
+
+watson("Salbutamol")
