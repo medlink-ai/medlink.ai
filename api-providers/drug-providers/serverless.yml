@@ -26,41 +26,11 @@ functions:
     memorySize: 512
     timeout: 20
 
-  southstar:
-    handler: handler.southstar
-    events:
-    - http:
-        path: /v1/ph/southstar/2023
-        method: get
-    runtime: nodejs18.x
-    memorySize: 512
-    timeout: 20
-
   mercury:
     handler: handler.mercury
     events:
     - http:
         path: /v1/ph/mercury/2023
-        method: get
-    runtime: nodejs18.x
-    memorySize: 512
-    timeout: 20
-
-  ahmc:
-    handler: handler.ahmc
-    events:
-    - http:
-        path: /v1/ph/ahmc/2023
-        method: get
-    runtime: nodejs18.x
-    memorySize: 512
-    timeout: 20
-
-  mmc:
-    handler: handler.mmc
-    events:
-    - http:
-        path: /v1/ph/mmc/2023
         method: get
     runtime: nodejs18.x
     memorySize: 512

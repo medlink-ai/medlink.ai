@@ -1,0 +1,748 @@
+{
+    "version": "1.1.0",
+    "country": "Philippines",
+    "official_currency": "Php",
+    "provider": "Mercury Drug",
+    "provider_type": "Drug Store",
+    "code": "MDLNKP480215",
+    "drugs": [
+        {
+            "code": "MDLNKG879198",
+            "product_name": "Losartan 100mg Film-Coated Tablet",
+            "generic_name": "Losartan Potassium",
+            "dosage_strength": "100mg",
+            "dosage_form": "Film-Coated Tablet",
+            "brands": [
+                {
+                    "code": "MDLNKG879198",
+                    "product_name": "Kenzar 100mg Film-Coated Tablet",
+                    "brand_name": "Kenzar",
+                    "dosage_strength": "100mg",
+                    "dosage_form": "Film-Coated Tablet",
+                    "price": 17.00,
+                    "discounted_price": 14.45,
+                    "place_of_origin": "Bangladesh",
+                    "manufacturer": "The Acme Laboratories Ltd.",
+                    "prescription_drug": true,
+                    "indication": "Used in treatment of cardiovascular disease",
+                    "related_to": ["Bepsar-100 100mg Film-Coated Tablet", "Kardiostan 100mg Film-Coated Tablet", "Neosartan 100mg Film-Coated Tablet", "Wilopres 100mg Film-Coated Tablet"]
+                },
+                {
+                    "code": "MDLNKG879198",
+                    "product_name": "Bepsar-100 100mg Film-Coated Tablet",
+                    "brand_name": "Bepsar-100",
+                    "dosage_strength": "100mg",
+                    "dosage_form": "Film-Coated Tablet",
+                    "price": 13.50,
+                    "discounted_price": 11.48,
+                    "place_of_origin": "India",
+                    "manufacturer": "Mediwin Pharmaceuticals",
+                    "prescription_drug": true,
+                    "indication": "Used in treatment of cardiovascular disease",
+                    "related_to": ["Kenzar 100mg Film-Coated Tablet", "Kardiostan 100mg Film-Coated Tablet", "Neosartan 100mg Film-Coated Tablet", "Wilopres 100mg Film-Coated Tablet"]
+                },
+                {
+                    "code": "MDLNKB953498",
+                    "product_name": "Kardiostan 100mg Film-Coated Tablet",
+                    "brand_name": "Kardiostan",
+                    "dosage_strength": "100mg",
+                    "dosage_form": "Film-Coated Tablet",
+                    "price": 18.00,
+                    "discounted_price": 16.20,
+                    "place_of_origin": "Philippines",
+                    "manufacturer": "Interphil Laboratories, Incorporated",
+                    "prescription_drug": true,
+                    "indication": "Used in treatment of cardiovascular disease",
+                    "related_to": ["Kenzar 100mg Film-Coated Tablet", "Bepsar-100 100mg Film-Coated Tablet", "Neosartan 100mg Film-Coated Tablet", "Wilopres 100mg Film-Coated Tablet"]
+                },
+                {
+                    "code": "MDLNKB953498",
+                    "product_name": "Neosartan 100mg Film-Coated Tablet",
+                    "brand_name": "Neosartan",
+                    "dosage_strength": "100mg",
+                    "dosage_form": "Film-Coated Tablet",
+                    "price": 19.25,
+                    "discounted_price": 17.33,
+                    "place_of_origin": "Philippines",
+                    "manufacturer": "Hizon Laboratories, Inc.",
+                    "prescription_drug": true,
+                    "indication": "Used in treatment of cardiovascular disease",
+                    "related_to": ["Kenzar 100mg Film-Coated Tablet", "Bepsar-100 100mg Film-Coated Tablet", "Kardiostan 100mg Film-Coated Tablet", "Wilopres 100mg Film-Coated Tablet"]
+                },
+                {
+                    "code": "MDLNKB953498",
+                    "product_name": "Wilopres 100mg Film-Coated Tablet",
+                    "brand_name": "Wilopres",
+                    "dosage_strength": "100mg",
+                    "dosage_form": "Film-Coated Tablet",
+                    "price": 20.95,
+                    "discounted_price": 18.86,
+                    "place_of_origin": "Philippines",
+                    "manufacturer": "Hizon Laboratories, Inc.",
+                    "prescription_drug": true,
+                    "indication": "Used in treatment of cardiovascular disease",
+                    "related_to": ["Kenzar 100mg Film-Coated Tablet", "Bepsar-100 100mg Film-Coated Tablet", "Kardiostan 100mg Film-Coated Tablet", "Neosartan 100mg Film-Coated Tablet"]
+                }
+            ]
+        },
+        {
+            "code": "MDLNKG105523",
+            "product_name": "Losartan 50mg Film-Coated Tablet",
+            "generic_name": "Losartan Potassium",
+            "dosage_strength": "50mg",
+            "dosage_form": "Film-Coated Tablet",
+            "brands": [
+                {
+                    "code": "MDLNKB778004",
+                    "product_name": "Arbloc 50mg Film-Coated Tablet",
+                    "brand_name": "Arbloc",
+                    "price": 15.25,
+                    "discounted_price": 13.73,
+                    "place_of_origin": "Philippines",
+                    "manufacturer": "Hizon Laboratories, Inc.",
+                    "prescription_drug": true,
+                    "indication": "Used in treatment of cardiovascular disease",
+                    "related_to": ["Neosartan 50mg Film-Coated Tablet", "Zarnat 50mg Film-Coated Tablet", "Vamzar 50mg Film-Coated Tablet", "Vivasartan 50mg Film-Coated Tablet"]
+                },
+                {
+                    "code": "MDLNKB871791",
+                    "product_name": "Neosartan 50mg Film-Coated Tablet",
+                    "brand_name": "Neosartan",
+                    "dosage_strength": "50mg",
+                    "dosage_form": "Film-Coated Tablet",
+                    "price": 13.50,
+                    "discounted_price": 12.15,
+                    "place_of_origin": "Philippines",
+                    "manufacturer": "Hizon Laboratories, Inc.",
+                    "prescription_drug": true,
+                    "indication": "Used in treatment of cardiovascular disease",
+                    "related_to": ["Arbloc 50mg Film-Coated Tablet", "Zarnat 50mg Film-Coated Tablet", "Vamzar 50mg Film-Coated Tablet", "Vivasartan 50mg Film-Coated Tablet"]
+                },
+                {
+                    "code": "MDLNKB871791",
+                    "product_name": "Zarnat 50mg Film-Coated Tablet",
+                    "brand_name": "Zarnat",
+                    "dosage_strength": "50mg",
+                    "dosage_form": "Film-Coated Tablet",
+                    "price": 13.00,
+                    "discounted_price": 11.70,
+                    "place_of_origin": "Philippines",
+                    "manufacturer": "Lloyd Laboratories, Inc.",
+                    "prescription_drug": true,
+                    "indication": "Used in treatment of cardiovascular disease",
+                    "related_to": ["Arbloc 50mg Film-Coated Tablet", "Neosartan 50mg Film-Coated Tablet", "Vamzar 50mg Film-Coated Tablet", "Vivasartan 50mg Film-Coated Tablet"]
+                },
+                {
+                    "code": "MDLNKB907264",
+                    "product_name": "Vamzar 50mg Film-Coated Tablet",
+                    "brand_name": "Vamzar",
+                    "dosage_strength": "50mg",
+                    "dosage_form": "Film-Coated Tablet",
+                    "price": 9.50,
+                    "discounted_price": 8.55,
+                    "place_of_origin": "Philippines",
+                    "manufacturer": "Lloyd Laboratories, Inc.",
+                    "prescription_drug": true,
+                    "indication": "Used in treatment of cardiovascular disease",
+                    "related_to": ["Arbloc 50mg Film-Coated Tablet", "Neosartan 50mg Film-Coated Tablet", "Zarnat 50mg Film-Coated Tablet", "Vivasartan 50mg Film-Coated Tablet"]
+                },
+                {
+                    "code": "MDLNKB535476",
+                    "product_name": "Vivasartan 50mg Film-Coated Tablet",
+                    "brand_name": "Vivasartan",
+                    "dosage_strength": "50mg",
+                    "dosage_form": "Film-Coated Tablet",
+                    "price": 10.25,
+                    "discounted_price": 8.71,
+                    "place_of_origin": "Turkey",
+                    "manufacturer": "Sandoz Ilac Sanayi Ve Ticaret A.S.",
+                    "prescription_drug": true,
+                    "indication": "Used in treatment of cardiovascular disease",
+                    "related_to": ["Arbloc 50mg Film-Coated Tablet", "Neosartan 50mg Film-Coated Tablet", "Zarnat 50mg Film-Coated Tablet", "Vamzar 50mg Film-Coated Tablet"]
+                }
+            ]
+        },
+        {
+            "code": "MDLNKG108451",
+            "product_name": "Losartan 50mg Tablet",
+            "generic_name": "Losartan Potassium",
+            "dosage_strength": "50mg",
+            "dosage_form": "Tablet",
+            "brands": [
+                {
+                    "code": "MDLNKG108451",
+                    "product_name": "Kenzar 50mg Tablet",
+                    "brand_name": "Kenzar",
+                    "price": 12.75,
+                    "discounted_price": 10.84,
+                    "place_of_origin": "Bangladesh",
+                    "manufacturer": "The Acme Laboratories Ltd.",
+                    "prescription_drug": true,
+                    "indication": "Used in treatment of cardiovascular disease",
+                    "related_to": ["Lifezar 50mg Tablet", "Cozaar 50mg Tablet"]
+                },
+                {
+                    "code": "MDLNKB305941",
+                    "product_name": "Lifezar 50mg Tablet",
+                    "brand_name": "Lifezar",
+                    "dosage_strength": "50mg",
+                    "dosage_form": "Tablet",
+                    "price": 25.25,
+                    "discounted_price": 22.73,
+                    "place_of_origin": "Philippines",
+                    "manufacturer": "The Acme Laboratories Ltd.",
+                    "prescription_drug": true,
+                    "indication": "Used in treatment of cardiovascular disease",
+                    "related_to": ["Kenzar 50mg Tablet", "Cozaar 50mg Tablet"]
+                },
+                {
+                    "code": "MDLNKB500432",
+                    "product_name": "Cozaar 50mg Tablet",
+                    "brand_name": "Cozaar",
+                    "dosage_strength": "50mg",
+                    "dosage_form": "Tablet",
+                    "price": 22.50,
+                    "discounted_price": 19.13,
+                    "place_of_origin": "United Kingdom",
+                    "manufacturer": "Merck Sharp & Dohme Limited",
+                    "prescription_drug": true,
+                    "indication": "Used in treatment of cardiovascular disease",
+                    "related_to": ["Kenzar 50mg Tablet", "Lifezar 50mg Tablet"]
+                }
+            ]
+        },
+        {
+            "code": "MDLNKG142330",
+            "product_name": "Losartan 100mg Tablet",
+            "generic_name": "Losartan Potassium",
+            "dosage_strength": "100mg",
+            "dosage_form": "Tablet",
+            "brands": [
+                {
+                    "code": "MDLNKB383079",
+                    "product_name": "Lifezar 100mg Tablet",
+                    "brand_name": "Lifezar",
+                    "dosage_strength": "100mg",
+                    "dosage_form": "Tablet",
+                    "price": 32.00,
+                    "discounted_price": 28.80,
+                    "place_of_origin": "Philippines",
+                    "manufacturer": "Amherst Laboratories, Inc.",
+                    "prescription_drug": true,
+                    "indication": "Used in treatment of cardiovascular disease",
+                    "related_to": ["Cozaar 100mg Tablet"]
+                },
+                {
+                    "code": "MDLNKB773020",
+                    "product_name": "Cozaar 100mg Tablet",
+                    "brand_name": "Cozaar",
+                    "dosage_strength": "100mg",
+                    "dosage_form": "Tablet",
+                    "price": 26.75,
+                    "discounted_price": 22.74,
+                    "place_of_origin": "United Kingdom",
+                    "manufacturer": "Merck Sharp & Dohme Limited",
+                    "prescription_drug": true,
+                    "indication": "Used in treatment of cardiovascular disease",
+                    "related_to": ["Lifezar 100mg Tablet"]
+                }
+            ]
+        },
+        {
+            "code": "MDLNKG469409",
+            "product_name": "Metformin 1g Extended-Release Tablet",
+            "generic_name": "Metformin Hydrochloride",
+            "dosage_strength": "1g",
+            "dosage_form": "Extended-Release Tablet",
+            "brands": [
+                {
+                    "code": "MDLNKB294323",
+                    "product_name": "Glucophage XR 1g Extended-Release Tablet",
+                    "brand_name": "Glucophage XR",
+                    "dosage_strength": "1g",
+                    "dosage_form": "Extended-Release Tablet",
+                    "price": 34.75,
+                    "discounted_price": 29.54,
+                    "place_of_origin": "France",
+                    "manufacturer": "Merck Sante",
+                    "prescription_drug": true,
+                    "indication": "Used in the treatment of diabetes",
+                    "related_to": ["Fornidd XR 1g Extended-Release Tablet", "Proglutrol 1000 1g Extended-Release Tablet"]
+                },
+                {
+                    "code": "MDLNKB294323",
+                    "product_name": "Fornidd XR 1g Extended-Release Tablet",
+                    "brand_name": "Fornidd XR",
+                    "dosage_strength": "1g",
+                    "dosage_form": "Extended-Release Tablet",
+                    "price": 16.75,
+                    "discounted_price": 14.24,
+                    "place_of_origin": "India",
+                    "manufacturer": "Inventia Healthcare Pvt. Ltd.",
+                    "prescription_drug": true,
+                    "indication": "Used in the treatment of diabetes",
+                    "related_to": ["Glucophage XR 1g Extended-Release Tablet", "Proglutrol 1000 1g Extended-Release Tablet"]
+                },
+                {
+                    "code": "MDLNKB662529",
+                    "product_name": "Proglutrol 1000 1g Extended-Release Tablet",
+                    "brand_name": "Proglutrol 1000",
+                    "dosage_strength": "1g",
+                    "dosage_form": "Extended-Release Tablet",
+                    "price": 12.00,
+                    "discounted_price": 10.20,
+                    "place_of_origin": "India",
+                    "manufacturer": "Inventia Healthcare Pvt. Ltd.",
+                    "prescription_drug": true,
+                    "indication": "Used in the treatment of diabetes",
+                    "related_to": ["Glucophage XR 1g Extended-Release Tablet", "Fornidd XR 1g Extended-Release Tablet"]
+                }
+            ]
+        },
+        {
+            "code": "MDLNKG161696",
+            "product_name": "Metformin 750mg Extended-Release Tablet",
+            "generic_name": "Metformin Hydrochloride",
+            "dosage_strength": "750mg",
+            "dosage_form": "Extended-Release Tablet",
+            "brands": [
+                {
+                    "code": "MDLNKB386464",
+                    "product_name": "Glucophage XR 750mg Extended-Release Tablet",
+                    "brand_name": "Glucophage XR",
+                    "dosage_strength": "750mg",
+                    "dosage_form": "Extended-Release Tablet",
+                    "price": 23.00,
+                    "discounted_price": 19.55,
+                    "place_of_origin": "France",
+                    "manufacturer": "Merck Sante",
+                    "prescription_drug": true,
+                    "indication": "Used in the treatment of diabetes",
+                    "related_to": []
+                }
+            ]
+        },
+        {
+            "code": "MDLNKG820743",
+            "product_name": "Metformin 500mg Film-Coated Tablet",
+            "generic_name": "Metformin Hydrochloride",
+            "brand_name": "Glucophage",
+            "dosage_strength": "500mg",
+            "dosage_form": "Film-Coated Tablet",
+            "brands": [
+                {
+                    "code": "MDLNKB716311",
+                    "product_name": "Glucophage 500mg Film-Coated Tablet",
+                    "brand_name": "Glucophage",
+                    "dosage_strength": "500mg",
+                    "dosage_form": "Film-Coated Tablet",
+                    "price": 18.25,
+                    "discounted_price": 15.51,
+                    "place_of_origin": "Indonesia",
+                    "manufacturer": "P.T Merck TBK",
+                    "prescription_drug": true,
+                    "indication": "Used in the treatment of diabetes",
+                    "related_to": ["Fornidd 500mg Film-Coated Tablet", "I-Max 500mg Film-Coated Tablet"]
+                },
+                {
+                    "code": "MDLNKB716311",
+                    "product_name": "Fornidd 500mg Film-Coated Tablet",
+                    "brand_name": "Fornidd",
+                    "dosage_strength": "500mg",
+                    "dosage_form": "Film-Coated Tablet",
+                    "price": 19.50,
+                    "discounted_price": 17.55,
+                    "place_of_origin": "Philippines",
+                    "manufacturer": "Hizon Laboratories, Inc.",
+                    "prescription_drug": true,
+                    "indication": "Used in the treatment of diabetes",
+                    "related_to": ["Glucophage 500mg Film-Coated Tablet", "I-Max 500mg Film-Coated Tablet"]
+                },
+                {
+                    "code": "MDLNKB870129",
+                    "product_name": "I-Max 500mg Film-Coated Tablet",
+                    "brand_name": "I-Max",
+                    "dosage_strength": "500mg",
+                    "dosage_form": "Film-Coated Tablet",
+                    "price": 6.75,
+                    "discounted_price": 6.08,
+                    "place_of_origin": "Philippines",
+                    "manufacturer": "Lloyd Laboratories, Inc.",
+                    "prescription_drug": true,
+                    "indication": "Used in the treatment of diabetes",
+                    "related_to": ["Glucophage 500mg Film-Coated Tablet", "Fornidd 500mg Film-Coated Tablet"]
+                }
+            ]
+        },
+        {
+            "code": "MDLNKB870129",
+            "product_name": "Metformin 850mg Film-Coated Tablet",
+            "generic_name": "Metformin Hydrochloride",
+            "brand_name": "Gludin",
+            "dosage_strength": "850mg",
+            "dosage_form": "Film-Coated Tablet",
+            "brands": [
+                {
+                    "code": "MDLNKB480216",
+                    "product_name": "Gludin 850mg Film-Coated Tablet",
+                    "brand_name": "Gludin",
+                    "dosage_strength": "850mg",
+                    "dosage_form": "Film-Coated Tablet",
+                    "price": 8.00,
+                    "discounted_price": 7.20,
+                    "place_of_origin": "Philippines",
+                    "manufacturer": "Sydenham Laboratories, Inc.",
+                    "prescription_drug": true,
+                    "indication": "Used in the treatment of diabetes",
+                    "related_to": ["Glumet 850mg Film-Coated Tablet"]
+                },
+                {
+                    "code": "MDLNKB837176",
+                    "product_name": "Glumet 850mg Film-Coated Tablet",
+                    "brand_name": "Glumet",
+                    "dosage_strength": "850mg",
+                    "dosage_form": "Film-Coated Tablet",
+                    "price": 11.50,
+                    "discounted_price": 10.35,
+                    "place_of_origin": "Philippines",
+                    "manufacturer": "Sydenham Laboratories, Inc.",
+                    "prescription_drug": true,
+                    "indication": "Used in the treatment of diabetes",
+                    "related_to": ["Gludin 850mg Film-Coated Tablet"]
+                }
+            ]
+        },
+        {
+            "code": "MDLNKG147936",
+            "product_name": "Metformin 1g Tablet",
+            "generic_name": "Metformin Hydrochloride",
+            "brand_name": "Glumet",
+            "dosage_strength": "1g",
+            "dosage_form": "Tablet",
+            "brands": [
+                {
+                    "code": "MDLNKG147936",
+                    "product_name": "Glumet 1g Tablet",
+                    "brand_name": "Glumet",
+                    "dosage_strength": "1g",
+                    "dosage_form": "Tablet",
+                    "price": 13.25,
+                    "discounted_price": 11.93,
+                    "place_of_origin": "Philippines",
+                    "manufacturer": "Amherst Laboratories, Inc.",
+                    "prescription_drug": true,
+                    "indication": "Used in the treatment of diabetes",
+                    "related_to": []
+                }
+            ]
+        },
+        {
+            "code": "MDLNKG880500",
+            "product_name": "Metformin 500mg Tablet",
+            "generic_name": "Metformin Hydrochloride",
+            "dosage_strength": "500mg",
+            "dosage_form": "Tablet",
+            "brands": [
+                {
+                    "code": "MDLNKB376760",
+                    "product_name": "Glumet 500mg Tablet",
+                    "brand_name": "Glumet",
+                    "dosage_strength": "500mg",
+                    "dosage_form": "Tablet",
+                    "price": 10.00,
+                    "discounted_price": 9.00,
+                    "place_of_origin": "Philippines",
+                    "manufacturer": "Amherst Laboratories, Inc.",
+                    "prescription_drug": true,
+                    "indication": "Used in the treatment of diabetes",
+                    "related_to": []
+                }
+            ]
+        },
+        {
+            "code": "MDLNKG512075",
+            "product_name": "Metformin 850mg Tablet",
+            "generic_name": "Metformin Hydrochloride",
+            "dosage_strength": "850mg",
+            "dosage_form": "Tablet",
+            "brands": [
+                {
+                    "code": "MDLNKB465280",
+                    "product_name": "Humamet 850mg Tablet",
+                    "brand_name": "Humamet",
+                    "dosage_strength": "850mg",
+                    "dosage_form": "Tablet",
+                    "price": 17.50,
+                    "discounted_price": 15.75,
+                    "place_of_origin": "Philippines",
+                    "manufacturer": "Hizon Laboratories, Inc.",
+                    "prescription_drug": true,
+                    "indication": "Used in the treatment of diabetes",
+                    "related_to": []
+                }
+            ]
+        },
+        {
+            "code": "MDLNKG137225",
+            "product_name": "Salbutamol 100mcg/actuation Metered Dose Inhaler",
+            "generic_name": "Salbutamol Sulfate",
+            "dosage_strength": "100mcg/actuation",
+            "dosage_form": "Metered Dose Inhaler",
+            "brands": [
+                {
+                    "code": "MDLNKB562596",
+                    "product_name": "Salbusol 100mcg/actuation Metered Dose Inhaler",
+                    "brand_name": "Salbusol",
+                    "dosage_strength": "100mcg/actuation",
+                    "dosage_form": "Metered Dose Inhaler",
+                    "price": 245.00,
+                    "discounted_price": 208.25,
+                    "place_of_origin": "China",
+                    "manufacturer": "Jewim Pharmaceutical (Shandong) Co., Ltd.",
+                    "prescription_drug": true,
+                    "indication": "Used in the treatment of obstructive airway diseases.",
+                    "related_to": ["Derihaler-100 100mcg/actuation Metered Dose Inhaler", "Asmalin 100mcg/actuation Metered Dose Inhaler", "Ventolin 100mcg/actuation Metered Dose Inhaler", "Asmacaire 100mcg/actuation Metered Dose Inhaler (CFC-Free)"]
+                },
+                {
+                    "code": "MDLNKB833864",
+                    "product_name": "Derihaler-100 100mcg/actuation Metered Dose Inhaler",
+                    "brand_name": "Derihaler-100",
+                    "dosage_strength": "100mcg/actuation",
+                    "dosage_form": "Metered Dose Inhaler",
+                    "price": 260.00,
+                    "discounted_price": 221.00,
+                    "place_of_origin": "India",
+                    "manufacturer": "Cadila Healthcare Limited",
+                    "prescription_drug": true,
+                    "indication": "Used in the treatment of obstructive airway diseases.",
+                    "related_to": ["Salbusol 100mcg/actuation Metered Dose Inhaler", "Asmalin 100mcg/actuation Metered Dose Inhaler", "Ventolin 100mcg/actuation Metered Dose Inhaler", "Asmacaire 100mcg/actuation Metered Dose Inhaler (CFC-Free)"]
+                },
+                {
+                    "code": "MDLNKB833864",
+                    "product_name": "Asmalin 100mcg/actuation Metered Dose Inhaler",
+                    "brand_name": "Asmalin",
+                    "dosage_strength": "100mcg/actuation",
+                    "dosage_form": "Metered Dose Inhaler",
+                    "price": 417.75,
+                    "discounted_price": 355.09,
+                    "place_of_origin": "Spain",
+                    "manufacturer": "Laboratorio Aldo-Union S.L.",
+                    "prescription_drug": true,
+                    "indication": "Used in the treatment of obstructive airway diseases.",
+                    "related_to": ["Salbusol 100mcg/actuation Metered Dose Inhaler", "Derihaler-100 100mcg/actuation Metered Dose Inhaler", "Ventolin 100mcg/actuation Metered Dose Inhaler", "Asmacaire 100mcg/actuation Metered Dose Inhaler (CFC-Free)"]
+                },
+                {
+                    "code": "MDLNKB234299",
+                    "product_name": "Ventolin 100mcg/actuation Metered Dose Inhaler",
+                    "brand_name": "Ventolin",
+                    "dosage_strength": "100mcg/actuation",
+                    "dosage_form": "Metered Dose Inhaler",
+                    "price": 475.25,
+                    "discounted_price": 403.96,
+                    "place_of_origin": "Spain",
+                    "manufacturer": "Glaxo Wellcome S.A.",
+                    "prescription_drug": true,
+                    "indication": "Used in the treatment of obstructive airway diseases.",
+                    "related_to": ["Salbusol 100mcg/actuation Metered Dose Inhaler", "Derihaler-100 100mcg/actuation Metered Dose Inhaler", "Asmalin100 mcg/actuation Metered Dose Inhaler", "Asmacaire 100mcg/actuation Metered Dose Inhaler (CFC-Free)"]
+                },
+                {
+                    "code": "MDLNKB621850",
+                    "product_name": "Asmacaire 100mcg/actuation Metered Dose Inhaler",
+                    "brand_name": "Asmacaire",
+                    "dosage_strength": "100mcg/actuation",
+                    "dosage_form": "Metered Dose Inhaler (CFC-Free)",
+                    "price": 355.00,
+                    "discounted_price": 301.75,
+                    "place_of_origin": "Spain",
+                    "manufacturer": "Laboratorio Aldo Union, S.L.",
+                    "prescription_drug": true,
+                    "indication": "Used in the treatment of obstructive airway diseases.",
+                    "related_to": ["Salbusol 100mcg/actuation Metered Dose Inhaler", "Derihaler-100 100mcg/actuation Metered Dose Inhaler", "Asmalin 100mcg/actuation Metered Dose Inhaler", "Ventolin 100mcg/actuation Metered Dose Inhaler"]
+                }
+                
+            ]
+        },
+        {
+            "code": "MDLNKG663666",
+            "product_name": "Salbutamol 1mg/1ml Solution for Inhalation",
+            "generic_name": "Salbutamol Sulfate",
+            "dosage_strength": "1mg/1ml",
+            "dosage_form": "Solution for Inhalation",
+            "brands": [
+                {
+                    "code": "MDLNKB499170",
+                    "product_name": "Ventolin 1mg/1ml Solution for Inhalation",
+                    "brand_name": "Ventolin",
+                    "dosage_strength": "1mg/1ml",
+                    "dosage_form": "Solution for Inhalation",
+                    "price": 42.50,
+                    "discounted_price": 36.13,
+                    "place_of_origin": "Australia",
+                    "manufacturer": "GlaxoSmithKline Australia Pty. Ltd",
+                    "prescription_drug": true,
+                    "indication": "Used in the treatment of obstructive airway diseases.",
+                    "related_to": ["Asmacaire 1mg/1ml 30 Nebules Solution for Inhalation", "Asmalin 1mg/1ml Solution for Inhalation", "Hivent EM 1 mg/mL (0.1% w/v) Solution for Nebulization"]
+                },
+                {
+                    "code": "MDLNKB806371",
+                    "product_name": "Asmacaire 1mg/1ml Solution for Inhalation",
+                    "brand_name": "Asmacaire",
+                    "dosage_strength": "1mg/1ml",
+                    "dosage_form": "Solution for Inhalation",
+                    "price": 26.75,
+                    "discounted_price": 22.14,
+                    "place_of_origin": "India",
+                    "manufacturer": "Ahlcon Parenterals (India) Ltd.",
+                    "prescription_drug": true,
+                    "indication": "Used in the treatment of obstructive airway diseases.",
+                    "related_to": ["Ventolin 1mg/1ml Solution for Inhalation", "Asmalin 1mg/1ml Solution for Inhalation", "Hivent EM 1 mg/mL (0.1% w/v) Solution for Nebulization"]
+                },
+                {
+                    "code": "MDLNKB201686",
+                    "product_name": "Asmalin 1mg/1ml Solution for Inhalation",
+                    "brand_name": "Asmalin",
+                    "dosage_strength": "1mg/1ml",
+                    "dosage_form": "Solution for Inhalation",
+                    "price": 28.25,
+                    "discounted_price": 24.01,
+                    "place_of_origin": "India",
+                    "manufacturer": "Medispray Laboratories Pvt. Ltd.",
+                    "prescription_drug": true,
+                    "indication": "Used in the treatment of obstructive airway diseases.",
+                    "related_to": ["Ventolin 1mg/1ml Solution for Inhalation", "Asmacaire 1mg/1ml Solution for Inhalation", "Hivent EM 1mg/mL (0.1% w/v) Solution for Nebulization"]
+                },
+                {
+                    "code": "MDLNKB483390",
+                    "product_name": "Hivent EM 1mg/mL (0.1% w/v) Solution for Nebulization",
+                    "brand_name": "Hivent EM",
+                    "dosage_strength": "1mg/1mL (0.1% w/v)",
+                    "dosage_form": "Solution for Nebulization",
+                    "price": 22.00,
+                    "discounted_price": 19.80,
+                    "place_of_origin": "Philippines",
+                    "manufacturer": "Ero-Med Laboratories Phil., Inc",
+                    "prescription_drug": true,
+                    "indication": "Used in the treatment of obstructive airway diseases.",
+                    "related_to": ["Ventolin 1mg/1ml Solution for Inhalation", "Asmacaire 1mg/1ml Solution for Inhalation", "Asmalin 1mg/1ml Solution for Inhalation"]
+                }
+
+            ]
+        },
+        {
+            "code": "MDLNKB483390",
+            "product_name": "Salbutamol 2mg/5ml x 60ml Syrup",
+            "generic_name": "Salbutamol Sulfate",
+            "dosage_strength": "2mg/5ml x 60ml",
+            "dosage_form": "Syrup",
+            "brands": [
+                {
+                    "code": "MDLNKB108025",
+                    "product_name": "Asmacaire 2mg/5ml x 60ml Syrup",
+                    "brand_name": "Asmacaire",
+                    "dosage_strength": "2mg/5ml x 60ml",
+                    "dosage_form": "Syrup",
+                    "price": 91.75,
+                    "discounted_price": 82.58,
+                    "place_of_origin": "Philippines",
+                    "manufacturer": "E.L. Laboratories, Inc",
+                    "prescription_drug": true,
+                    "indication": "Used in the treatment of obstructive airway diseases.",
+                    "related_to": ["Asmalin 2mg/5ml x 60ml Syrup", "Efamed 2mg/5ml x 60ml Syrup", "Ventar 2mg/5ml x 60ml Syrup", "Prox S 2mg/5ml x 120ml Syrup"]
+                },
+                {
+                    "code": "MDLNKB228179",
+                    "product_name": "Asmalin 2mg/5ml x 60ml Syrup",
+                    "brand_name": "Asmalin",
+                    "dosage_strength": "2mg/5ml x 60ml",
+                    "dosage_form": "Syrup",
+                    "price": 134.00,
+                    "discounted_price": 120.60,
+                    "place_of_origin": "Philippines",
+                    "manufacturer": "Amherst Laboratories, Inc.",
+                    "prescription_drug": true,
+                    "indication": "Used in the treatment of obstructive airway diseases.",
+                    "related_to": ["Asmacaire 2mg/5ml x 60ml Syrup", "Efamed 2mg/5ml x 60ml Syrup", "Ventar 2mg/5ml x 60ml Syrup", "Prox S 2mg/5ml x 120ml Syrup"]
+                },
+                {
+                    "code": "MDLNKB677210",
+                    "product_name": "Efamed 2mg/5ml x 60ml Syrup",
+                    "brand_name": "Efamed",
+                    "dosage_strength": "2mg/5ml x 60ml",
+                    "dosage_form": "Syrup",
+                    "price": 51.00,
+                    "discounted_price": 45.90,
+                    "place_of_origin": "Philippines",
+                    "manufacturer": "Lloyd Laboratories, Inc.",
+                    "prescription_drug": true,
+                    "indication": "Used in the treatment of obstructive airway diseases.",
+                    "related_to": ["Asmacaire 2mg/5ml x 60ml Syrup", "Asmalin 2mg/5ml x 60ml Syrup", "Ventar 2mg/5ml x 60ml Syrup", "Prox S 2mg/5ml x 120ml Syrup"]
+                },
+                {
+                    "code": "MDLNKB954719",
+                    "product_name": "Ventar 2mg/5ml x 60ml Syrup",
+                    "brand_name": "Ventar",
+                    "dosage_strength": "2mg/5ml x 60ml",
+                    "dosage_form": "Syrup",
+                    "price": 93.00,
+                    "discounted_price": 83.70,
+                    "place_of_origin": "Philippines",
+                    "manufacturer": "Hizon Laboratories, Inc.",
+                    "prescription_drug": true,
+                    "indication": "Used in the treatment of obstructive airway diseases.",
+                    "related_to": ["Asmacaire 2mg/5ml x 60ml Syrup", "Asmalin 2mg/5ml x 60ml Syrup", "Efamed 2mg/5ml x 60ml Syrup", "Prox S 2mg/5ml x 120ml Syrup"]
+                },
+                {
+                    "code": "MDLNKB504778",
+                    "product_name": "Prox S 2mg/5ml x 120ml Syrup",
+                    "brand_name": "Prox S",
+                    "dosage_strength": "2mg/5ml x 120ml",
+                    "dosage_form": "Syrup",
+                    "price": 148.00,
+                    "discounted_price": 125.80,
+                    "place_of_origin": "Spain",
+                    "manufacturer": "Laboratorio Aldo Union, S.L.",
+                    "prescription_drug": true,
+                    "indication": "Used in the treatment of obstructive airway diseases.",
+                    "related_to": ["Asmacaire 2mg/5ml x 60ml Syrup", "Asmalin 2mg/5ml x 60ml Syrup", "Efamed 2mg/5ml x 60ml Syrup", "Ventar 2mg/5ml x 60ml Syrup"]
+                }
+            ]
+        },
+        {
+            "code": "MDLNKG453386",
+            "product_name": "Salbutamol 2mg/5ml x 60ml Syrup",
+            "generic_name": "Salbutamol Sulfate",
+            "dosage_strength": "2mg",
+            "dosage_form": "Tablet",
+            "brands": [
+                {
+                    "code": "MDLNKB103520",
+                    "product_name": "Ventolin 2mg Tablet",
+                    "brand_name": "Ventolin",
+                    "dosage_strength": "2mg",
+                    "dosage_form": "Tablet",
+                    "price": 10.75,
+                    "discounted_price": 9.14,
+                    "place_of_origin": "Germany",
+                    "manufacturer": "Aspen Bad Odesloe GmbH",
+                    "prescription_drug": true,
+                    "indication": "Used in the treatment of obstructive airway diseases.",
+                    "related_to": ["Ventar 2mg Tablet"]
+                },
+                {
+                    "code": "MDLNKB997732",
+                    "product_name": "Ventar 2mg Tablet",
+                    "brand_name": "Ventar",
+                    "dosage_strength": "2mg",
+                    "dosage_form": "Tablet",
+                    "price": 3.10,
+                    "discounted_price": 2.79,
+                    "place_of_origin": "Philippines",
+                    "manufacturer": "Hizon Laboratories, Inc.",
+                    "prescription_drug": true,
+                    "indication": "Used in the treatment of obstructive airway diseases.",
+                    "related_to": ["Ventolin 2mg Tablet"]
+                }
+            ]
+        }
+    ]
+}
