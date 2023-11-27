@@ -1,16 +1,14 @@
 import { abi, bytecode } from "@/utils/contracts/abi/FunctionsConsumer.json";
 import { wallet, signer } from "@/utils/connection";
+import { Networks } from "@/utils/interfaces/networks.interface";
 import { networks } from "@/utils/networks";
 import { ContractFactory, utils } from "ethers";
 import HttpException from "@/utils/exceptions/http.exception";
 
-const NETWORK = "polygonMumbai";
-
-const routerAddress = networks[NETWORK].functionsRouter;
-const donIdBytes32: string = utils.formatBytes32String(networks[NETWORK].donId);
-
-const deployFunctionsConsumerContract = async (): Promise<void> => {
+const deployFunctionsConsumerContract = async (NETWORK: keyof Networks ): Promise<string | Error> => {
   try {
+    const routerAddress = networks[NETWORK].functionsRouter;
+    const donIdBytes32: string = utils.formatBytes32String(networks[NETWORK].donId);
     const contractFactory: ContractFactory = new ContractFactory(abi, bytecode, wallet);
 
     console.log(
@@ -22,9 +20,11 @@ const deployFunctionsConsumerContract = async (): Promise<void> => {
 
     await functionsConsumerContract.deployed();
     console.log(`FunctionsConsumer deployed at address ${functionsConsumerContract.address}`);
+
+    return functionsConsumerContract.address;
   } catch (error: any) {
     console.log('Canno deploy Functions Consumer contract');
-    throw new HttpException(400, error.message);
+    throw new HttpException(400, error);
   }
 };
 

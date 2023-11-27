@@ -6,6 +6,8 @@ function configEnv(): void {
             choices: ['development', 'production']
         }),
         PORT: str(),
+        RPC_URL: str(),
+        PRIVATE_KEY: str()
     })
 }
 

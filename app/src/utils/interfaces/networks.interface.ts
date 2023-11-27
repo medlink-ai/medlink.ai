@@ -1,4 +1,5 @@
 export interface Network {
+  network: string;
   gasPrice: number | undefined;
   nonce: number | undefined;
   accounts: string[];

@@ -3,21 +3,21 @@ import { utils } from "ethers";
 import { signer } from "@/utils/connection";
 import { networks } from "@/utils/networks";
 import HttpException from "@/utils/exceptions/http.exception";
+import { Networks } from "@/utils/interfaces/networks.interface";
 
-const NETWORK = "polygonMumbai";
 
-const functionsRouterAddress = networks[NETWORK].functionsRouter;
-const linkTokenAddress = networks[NETWORK].linkToken;
-const consumerAddress = "0x4d93a395cba2CAf125f7C33080281E7b972F32b6";
-const LINK_AMOUNT = "5";
-
-const createAndFundSub = async (): Promise<void> => {
+const createAndFundSub = async (NETWORK: keyof Networks, consumerAddress: string, LINK_AMOUNT: string): Promise<string> => {
     try {
+        const functionsRouterAddress = networks[NETWORK].functionsRouter;
+        const linkTokenAddress = networks[NETWORK].linkToken;
+        
         const subscriptionManager = new SubscriptionManager({
             signer,
             linkTokenAddress,
             functionsRouterAddress
         })
+
+        console.log(`Subscrition manager starting to initialize...`)
 
         await subscriptionManager.initialize();
 
@@ -40,6 +40,8 @@ const createAndFundSub = async (): Promise<void> => {
         })
 
         console.log(`Subscription ${subscriptionId} funded with ${LINK_AMOUNT} LINK`);
+
+        return subscriptionId.toString();
     } catch (error: any) {
         console.log('Create and fund subscription failed.');
         throw new HttpException(400, error);

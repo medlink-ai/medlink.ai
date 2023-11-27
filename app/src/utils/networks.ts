@@ -6,6 +6,7 @@ const PRIVATE_KEY = process.env.PRIVATE_KEY as string;
 
 export const networks: Networks = {
   ethereumSepolia: {
+    network: "sepolia",
     gasPrice: undefined,
     nonce: undefined,
     accounts: [PRIVATE_KEY],
@@ -23,6 +24,7 @@ export const networks: Networks = {
     ],
   },
   polygonMumbai: {
+    network: "mumbai",
     gasPrice: 20_000_000_000,
     nonce: undefined,
     accounts: [PRIVATE_KEY as string],
