@@ -84,7 +84,7 @@ function Chat({ onClose }: { onClose: () => void }) {
 }
 
 export default function Chatbot() {
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(true);
 
     return (
         <div className="fixed bottom-10 right-10 flex flex-col z-10">
