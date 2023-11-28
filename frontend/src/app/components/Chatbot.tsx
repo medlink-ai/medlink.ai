@@ -1,9 +1,64 @@
 "use client";
 
 import { Button, Textarea } from "@nextui-org/react";
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import { Message, saveMessage, getSavedMessages } from "../utils/utils";
 
 function Chat({ onClose }: { onClose: () => void }) {
+    const [question, setQuestion] = useState('');
+    const [context, setContext] = useState('');
+    const [answer, setAnswer] = useState('');
+    const [messages, setMessages] = useState([] as Message[]);
+    const workerRef = useRef<Worker | null>(null);
+
+    useEffect(() => {
+        const savedMessages = getSavedMessages() as Message[];
+        setMessages(savedMessages);
+
+        setContext(savedMessages.map(msg => msg.text).join(' '));
+
+        // if (!workerRef.current) {
+        workerRef.current = new Worker(new URL('./worker.js', import.meta.url), { type: 'module' });
+        // }
+        workerRef.current.onmessage = (e) => {
+            setAnswer(e.data.answer);
+            const newMessage: Message = { sender: 'bot', text: e.data.answer };
+            saveMessage(newMessage);
+            setMessages(prevMessages => [...prevMessages, newMessage]);
+        };
+        return () => {
+            if (workerRef.current) {
+                workerRef.current.terminate();
+            }
+        };
+    }, []);
+
+    const handleSubmit = (e: React.FormEvent) => {
+        console.log(e)
+        e.preventDefault();
+        if (question) {
+            const newMessage: Message = { sender: 'user', text: question };
+            saveMessage(newMessage);
+            setMessages(prevMessages => [...prevMessages, newMessage]);
+    
+            // Ensure the worker is initialized
+            if (!workerRef.current) {
+                workerRef.current = new Worker(new URL('./worker.js', import.meta.url), { type: 'module' });
+            }
+    
+            // Update context and send message to worker
+            setContext(prevContext => {
+                const updatedContext = prevContext + ' ' + question;
+                workerRef.current?.postMessage({ question, context: updatedContext });
+                return updatedContext;
+            });
+    
+            setQuestion('');
+        }
+    }
+    
+    
+
     return (
         <div className="bg-background shadow-md w-96 h-[70vh] rounded-2xl drop-shadow-xl flex flex-col justify-between">
             <div className="flex w-full bg-primary justify-between p-2 rounded-t-2xl items-center">
@@ -18,9 +73,9 @@ function Chat({ onClose }: { onClose: () => void }) {
             <div className="flex flex-col p-4">
                 <div>{/* chat goes here */}</div>
                 <div className="w-full flex flex-col gap-2">
-                    <Textarea />
+                    <Textarea value={question} onChange={(e) => setQuestion(e.target.value)}/>
                     <div className="flex w-full justify-end">
-                        <Button className="w-fit">Send</Button>
+                        <Button onClick={handleSubmit} className="w-fit">Send</Button>
                     </div>
                 </div>
             </div>
