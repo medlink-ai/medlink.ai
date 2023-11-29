@@ -18,3 +18,9 @@ export const saveMessage = (message: Message): void => {
     messages.push(message);
     localStorage.setItem(MESSAGES_KEY, JSON.stringify(messages));
 };
+
+export const clearLocalStorageKey = (key: string): void => {
+    if (typeof localStorage !== 'undefined') {
+        localStorage.removeItem(key);
+    }
+};

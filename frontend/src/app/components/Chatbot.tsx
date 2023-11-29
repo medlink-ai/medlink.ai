@@ -1,68 +1,84 @@
 "use client";
 
-import { Button, Textarea } from "@nextui-org/react";
+import { Button, Textarea, Switch } from "@nextui-org/react";
 import { useEffect, useState, useRef } from "react";
-import { Message, saveMessage, getSavedMessages } from "../utils/utils";
+import { Message, saveMessage, getSavedMessages, clearLocalStorageKey } from "../utils/utils";
 
 function Chat({ onClose }: { onClose: () => void }) {
     const [question, setQuestion] = useState('');
     const [context, setContext] = useState('');
     const [answer, setAnswer] = useState('');
-    const [messages, setMessages] = useState([] as Message[]);
+    const [messages, setMessages] = useState<Message[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
     const workerRef = useRef<Worker | null>(null);
+    const [mode, setMode] = useState('Patient');
+
+    const handleModeChange = () => {
+        setMode(mode === 'Patient' ? 'Doctor' : 'Patient');
+    };
 
     useEffect(() => {
-        const savedMessages = getSavedMessages() as Message[];
+        const savedMessages = getSavedMessages();
         setMessages(savedMessages);
-
         setContext(savedMessages.map(msg => msg.text).join(' '));
-
-        // if (!workerRef.current) {
-        workerRef.current = new Worker(new URL('./worker.js', import.meta.url), { type: 'module' });
-        // }
-        workerRef.current.onmessage = (e) => {
-            setAnswer(e.data.answer);
-            const newMessage: Message = { sender: 'bot', text: e.data.answer };
-            saveMessage(newMessage);
-            setMessages(prevMessages => [...prevMessages, newMessage]);
-        };
+    
+        // Check if the worker already exists
+        if (!workerRef.current) {
+            workerRef.current = new Worker(new URL('./worker.js', import.meta.url), { type: 'module' });
+    
+            workerRef.current.onmessage = (e) => {
+                if (e.data.error) {
+                    setError(e.data.error);
+                    setIsLoading(false);
+                } else {
+                    setAnswer(e.data.answer);
+                    const newMessage: Message = { sender: 'bot', text: e.data.answer };
+                    saveMessage(newMessage);
+                    setMessages(prevMessages => [...prevMessages, newMessage]);
+                    setIsLoading(false);
+                }
+            };
+        }
+    
         return () => {
             if (workerRef.current) {
                 workerRef.current.terminate();
+                workerRef.current = null; // Reset the ref after terminating the worker
             }
         };
     }, []);
+    
 
     const handleSubmit = (e: React.FormEvent) => {
-        console.log(e)
         e.preventDefault();
         if (question) {
+            setIsLoading(true);
+            setError(null);
             const newMessage: Message = { sender: 'user', text: question };
             saveMessage(newMessage);
             setMessages(prevMessages => [...prevMessages, newMessage]);
-    
-            // Ensure the worker is initialized
-            if (!workerRef.current) {
-                workerRef.current = new Worker(new URL('./worker.js', import.meta.url), { type: 'module' });
-            }
-    
-            // Update context and send message to worker
-            setContext(prevContext => {
-                const updatedContext = prevContext + ' ' + question;
-                workerRef.current?.postMessage({ question, context: updatedContext });
-                return updatedContext;
-            });
-    
+
+            const updatedContext = context + ' ' + question;
+            workerRef.current?.postMessage({ question, context: updatedContext, mode });
+            setContext(updatedContext);
             setQuestion('');
         }
-    }
-    
-    
+    };
 
+    const handleClear = () => {
+        setMessages([]);
+        clearLocalStorageKey("chat_messages");
+    };
     return (
         <div className="bg-background shadow-md w-96 h-[70vh] rounded-2xl drop-shadow-xl flex flex-col justify-between">
             <div className="flex w-full bg-primary justify-between p-2 rounded-t-2xl items-center">
                 <div className="font-semibold">Medlink.AI Chatbot</div>
+                <div className="flex items-center justify-between mb-4">
+                    <div>Patient Mode</div>
+                    <Switch checked={mode === 'Doctor'} onChange={handleModeChange} />
+                    <div>Doctor Mode</div>
+                </div>
                 <Button isIconOnly className="rounded-full" size="sm" onClick={onClose}>
                     <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 384 512">
                         <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
@@ -71,11 +87,20 @@ function Chat({ onClose }: { onClose: () => void }) {
             </div>
 
             <div className="flex flex-col p-4">
-                <div>{/* chat goes here */}</div>
+                {isLoading && <div>Loading...</div>}
+                {error && <div>{error}</div>}
+                <div>{messages.map((msg, index) => (
+                        <div key={index} className={`message ${msg.sender}`}>
+                            {msg.text}
+                        </div>
+                    ))}</div>
                 <div className="w-full flex flex-col gap-2">
                     <Textarea value={question} onChange={(e) => setQuestion(e.target.value)}/>
                     <div className="flex w-full justify-end">
                         <Button onClick={handleSubmit} className="w-fit">Send</Button>
+                    </div>
+                    <div className="flex w-full">
+                        <Button onClick={handleClear} className="w-fit">Clear</Button>
                     </div>
                 </div>
             </div>
