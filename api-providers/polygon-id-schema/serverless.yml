@@ -1,0 +1,34 @@
+service: polygon-id-schema
+
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  memorySize: 512
+  timeout: 20
+
+# you can overwrite defaults here
+  stage: dev
+  region: ap-southeast-1
+
+functions:
+  JSONSchema:
+    handler: handler.JSONSchema
+    events:
+    - http:
+        path: /schema
+        method: get
+    runtime: nodejs18.x
+    memorySize: 512
+    timeout: 20
+
+  JSONLD:
+    handler: handler.JSONLD
+    events:
+    - http:
+        path: /ld
+        method: get
+    runtime: nodejs18.x
+    memorySize: 512
+    timeout: 20
