@@ -1,106 +1,121 @@
-const express = require('express');
-const {auth, resolver, protocol} = require('@iden3/js-iden3-auth')
-const getRawBody = require('raw-body')
+const express = require('express'); // included
+const { Server } = require('socket.io');
+const cors = require('cors'); //included
+const getRawBody = require('raw-body');
+const { auth, resolver, loaders } = require('@iden3/js-iden3-auth');
 const path = require('path');
-require("dotenv").config();
+
+require('dotenv').config();
 
 const app = express();
 const port = 8080;
 
+app.use(cors({ origin: process.env.FRONTEND_URL }));
 
-app.use(express.static('static'));
-
-app.get("/api/sign-in", (req, res) => {
-    console.log('get Auth Request');
-    GetAuthRequest(req,res);
+const server = app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });
 
-app.post("/api/callback", (req, res) => {
-    console.log('callback');
-    Callback(req,res);
+const io = new Server(server, {
+  cors: {
+    origin: process.env.FRONTEND_URL,
+  },
 });
 
-app.listen(port, () => {
-    console.log('server running on port 8080');
+const STATUS = {
+  IN_PROGRESS: 'IN_PROGRESS',
+  ERROR: 'ERROR',
+  DONE: 'DONE',
+};
+
+const socketMessage = (fn, status, data) => ({
+  fn,
+  status,
+  data,
 });
 
-// Create a map to store the auth requests and their session IDs
 const requestMap = new Map();
 
-// GetQR returns auth request
-async function GetAuthRequest(req,res) {
+app.get('/', (_req, res) => {
+  res.send('Welcome to your backend Polygon ID verifier server!');
+});
 
-	// Audience is verifier id
-	const hostUrl = process.env.HOSTED_SERVER_URL;
-	const sessionId = 1;
-	const callbackURL = "/api/callback"
-	const audience = "did:polygonid:polygon:mumbai:2qDyy1kEo2AYcP3RT4XGea7BtxsY285szg6yP9SPrs"
+app.get('/api/get-auth-qr', (req, res) => {
+  getAuthQr(req, res);
+});
 
-	const uri = `${hostUrl}${callbackURL}?sessionId=${sessionId}`;
+app.post('/api/verification-callback', (req, res) => {
+  handleVerification(req, res);
+});
 
-	// Generate request for basic authentication
-	const request = auth.createAuthorizationRequest(
-		'test flow',
-		audience,
-		uri,
-	);
-	
-	request.id = '7f38a193-0918-4a48-9fac-36adfdb8b542';
-	request.thid = '7f38a193-0918-4a48-9fac-36adfdb8b542';
+async function getAuthQr(req, res) {
+  const sessionId = req.query.sessionId;
 
-	// Add request for a specific proof
-	const proofRequest = {
-		id: 1,
-		circuitId: 'credentialAtomicQuerySigV2',
-		query: {
-			allowedIssuers: ['*'],
-			type: 'DrugPrescription',
-			context: 'ipfs://QmTai1aGTBXMVBP1yUYXjp3fuNjpoAmRxpA8dz1QFziQx2',
-			credentialSubject: {
-				drug_code: {
-					$gt: 100501,
-				},
-			},
-		},
-		};
-	const scope = request.body.scope ?? [];
-	request.body.scope = [...scope, proofRequest];
-		
-	// Store auth request in map associated with session ID
-	requestMap.set(`${sessionId}`, request);
+  io.sockets.emit(
+    sessionId,
+    socketMessage('getAuthQr', STATUS.IN_PROGRESS, sessionId)
+  );
 
-	return res.status(200).set('Content-Type', 'application/json').send(request);
+  const uri = `${process.env.HOSTED_SERVER_URL}/api/verification-callback?sessionId=${sessionId}`;
+
+  const request = auth.createAuthorizationRequest(
+    'test flow',
+    process.env.VERIFIER_DID,
+    uri
+  );
+
+  request.id = sessionId;
+  request.thid = sessionId;
+
+  const proofRequest = {
+    id: 1,
+    circuitId: 'credentialAtomicQuerySigV2',
+    query: {
+      allowedIssuers: ['*'],
+      type: 'DrugPrescription',
+      context: 'ipfs://QmTai1aGTBXMVBP1yUYXjp3fuNjpoAmRxpA8dz1QFziQx2',
+      credentialSubject: {
+        drug_code: {
+          $gt: 100501,
+        },
+      },
+    },
+  };
+
+  const scope = request.body.scope ?? [];
+  request.body.scope = [...scope, proofRequest];
+
+  requestMap.set(sessionId, request);
+
+  io.sockets.emit(sessionId, socketMessage('getAuthQr', STATUS.DONE, request));
+
+  return res.status(200).json(request);
 }
 
-// Callback verifies the proof after sign-in callbacks
-async function Callback(req,res) {
-
-	// Get session ID from request
+async function handleVerification(req, res) {
 	const sessionId = req.query.sessionId;
+	const authRequest = requestMap.get(sessionId);
+	
+	io.sockets.emit(
+		sessionId,
+		socketMessage('handleVerification', STATUS.IN_PROGRESS, authRequest)
+	);
 
-	// get JWZ token params from the post request
-	const raw = await getRawBody(req);
-	const tokenStr = raw.toString().trim();
+  	const raw = await getRawBody(req);
+  	const tokenStr = raw.toString().trim();
 
-	const RPC_URL = process.env.RPC_URL_MUMBAI;
-	const contractAddress = "0x134B1BE34911E39A8397ec6289782989729807a4"
-	const keyDIR = "./keys"
+  	const mumbaiContractAddress = '0x134B1BE34911E39A8397ec6289782989729807a4';
+ 	 const keyDIR = './keys';
 
 	const ethStateResolver = new resolver.EthStateResolver(
-		RPC_URL,
-		contractAddress,
+		process.env.RPC_URL_MUMBAI,
+		mumbaiContractAddress
 	);
 
 	const resolvers = {
 		['polygon:mumbai']: ethStateResolver,
 	};
 
-
-	// fetch authRequest from sessionID
-	const authRequest = requestMap.get(`${sessionId}`);
-
-
-	// EXECUTE VERIFICATION
 	const verifier = await auth.Verifier.newVerifier(
 		{
 			stateResolver: resolvers,
@@ -112,12 +127,26 @@ async function Callback(req,res) {
 
 	try {
 		const opts = {
-			AcceptedStateTransitionDelay: 5 * 60 * 1000, // 5 minute
-			};		
-		authResponse = await verifier.fullVerify(tokenStr, authRequest, opts);
+			AcceptedStateTransitionDelay: 5 * 60 * 1000,
+		};
+		const authResponse = await verifier.fullVerify(tokenStr, authRequest, opts);
+		const userId = authResponse.from;
+		io.sockets.emit(
+			sessionId,
+			socketMessage('handleVerification', STATUS.DONE, authResponse)
+		);
+		return res
+			.status(200)
+			.json({ message: `User ${userId} successfully authenticated` });
 	} catch (error) {
-		return res.status(500).send(error);
+		console.log(
+			'Error handling verification: Double-check the value of your RPC_URL_MUMBAI in the .env file. Are you using a valid API key for Polygon Mumbai from your RPC provider? Visit https://alchemy.com/?r=zU2MTQwNTU5Mzc2M and create a new app with Polygon Mumbai'
+		);
+		console.log('handleVerification error', sessionId, error);
+		io.sockets.emit(
+			sessionId,
+			socketMessage('handleVerification', STATUS.ERROR, error)
+		);
+		return res.status(500).json({ error: 'Internal Server Error' });
 	}
-
-	return res.status(200).set('Content-Type', 'application/json').send("user with ID: " + authResponse.from + " Succesfully authenticated");
 }

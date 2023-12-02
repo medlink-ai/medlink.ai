@@ -1,8 +1,10 @@
 import 'dotenv/config';
 import 'module-alias/register';
-import App from './app';
 import validateEnv from '@/utils/validateEnv';
-import ChainlinkFunctionsController from './resources/chainlink_functions/cf.controller';
+import ChainlinkFunctionsController from '@/resources/chainlink_functions/cf.controller';
+import App from './app';
+
 validateEnv();
-const app = new App([new ChainlinkFunctionsController()], Number(process.env.PORT))
-app.listen();
+const port = Number(process.env.PORT || 8080);
+const appInstance = new App([new ChainlinkFunctionsController()], port);
+appInstance.listen();
