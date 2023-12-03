@@ -5,7 +5,10 @@ import { getCsrfToken, signIn, useSession } from "next-auth/react";
 import { SiweMessage } from "siwe";
 import { useAccount, useConnect, useNetwork, useSignMessage } from "wagmi";
 import { InjectedConnector } from "wagmi/connectors/injected";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { toast } from "react-toastify";
+
+import { useRouter, useSearchParams } from "next/navigation";
 
 export async function getServerSideProps(context: any) {
     return {
@@ -16,6 +19,9 @@ export async function getServerSideProps(context: any) {
 }
 
 export default function Auth() {
+    const params = useSearchParams();
+    const router = useRouter();
+
     const { signMessageAsync } = useSignMessage();
     const { chain } = useNetwork();
     const { address, isConnected } = useAccount();
@@ -23,6 +29,8 @@ export default function Auth() {
         connector: new InjectedConnector(),
     });
     const { data: session, status } = useSession();
+
+    const [isMounted, setIsMounted] = useState(false);
 
     const handleLogin = useCallback(async () => {
         try {
@@ -55,6 +63,18 @@ export default function Auth() {
             handleLogin();
         }
     }, [handleLogin, isConnected, session]);
+
+    useEffect(() => {
+        setIsMounted(true);
+        if (isMounted && session) {
+            toast("Welcome back!");
+            connect();
+        }
+        if (isMounted && params.get("unauth")) {
+            toast.error("You need to login first!");
+            router.replace("/");
+        }
+    }, [isMounted]);
 
     return (
         <>

@@ -69,7 +69,6 @@ const config: Config = {
                 },
             },
         }),
-
         // require("daisyui"),
     ],
     // daisyui: {

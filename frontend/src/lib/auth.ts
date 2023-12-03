@@ -1,5 +1,5 @@
 import type { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from "next";
-import type { AuthOptions, NextAuthOptions } from "next-auth";
+import type { AuthOptions } from "next-auth";
 import { getServerSession } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { getCsrfToken } from "next-auth/react";
@@ -47,6 +47,5 @@ export const authOption: AuthOptions = {
 };
 
 export function auth(...args: [GetServerSidePropsContext["req"], GetServerSidePropsContext["res"]] | [NextApiRequest, NextApiResponse] | []) {
-    console.log("called auth");
     return getServerSession(...args, authOption);
 }
