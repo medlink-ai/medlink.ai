@@ -13,6 +13,7 @@
   "author": "0xbryanf <0xbryanf@gmail.com>",
   "license": "ISC",
   "devDependencies": {
+    "@iden3/js-iden3-auth": "^1.0.3",
     "@nomicfoundation/hardhat-verify": "^2.0.1",
     "@nomiclabs/hardhat-etherscan": "^3.1.7",
     "@types/compression": "^1.7.3",
@@ -30,6 +31,7 @@
     "hardhat": "^2.19.1",
     "prettier": "^3.0.3",
     "rimraf": "^5.0.5",
+    "socket.io": "^4.7.2",
     "ts-node": "^10.9.1",
     "tsc-watch": "^6.0.4",
     "typescript": "^5.2.2"

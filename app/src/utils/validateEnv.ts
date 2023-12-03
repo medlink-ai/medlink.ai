@@ -7,7 +7,11 @@ function configEnv(): void {
         }),
         PORT: str(),
         RPC_URL: str(),
-        PRIVATE_KEY: str()
+        PRIVATE_KEY: str(),
+        API_MUMBAI_KEY: str(),
+        FRONTEND_URL: str(),
+        HOSTED_SERVER_URL: str(),
+        VERIFIER_DID: str()
     })
 }
 
