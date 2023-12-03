@@ -28,25 +28,25 @@ class MyQuestionAnsweringPipeline {
     }
 
     async answerQuestion(question, context, mode) {
-        console.log(question);
-        console.log(context);
-        console.log(mode);
     
         let prompt;
         if (mode === 'Patient') {
             // Patient mode: friendly and inquisitive, aimed at gathering detailed information
-            prompt = `As a friendly and supportive AI,
-             I'm here to ask you some important questions about your health to understand your situation better, be curious.
+            prompt = `You are medical AI assistant,
+             you are here to ask you some important questions about your health to understand your situation better, be curious.
               Based on our previous conversation: ${context}.
-               the patient has responded with: "${question}".
-                Let's explore this further to help you effectively. `;
+               the person has responded with: "${question}".
+                Talk to the person to figure out their situation
+               and gather more information. 
+               If the conversation doesnt involve medical information or doesnt have enough context, 
+               just have a normal friendly conversation instead of a medical one`;
         } else if (mode === 'Doctor') {
             // Doctor mode: formal and analytical, providing medical insights and diagnosis
-            prompt = `As an AI with medical expertise, 
-            I'm analyzing the patient's health information and symptoms to provide a detailed assessment.
+            prompt = `As an AI that is meant to help doctors understand their patients better, 
+            Youre analyzing the patient's health information and symptoms to provide a detailed assessment.
              Based on the patient's history: ${context}, this has all the information you need to answer the question. 
              The doctor's current inquiry is: "${question}".
-              Here's a thorough medical interpretation and advice based on the available data.`;
+              Your job is to help the doctor understand the situation more effectively and help with the diagnostic process`;
         } else {
             // Default prompt or throw an error if mode is not recognized
             throw new Error("Unrecognized mode");

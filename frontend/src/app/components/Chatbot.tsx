@@ -6,7 +6,8 @@ import { Message, saveMessage, getSavedMessages, clearLocalStorageKey } from "..
 
 function Chat({ onClose }: { onClose: () => void }) {
     const [question, setQuestion] = useState('');
-    const [context, setContext] = useState('');
+    const [patientContext, setPatientContext] = useState('');
+    const [doctorContext, setDoctorContext] = useState('');
     const [answer, setAnswer] = useState('');
     const [messages, setMessages] = useState<Message[]>([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -19,11 +20,11 @@ function Chat({ onClose }: { onClose: () => void }) {
     };
 
     useEffect(() => {
-        const savedMessages = getSavedMessages();
+        // Load only patient's messages from local storage
+        const savedMessages = getSavedMessages().filter(msg => msg.sender === 'patient' || msg.sender === 'bot');
         setMessages(savedMessages);
-        setContext(savedMessages.map(msg => msg.text).join(' '));
+        setPatientContext(savedMessages.map(msg => msg.text).join(' '));
     
-        // Check if the worker already exists
         if (!workerRef.current) {
             workerRef.current = new Worker(new URL('./worker.js', import.meta.url), { type: 'module' });
     
@@ -34,7 +35,9 @@ function Chat({ onClose }: { onClose: () => void }) {
                 } else {
                     setAnswer(e.data.answer);
                     const newMessage: Message = { sender: 'bot', text: e.data.answer };
-                    saveMessage(newMessage);
+                    if (mode === 'Patient') {
+                        saveMessage(newMessage); // Save bot's response only in Patient mode
+                    }
                     setMessages(prevMessages => [...prevMessages, newMessage]);
                     setIsLoading(false);
                 }
@@ -44,7 +47,7 @@ function Chat({ onClose }: { onClose: () => void }) {
         return () => {
             if (workerRef.current) {
                 workerRef.current.terminate();
-                workerRef.current = null; // Reset the ref after terminating the worker
+                workerRef.current = null;
             }
         };
     }, []);
@@ -55,13 +58,22 @@ function Chat({ onClose }: { onClose: () => void }) {
         if (question) {
             setIsLoading(true);
             setError(null);
-            const newMessage: Message = { sender: 'user', text: question };
-            saveMessage(newMessage);
+            const newMessage: Message = { sender: mode.toLowerCase(), text: question };
+            if (mode === 'Patient') {
+                saveMessage(newMessage); // Save patient's message only in Patient mode
+            }
             setMessages(prevMessages => [...prevMessages, newMessage]);
 
-            const updatedContext = context + ' ' + question;
-            workerRef.current?.postMessage({ question, context: updatedContext, mode });
-            setContext(updatedContext);
+            if (mode === 'Patient') {
+                const updatedPatientContext = patientContext + ' ' + question;
+                setPatientContext(updatedPatientContext);
+                workerRef.current?.postMessage({ question, context: updatedPatientContext, mode });
+            } else {
+                const updatedDoctorContext = patientContext + ' ' + question;
+                setDoctorContext(updatedDoctorContext);
+                workerRef.current?.postMessage({ question, context: updatedDoctorContext, mode });
+            }
+
             setQuestion('');
         }
     };
@@ -70,6 +82,7 @@ function Chat({ onClose }: { onClose: () => void }) {
         setMessages([]);
         clearLocalStorageKey("chat_messages");
     };
+
     return (
         <div className="bg-background shadow-md w-96 h-[70vh] rounded-2xl drop-shadow-xl flex flex-col justify-between">
             <div className="flex w-full bg-primary justify-between p-2 rounded-t-2xl items-center">
