@@ -38,7 +38,7 @@ function ChatBubble({ msg, status }: { msg: Message; status?: "loading" | "error
     );
 }
 
-export function Chat({ buttonMarginRight }: { buttonMarginRight?: string }) {
+export function Chat() {
     const [question, setQuestion] = useState("");
     const [patientContext, setPatientContext] = useState("");
     const [doctorContext, setDoctorContext] = useState("");
@@ -122,7 +122,7 @@ export function Chat({ buttonMarginRight }: { buttonMarginRight?: string }) {
 
     return (
         <div className="flex flex-col justify-between w-full">
-            <ScrollShadow className={`2xl:h-[84vh] h-[74vh] pr-4  overflow-y-auto`}>
+            <ScrollShadow className={`2xl:h-[82vh] h-[74vh] pr-4  overflow-y-auto`}>
                 {messages.map((msg, index) => (
                     <ChatBubble key={index} msg={msg} />
                 ))}
@@ -152,7 +152,7 @@ export function Chat({ buttonMarginRight }: { buttonMarginRight?: string }) {
                     }}
                 />
 
-                <div className={`flex w-full justify-end gap-4 ${buttonMarginRight}`}>
+                <div className="flex w-full justify-end gap-4">
                     <Switch
                         defaultSelected
                         size="lg"

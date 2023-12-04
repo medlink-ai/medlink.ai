@@ -22,7 +22,7 @@ export default function Home() {
             )}
             <div className="grid grid-cols-5 w-full h-full p-2">
                 <div className={`${isDealExpanded ? "col-span-4" : "col-span-5"} flex justify-items-center items-center`}>
-                    <Chat buttonMarginRight="mr-[30px]" />
+                    <Chat />
                 </div>
 
                 <div className={`${isDealExpanded ? "w-full col-span-1" : "w-0 col-span-0 collapse"} flex `}>
