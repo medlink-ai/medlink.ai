@@ -6,15 +6,12 @@ import Link from "next/link";
 import { ThemeSwitch } from "./ThemeSwitch";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { useAccount } from "wagmi";
+import Auth from "./Auth";
 
 export default function Nav() {
     const pathname = usePathname();
 
-    const { address, isConnected } = useAccount();
     const { data: session, status } = useSession();
-
-    const isSignedIn = isConnected && session;
 
     return (
         <Navbar
@@ -47,14 +44,7 @@ export default function Nav() {
                 <ThemeSwitch />
 
                 <NavbarItem className="hidden lg:flex">
-                    <Button as={Link} href="#" variant="flat">
-                        Login
-                    </Button>
-                </NavbarItem>
-                <NavbarItem>
-                    <Button as={Link} href="#" variant="flat">
-                        Sign Up
-                    </Button>
+                    <Auth />
                 </NavbarItem>
             </NavbarContent>
         </Navbar>

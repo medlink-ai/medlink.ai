@@ -69,20 +69,11 @@ const config: Config = {
                 },
             },
         }),
-
-        // require("daisyui"),
+        require("daisyui"),
     ],
-    // daisyui: {
-    //     light: {
-    //         ...require("daisyui/src/theming/themes")["light"],
-    //         primary: "blue",
-    //         secondary: "teal",
-    //     },
-    //     dark: {
-    //         ...require("daisyui/src/theming/themes")["dark"],
-    //         primary: "blue",
-    //         secondary: "teal",
-    //     },
-    // },
+    daisyui: {
+        base: false,
+        themes: false,
+    },
 };
 export default config;

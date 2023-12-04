@@ -1,9 +1,13 @@
+import { Role } from "@/constants";
+import dayjs from "dayjs";
+
 export interface Message {
-    sender: string;
+    sender: Role;
     text: string;
+    timestamp: dayjs.Dayjs;
 }
 
-const MESSAGES_KEY = 'chat_messages';
+const MESSAGES_KEY = "chat_messages";
 
 export const getSavedMessages = (): Message[] => {
     const messagesJson = localStorage.getItem(MESSAGES_KEY);
@@ -20,7 +24,7 @@ export const saveMessage = (message: Message): void => {
 };
 
 export const clearLocalStorageKey = (key: string): void => {
-    if (typeof localStorage !== 'undefined') {
+    if (typeof localStorage !== "undefined") {
         localStorage.removeItem(key);
     }
 };
