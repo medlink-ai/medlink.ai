@@ -1,7 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    fastRefresh: true,
-    concurrentFeatures: true,
     webpack: (config) => {
         // Ignore node-specific modules when bundling for the browser
         // https://webpack.js.org/configuration/resolve/#resolvealias

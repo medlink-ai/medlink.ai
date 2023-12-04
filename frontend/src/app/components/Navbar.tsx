@@ -6,6 +6,7 @@ import Link from "next/link";
 import { ThemeSwitch } from "./ThemeSwitch";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
+import Auth from "./Auth";
 
 export default function Nav() {
     const pathname = usePathname();
@@ -43,14 +44,7 @@ export default function Nav() {
                 <ThemeSwitch />
 
                 <NavbarItem className="hidden lg:flex">
-                    <Button as={Link} href="#" variant="flat">
-                        Login
-                    </Button>
-                </NavbarItem>
-                <NavbarItem>
-                    <Button as={Link} href="#" variant="flat">
-                        Sign Up
-                    </Button>
+                    <Auth />
                 </NavbarItem>
             </NavbarContent>
         </Navbar>

@@ -1,14 +1,16 @@
 "use client";
 
-import { Button } from "@nextui-org/react";
-import { getCsrfToken, signIn, useSession } from "next-auth/react";
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/react";
+import { getCsrfToken, signIn, useSession, signOut } from "next-auth/react";
 import { SiweMessage } from "siwe";
-import { useAccount, useConnect, useNetwork, useSignMessage } from "wagmi";
+import { useAccount, useConnect, useDisconnect, useNetwork, useSignMessage } from "wagmi";
 import { InjectedConnector } from "wagmi/connectors/injected";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 import { useRouter, useSearchParams } from "next/navigation";
+import { MetaMaskAvatar } from "react-metamask-avatar";
+import { on } from "events";
 
 export async function getServerSideProps(context: any) {
     return {
@@ -27,6 +29,11 @@ export default function Auth() {
     const { address, isConnected } = useAccount();
     const { connect } = useConnect({
         connector: new InjectedConnector(),
+    });
+    const { disconnect } = useDisconnect({
+        onSuccess: () => {
+            signOut();
+        },
     });
     const { data: session, status } = useSession();
 
@@ -66,9 +73,9 @@ export default function Auth() {
 
     useEffect(() => {
         setIsMounted(true);
-        if (isMounted && session) {
-            toast("Welcome back!");
+        if (isMounted && !isConnected && session) {
             connect();
+            toast("Welcome back!");
         }
         if (isMounted && params.get("unauth")) {
             toast.error("You need to login first!");
@@ -78,15 +85,29 @@ export default function Auth() {
 
     return (
         <>
-            {session && <p>Session: {JSON.stringify(session)}</p>}
-            <p>Status: {status}</p>
-            {address && <p>Address: {address}</p>}
-            <div className="w-80 h-62 flex flex-col justify-center items-center rounded-2xl bg-background drop-shadow-xl p-8 gap-6">
-                <div className="w-full">
-                    <h1 className="font-bold">Sign In</h1>
-                    <p>To continues with Medlink.AI</p>
-                </div>
+            {isConnected ? (
+                <div className="flex gap-4 items-center">
+                    <div>Welcome!</div>
 
+                    <Dropdown>
+                        <DropdownTrigger>
+                            <Button
+                                variant="bordered"
+                                isIconOnly
+                                className="w-10 rounded-full ring ring-green-1000 ring-offset-green-1100 ring-offset-2"
+                            >
+                                <MetaMaskAvatar address={address!} size={40} />
+                            </Button>
+                        </DropdownTrigger>
+                        <DropdownMenu aria-label="Static Actions">
+                            <DropdownItem key="new">View Profile</DropdownItem>
+                            <DropdownItem key="delete" className="text-danger" color="danger" onClick={() => disconnect()}>
+                                Disconnect
+                            </DropdownItem>
+                        </DropdownMenu>
+                    </Dropdown>
+                </div>
+            ) : (
                 <Button
                     color="primary"
                     onClick={(e) => {
@@ -100,7 +121,7 @@ export default function Auth() {
                 >
                     Login With Ethereum
                 </Button>
-            </div>
+            )}
         </>
     );
 }
