@@ -4,18 +4,22 @@ import { Role } from "@/constants";
 import { useState } from "react";
 import { Chat } from "./components/Chat";
 import { Button, Divider } from "@nextui-org/react";
+import { useAccount } from "wagmi";
 
 export default function Home() {
-    const [mode, setMode] = useState<Role>(Role.PATIENT);
-
     const [isDealExpanded, setIsDealExpanded] = useState(true);
 
-    const handleModeChange = () => {
-        setMode(mode === Role.PATIENT ? Role.DOCTOR : Role.PATIENT);
-    };
+    const { isConnected } = useAccount();
 
     return (
         <main className="flex flex-col items-center w-full h-[calc(100vh-64px)] bg-background">
+            {!isConnected && (
+                <div>
+                    <div className="absolute top-[64px] left-0 w-full h-[calc(100vh-64px)] bg-opacity-70 backdrop-blur-md z-50">
+                        <div className="flex h-full justify-center items-center">Please sign in to enjoy Medlink.AI</div>
+                    </div>
+                </div>
+            )}
             <div className="grid grid-cols-5 w-full h-full p-2">
                 <div className={`${isDealExpanded ? "col-span-4" : "col-span-5"} flex justify-items-center items-center`}>
                     <Chat buttonMarginRight="mr-[30px]" />

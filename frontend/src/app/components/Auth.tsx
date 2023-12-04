@@ -119,7 +119,7 @@ export default function Auth() {
                         }
                     }}
                 >
-                    Login With Ethereum
+                    Sign In With Ethereum
                 </Button>
             )}
         </>
