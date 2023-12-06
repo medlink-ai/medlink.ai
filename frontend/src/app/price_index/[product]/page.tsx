@@ -252,7 +252,7 @@ function ConfirmOrder({ product, onCancel }: { product: string; onCancel: () => 
 
 export default function Page({ params }: { params: { product: string } }) {
     const decodedProducts = decodeURIComponent(params.product);
-    const [provedPrescription, setProvedPrescription] = useState(true);
+    const [provedPrescription, setProvedPrescription] = useState(false);
 
     return (
         <div className="flex flex-col w-full h-[calc(100vh-64px)] py-6 px-6">
