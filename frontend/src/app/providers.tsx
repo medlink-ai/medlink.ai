@@ -41,7 +41,7 @@ function ToastProvider() {
             </style>
             <ToastContainer
                 toastClassName={(ctx) =>
-                    `${contextClass} absolute flex p-1 min-h-10 rounded-md justify-between overflow-hidden cursor-pointer top-[64px] right-2 min-w-[300px]`
+                    `${contextClass} absolute flex p-1 min-h-10 rounded-md justify-between overflow-hidden cursor-pointer top-[50px] right-2 min-w-[300px]`
                 }
                 bodyClassName={() => `text-sm text-${theme === "dark" ? "white" : "black"} font-med block p-3`}
                 closeButton={false}
