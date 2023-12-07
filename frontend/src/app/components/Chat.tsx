@@ -176,7 +176,7 @@ export function Chat() {
                         Clear
                     </Button>
 
-                    <Button onClick={handleSubmit} className="w-fit bg-primary" disabled={isLoading}>
+                    <Button onClick={handleSubmit} className="w-fit bg-primary text-white" disabled={isLoading}>
                         Send
                     </Button>
                 </div>

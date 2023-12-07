@@ -130,7 +130,7 @@ function Providers({ product, setProvedPrescription }: { product: string; setPro
                         issuerOrHowToLink={provider.issuerOrHowToLink}
                         credentialType={provider.credentialType}
                         onVerificationResult={setProvedPrescription}
-                        style={index === providers.length - 1 ? "mb-14 h-fit" : "h-fit"}
+                        style={index === providers.length - 1 ? "mb-10 h-fit" : "h-fit"}
                     />
                 ))}
             </div>
