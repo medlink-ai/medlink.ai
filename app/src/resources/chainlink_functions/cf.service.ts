@@ -2,6 +2,7 @@ import HttpException from "@/utils/exceptions/http.exception";
 import deployFunctionsConsumerContract from "@/middleware/deployConsumer.middleware";
 import createFundSub from "@/middleware/createAndFundSub.middleware";
 import request from '@/middleware/request.middleware';
+import requestProvider from '@/middleware/requestProvider.middleware';
 import readResponse from "@/middleware/readResponse.middleware";
 import { Networks } from "@/utils/interfaces/networks.interface";
 
@@ -29,6 +30,16 @@ class ChainlinkFunctionsService {
     public async request(consumerAddress: string, subscriptionId: string, drug_details: string): Promise<string | Error> {
         try {
             const response = await request(consumerAddress, subscriptionId, drug_details);
+            return response;
+        } catch (error: any) {
+            console.log('Cannot request for price index.');
+            throw new HttpException(400, error.message);
+        }
+    }
+
+    public async requestProvider(consumerAddress: string, subscriptionId: string, drug_details: string, amount: string): Promise<string | Error> {
+        try {
+            const response = await requestProvider(consumerAddress, subscriptionId, drug_details, amount);
             return response;
         } catch (error: any) {
             console.log('Cannot request for price index.');

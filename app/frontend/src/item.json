@@ -1,0 +1,38 @@
+[
+  {
+    "name_of_store": "Whatsons Pharmacy",
+    "code_of_store": 2,
+    "product_name": "Vivasartan 50mg Film-Coated Tablet",
+    "indication": "Used in treatment of cardiovascular disease",
+    "schema": "QmYVMoLtzVBsRXUizZj4JxgbiGhnskrLF42fbKjd5bJ993",
+    "max_range": 100999,
+    "min_range": 100501
+  },
+  {
+    "name_of_store": "Whatsons Pharmacy",
+    "code_of_store": 2,
+    "product_name": "Lanzaar 50 50mg Film-Coated Tablet",
+    "indication": "Used in treatment of cardiovascular disease",
+    "schema": "QmYVMoLtzVBsRXUizZj4JxgbiGhnskrLF42fbKjd5bJ993",
+    "max_range": 100999,
+    "min_range": 100501
+  },
+  {
+    "name_of_store": "Mercury Drug Store",
+    "code_of_store": 1,
+    "product_name": "Vamzar 50mg Film-Coated Tablet",
+    "indication": "Used in treatment of cardiovascular disease",
+    "schema": "QmYVMoLtzVBsRXUizZj4JxgbiGhnskrLF42fbKjd5bJ993",
+    "max_range": 100999,
+    "min_range": 100501
+  },
+  {
+    "name_of_store": "Mercury Drug Store",
+    "code_of_store": 1,
+    "product_name": "Vivasartan 50mg Film-Coated Tablet",
+    "indication": "Used in treatment of cardiovascular disease",
+    "schema": "QmYVMoLtzVBsRXUizZj4JxgbiGhnskrLF42fbKjd5bJ993",
+    "max_range": 100999,
+    "min_range": 100501
+  }
+]

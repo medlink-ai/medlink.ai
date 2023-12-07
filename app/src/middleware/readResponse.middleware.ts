@@ -11,9 +11,7 @@ const readResponse = async (consumerAddress: string): Promise<string> => {
 
     const decodedResponse = decodeResult(responseBytes, ReturnType.string);
 
-    console.log("Price Index : ", decodedResponse);
-
-    return `Price Index : ${decodedResponse}`;
+    return `${decodedResponse}`;
 }
 
 export default readResponse;

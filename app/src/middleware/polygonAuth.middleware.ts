@@ -20,47 +20,78 @@ const socketMessage = (fn: string, status: string, data: any) => ({
 
 const requestMap = new Map();
 
-export async function getAuthQr(req: Request, res: Response, io: Server): Promise<Response> {
+export async function getAuthQr(req: Request, res: Response, io: Server, schema: string, verifier: string, max_range: number, min_range: number, patient_wallet_add: string): Promise<Response> {
     const sessionId = req.query.sessionId as string;
 
-    io.sockets.emit(sessionId, socketMessage('getAuthQr', STATUS.IN_PROGRESS, sessionId))
+    io.sockets.emit(sessionId, socketMessage('getAuthQr', STATUS.IN_PROGRESS, sessionId));
 
     const uri = `${process.env.HOSTED_SERVER_URL as string}/api/verification-callback?sessionId=${sessionId}`;
-
     const request = auth.createAuthorizationRequest('test flow', process.env.VERIFIER_DID as string, uri);
-
-    const company = "Pharmacy A";
-
+    const company = verifier;
     request.id = sessionId;
     request.thid = sessionId;
     request.body.message = company;
 
-    const proofOfRequest = {
-        id: 1,
-        circuitId: 'credentialAtomicQuerySigV2',
-        query: {
-            allowedIssuers: ['*'],
-            type: 'DrugPrescription',
-            context: 'ipfs://QmTai1aGTBXMVBP1yUYXjp3fuNjpoAmRxpA8dz1QFziQx2',
-            credentialSubject: {
-                drug_code: {
-                    $gt: 100501,
+    const scopes = [
+        {
+            id: 1,
+            circuitId: 'credentialAtomicQuerySigV2',
+            query: {
+                allowedIssuers: ['*'],
+                type: 'PrescriptionMedicine',
+                context: schema,
+                credentialSubject: {
+                    patient_wallet_address: { $eq: patient_wallet_add },
                 },
-            },
+            }
         },
-    };
+        {
+            id: 2,
+            circuitId: 'credentialAtomicQuerySigV2',
+            query: {
+                allowedIssuers: ['*'],
+                type: 'PrescriptionMedicine',
+                context: schema,
+                credentialSubject: {
+                    min_code: { $gt: min_range },
+                },
+            }
+        },
+        {
+            id: 3,
+            circuitId: 'credentialAtomicQuerySigV2',
+            query: {
+                allowedIssuers: ['*'],
+                type: 'PrescriptionMedicine',
+                context: schema,
+                credentialSubject: {
+                    max_code: { $lt: max_range },
+                },
+            }
+        },
+        {
+            id: 4,
+            circuitId: 'credentialAtomicQuerySigV2',
+            query: {
+                allowedIssuers: ['*'],
+                type: 'PrescriptionMedicine',
+                context: schema,
+                credentialSubject: {
+                    expiration_date: { $lt: 20240106 },
+                },
+            }
+        },
+        
+    ];
 
-    const scope = request.body.scope ?? [];
-    request.body.scope = [...scope, proofOfRequest];
-
+    request.body.scope = [...request.body.scope ?? [], ...scopes];
     requestMap.set(sessionId, request);
 
     console.log(`Auth request added to map for session ID: ${sessionId}`);
 
-    io.sockets.emit(sessionId, socketMessage('getAuthQr', STATUS.DONE, request));
-
     return res.status(200).json(request);
 }
+
 
 export async function handleVerification(req: Request, res: Response, io: Server): Promise<Response> {
     const sessionId = req.query.sessionId as string;
@@ -99,7 +130,7 @@ export async function handleVerification(req: Request, res: Response, io: Server
 		const userId = authResponse.from;
 		io.sockets.emit(
 			sessionId,
-			socketMessage('handleVerification', STATUS.DONE, authResponse)
+			socketMessage('handleVerification', STATUS.DONE, { message: `User ${userId} successfully authenticated` })
 		);
 		return res.status(200).json({ message: `User ${userId} successfully authenticated` });
     } catch (error:any) {

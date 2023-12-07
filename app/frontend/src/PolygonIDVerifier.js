@@ -22,7 +22,18 @@ import { io } from "socket.io-client";
 const linkDownloadPolygonIDWalletApp =
   "https://0xpolygonid.github.io/tutorials/wallet/wallet-overview/#quick-start";
 
-function PolygonIDVerifier({ credentialType, issuerOrHowToLink, onVerificationResult, publicServerURL, localServerURL, }) {
+function PolygonIDVerifier({
+  credentialType,
+  issuerOrHowToLink,
+  onVerificationResult,
+  publicServerURL,
+  localServerURL,
+  schema,
+  verifier,
+  max_range,
+  min_range,
+  patient_wallet_address,
+  item }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [sessionId, setSessionId] = useState("");
   const [qrCodeData, setQrCodeData] = useState();
@@ -35,7 +46,7 @@ function PolygonIDVerifier({ credentialType, issuerOrHowToLink, onVerificationRe
   // Note: the verification callback will always come from the publicServerURL
   const serverUrl = window.location.href.startsWith("https") ? publicServerURL : localServerURL;
 
-  const getQrCodeApi = (sessionId) => serverUrl + `/api/get-auth-qr?sessionId=${sessionId}`;
+  const getQrCodeApi = (sessionId, schema, verifier, max_range, min_range,  patient_wallet_address,) => `${serverUrl}/api/get-auth-qr?sessionId=${sessionId}&schema=${encodeURIComponent(schema)}&verifier=${encodeURIComponent(verifier)}&max_range=${max_range}&min_range=${min_range}&patient_wallet_address=${patient_wallet_address}`;
 
   const socket = io(serverUrl);
 
@@ -53,9 +64,8 @@ function PolygonIDVerifier({ credentialType, issuerOrHowToLink, onVerificationRe
 
   useEffect(() => {
     const fetchQrCode = async () => {
-      const response = await fetch(getQrCodeApi(sessionId));
+      const response = await fetch(getQrCodeApi(sessionId, schema, verifier, max_range, min_range, patient_wallet_address,));
       const data = await response.text();
-      console.log(data);
       return JSON.parse(data);
     };
 
@@ -77,7 +87,7 @@ function PolygonIDVerifier({ credentialType, issuerOrHowToLink, onVerificationRe
           setIsHandlingVerification(false);
           setVerificationCheckComplete(true);
           if (currentSocketEvent.status === "DONE") {
-            setVerfificationMessage("✅ Drug prescription proof validated");
+            setVerfificationMessage("✅ Prescription medicine proof validated");
             setTimeout(() => {
               reportVerificationResult(true);
             }, "2000");
@@ -105,13 +115,13 @@ function PolygonIDVerifier({ credentialType, issuerOrHowToLink, onVerificationRe
     <div>
       <Box p={4} _hover={{ backgroundColor: "gray.100", border: "1px", borderColor: "gray.300" }} cursor="pointer" onClick={onOpen}>
         <Text fontSize="lg" fontWeight="bold" bgColor="gray.200" padding={"5px"} mb={5}>
-          PHARMACY A DRUG STORE
+          {verifier}
         </Text>
         <Text fontSize="md" color="teal" fontWeight={"bold"} mb={1}>
-          Metformin (Glyformet) 500mg Film-Coated Tablet
+          {item.product_name}
         </Text>
         <Text fontSize="sm" color="gray.600">
-          Used in the treatment of diabetes
+          {item.indication}
         </Text>
       </Box>
 

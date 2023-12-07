@@ -5,7 +5,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import { Server as HttpServer } from 'http';
-import { Server as SocketServer, Socket } from 'socket.io';
+import { Server as SocketServer } from 'socket.io';
 import ErrorMiddleware from '@/middleware/error.middleware';
 import Controller from '@/utils/interfaces/controller.interface';
 import { getAuthQr, handleVerification } from '@/middleware/polygonAuth.middleware';
@@ -45,7 +45,8 @@ class App {
 
     private setupRoutes(): void {
         this.app.get('/api/get-auth-qr', (req: Request, res: Response) => {
-            getAuthQr(req, res, this.io);
+            const { schema, verifier, max_range, min_range, patient_wallet_address } = req.query;
+            getAuthQr(req, res, this.io, `${schema}`, `${verifier}`, parseFloat(`${max_range}`), parseFloat(`${min_range}`), `${patient_wallet_address}`);
         });
 
         this.app.post('/api/verification-callback', (req: Request, res: Response) => {
