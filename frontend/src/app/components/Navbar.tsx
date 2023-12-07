@@ -33,7 +33,7 @@ export default function Nav() {
                 <NavbarItem isActive={pathname === "/"}>
                     <Link href="/">Home</Link>
                 </NavbarItem>
-                <NavbarItem isActive={pathname === "/price_index"}>
+                <NavbarItem isActive={pathname.startsWith("/price_index")}>
                     <Link href="/price_index" className={`${status === "unauthenticated" && "pointer-events-none text-gray-400"}`}>
                         Price Index
                     </Link>
