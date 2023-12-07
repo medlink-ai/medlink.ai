@@ -93,7 +93,7 @@ export default function PolygonIDVerifier({
     };
 
     return (
-        <div className={style}>
+        <div className={`h-fit ${style}`}>
             <div
                 className="p-6 border-1 border-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-900 dark:hover:bg-opacity-70 hover:transition-background cursor-pointer flex flex-col justify-center items-center rounded-lg gap-2"
                 onClick={onOpen}

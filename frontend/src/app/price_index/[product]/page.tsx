@@ -122,7 +122,7 @@ function Providers({ product, setProvedPrescription }: { product: string; setPro
                 />
             </div>
 
-            <div className={viewMode === "list" ? "flex flex-col gap-2 h-full overflow-y-auto" : "h-full grid grid-cols-2 gap-2 overflow-y-auto"}>
+            <div className={viewMode === "list" ? "flex flex-col gap-2 h-full overflow-y-auto" : "grid grid-cols-2 gap-2 overflow-y-auto"}>
                 {providers.map((provider, index) => (
                     <PolygonIDVerifier
                         key={index}
@@ -130,7 +130,7 @@ function Providers({ product, setProvedPrescription }: { product: string; setPro
                         issuerOrHowToLink={provider.issuerOrHowToLink}
                         credentialType={provider.credentialType}
                         onVerificationResult={setProvedPrescription}
-                        style={index === providers.length - 1 ? "mb-10 h-fit" : "h-fit"}
+                        style={index === providers.length - 1 ? "mb-10" : ""}
                     />
                 ))}
             </div>
