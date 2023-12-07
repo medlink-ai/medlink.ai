@@ -1,0 +1,23 @@
+service: codetodrugs
+
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  memorySize: 512
+  timeout: 20
+  
+  stage: dev
+  region: ap-southeast-1
+
+functions:
+  codes:
+    handler: handler.codes
+    events:
+    - http:
+        path: /codes-to-generics
+        method: get
+    runtime: nodejs18.x
+    memorySize: 512
+    timeout: 20

@@ -1,4 +1,5 @@
-const drug = args[0];
+let code = args[0];
+let budget = args[1];
 let result = [];
 
 async function makeApiRequest(url) {
@@ -10,7 +11,7 @@ async function makeApiRequest(url) {
         "Access-Control-Allow-Origin": "*",
       },
       params: {
-        drug_details: drug,
+        drug_details: code,
       },
     });
 
@@ -35,39 +36,19 @@ try {
 
   result.push(...watsonsData, ...mercuryData);
 
+  const acceptedAmount = parseFloat(budget);
+
+  
   if (result.length > 0) {
-    let groups = {};
+    let offer = [];
+
     for (let i = 0; i < result.length; i++) {
-      let key = `${result[i].code}`;
-      if (!groups[key]) {
-        groups[key] = [];
+      if (result[i].price <= acceptedAmount || result[i].discounted_price <= acceptedAmount) {
+        offer.push([{"p": "123456", "b": result[i].code}]);
       }
-      groups[key].push(result[i]);
     }
 
-    let lowestPrices = [];
-    let highestPrices = [];
-    for (const key in groups) {
-      let group = groups[key];
-      let lowestPrice = Math.min(...group.map(item => item.discounted_price));
-      let highestPrice = Math.max(...group.map(item => item.price));
-
-      lowestPrices.push(lowestPrice);
-      highestPrices.push(highestPrice);
-
-      groups[key] = {
-        lowestPrice: parseFloat(lowestPrice.toFixed(2)),
-        highestPrice: parseFloat(highestPrice.toFixed(2)),
-      };
-    }
-
-    let min = parseFloat(Math.min(...lowestPrices).toFixed(2));
-    let max = parseFloat(Math.max(...highestPrices).toFixed(2));
-    let med = parseFloat(((min + max) / 2).toFixed(2));
-
-    let finalOutput = { code: result[0].code, min, med, max };
-
-    return Functions.encodeString(JSON.stringify(finalOutput));
+    return Functions.encodeString(JSON.stringify(offer));
   }
 } catch (error) {
   console.error("Error processing data:", error);

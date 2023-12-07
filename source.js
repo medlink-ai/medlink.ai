@@ -61,11 +61,12 @@ try {
       };
     }
 
+    const y = drug;
     let min = parseFloat(Math.min(...lowestPrices).toFixed(2));
     let max = parseFloat(Math.max(...highestPrices).toFixed(2));
     let med = parseFloat(((min + max) / 2).toFixed(2));
 
-    let finalOutput = { code: result[0].code, min, med, max };
+    let finalOutput = { drug: y, min, med, max };
 
     return Functions.encodeString(JSON.stringify(finalOutput));
   }

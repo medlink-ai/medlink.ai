@@ -1,0 +1,176 @@
+[
+  {
+    "code": "100000",
+    "product_name": "Losartan 50mg Tablet",
+    "generic_name": "Losartan Potassium",
+    "dosage_strength": "50mg",
+    "dosage_form": "Tablet",
+    "indication": "Used in the treatment of obstructive airway diseases.",
+    "price_index": []
+  },
+  {
+    "code": "100500",
+    "product_name": "Losartan 50mg Film-Coated Tablet",
+    "generic_name": "Losartan Potassium",
+    "dosage_strength": "50mg",
+    "dosage_form": "Film-Coated Tablet",
+    "indication": "Used in the treatment of obstructive airway diseases.",
+    "price_index": []
+  },
+  {
+    "code": "101000",
+    "product_name": "Losartan 100mg Tablet",
+    "generic_name": "Losartan Potassium",
+    "dosage_strength": "100mg",
+    "dosage_form": "Tablet",
+    "indication": "Used in the treatment of obstructive airway diseases.",
+    "price_index": []
+  },
+  {
+    "code": "101500",
+    "product_name": "Losartan 100mg Film-Coated Tablet",
+    "generic_name": "Losartan Potassium",
+    "dosage_strength": "100mg",
+    "dosage_form": "Film-Coated Tablet",
+    "indication": "Used in the treatment of obstructive airway diseases.",
+    "price_index": []
+  },
+  {
+    "code": "200000",
+    "product_name": "Metformin 1g Extended-Release Tablet",
+    "generic_name": "Metformin Hydrochloride",
+    "dosage_strength": "1g",
+    "dosage_form": "Extended-Release Tablet",
+    "indication": "Used in the treatment of diabetes.",
+    "price_index": []
+  },
+  {
+    "code": "200500",
+    "product_name": "Metformin 1g Tablet",
+    "generic_name": "Metformin Hydrochloride",
+    "brand_name": "Glumet",
+    "dosage_strength": "1g",
+    "dosage_form": "Tablet",
+    "indication": "Used in the treatment of diabetes.",
+    "price_index": []
+  },
+  {
+    "code": "201000",
+    "product_name": "Metformin 500mg Extended-Release Tablet",
+    "generic_name": "Metformin Hydrochloride",
+    "dosage_strength": "500mg",
+    "dosage_form": "Extended-Release Tablet",
+    "indication": "Used in the treatment of diabetes.",
+    "price_index": []
+  },
+  {
+    "code": "201500",
+    "product_name": "Metformin 500mg Film-Coated Tablet",
+    "generic_name": "Metformin Hydrochloride",
+    "brand_name": "Glucophage",
+    "dosage_strength": "500mg",
+    "dosage_form": "Film-Coated Tablet",
+    "indication": "Used in the treatment of diabetes.",
+    "price_index": []
+  },
+  {
+    "code": "202000",
+    "product_name": "Metformin 500mg Tablet",
+    "generic_name": "Metformin Hydrochloride",
+    "dosage_strength": "500mg",
+    "dosage_form": "Tablet",
+    "indication": "Used in the treatment of diabetes.",
+    "price_index": []
+  },
+  {
+    "code": "202500",
+    "product_name": "Metformin 750mg Extended-Release Tablet",
+    "generic_name": "Metformin Hydrochloride",
+    "dosage_strength": "750mg",
+    "dosage_form": "Extended-Release Tablet",
+    "indication": "Used in the treatment of diabetes.",
+    "price_index": []
+  },
+  {
+    "code": "203000",
+    "product_name": "Metformin 850mg Film-Coated Tablet",
+    "generic_name": "Metformin Hydrochloride",
+    "brand_name": "Gludin",
+    "dosage_strength": "850mg",
+    "dosage_form": "Film-Coated Tablet",
+    "indication": "Used in the treatment of diabetes.",
+    "price_index": []
+  },
+  {
+    "code": "203500",
+    "product_name": "Metformin 850mg Tablet",
+    "generic_name": "Metformin Hydrochloride",
+    "dosage_strength": "850mg",
+    "dosage_form": "Tablet",
+    "indication": "Used in the treatment of diabetes.",
+    "price_index": []
+  },
+  {
+    "code": "300000",
+    "product_name": "Salbutamol 100mcg/actuation Metered Dose Inhaler",
+    "generic_name": "Salbutamol Sulfate",
+    "dosage_strength": "100mcg/actuation",
+    "dosage_form": "Metered Dose Inhaler",
+    "indication": "Used in the treatment of obstructive airway diseases.",
+    "price_index": []
+  },
+  {
+    "code": "300500",
+    "product_name": "Salbutamol 1mg/1ml Solution for Inhalation",
+    "generic_name": "Salbutamol Sulfate",
+    "dosage_strength": "1mg/1ml",
+    "dosage_form": "Solution for Inhalation",
+    "indication": "Used in the treatment of obstructive airway diseases.",
+    "price_index": []
+  },
+  {
+    "code": "301000",
+    "product_name": "Salbutamol 2.5mg/2.5ml Solution for Inhalation",
+    "generic_name": "Salbutamol",
+    "dosage_strength": "2.5mg/2.5ml",
+    "dosage_form": "Solution for Inhalation",
+    "indication": "Used in the treatment of obstructive airway diseases.",
+    "price_index": []
+  },
+  {
+    "code": "301500",
+    "product_name": "Salbutamol 200mcg Rotacap",
+    "generic_name": "Salbutamol",
+    "dosage_strength": "200mcg",
+    "dosage_form": "Rotacap",
+    "indication": "Used in the treatment of obstructive airway diseases.",
+    "price_index": []
+  },
+  {
+    "code": "302000",
+    "product_name": "Salbutamol 2mg Tablet",
+    "generic_name": "Salbutamol Sulfate",
+    "dosage_strength": "2mg",
+    "dosage_form": "Tablet",
+    "indication": "Used in the treatment of obstructive airway diseases.",
+    "price_index": []
+  },
+  {
+    "code": "302500",
+    "product_name": "Salbutamol 2mg/5ml x 120ml Syrup",
+    "generic_name": "Salbutamol",
+    "dosage_strength": "2mg/5ml x 120ml",
+    "dosage_form": "Syrup",
+    "indication": "Used in the treatment of obstructive airway diseases.",
+    "price_index": []
+  },
+  {
+    "code": "303000",
+    "product_name": "Salbutamol 2mg/5ml x 60ml Syrup",
+    "generic_name": "Salbutamol Sulfate",
+    "dosage_strength": "2mg/5ml x 60ml",
+    "dosage_form": "Syrup",
+    "indication": "Used in the treatment of obstructive airway diseases.",
+    "price_index": []
+  }
+]

@@ -1,0 +1,920 @@
+[
+  {
+    "code": "101501",
+    "product_name": "Kenzar 100mg Film-Coated Tablet",
+    "prescription_drug": true,
+    "indication": "Used in treatment of cardiovascular disease",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "101501",
+    "max_range": "101999"
+  },
+  {
+    "code": "101502",
+    "product_name": "Bepsar-100 100mg Film-Coated Tablet",
+    "prescription_drug": true,
+    "indication": "Used in treatment of cardiovascular disease",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "101501",
+    "max_range": "101999"
+  },
+  {
+    "code": "101503",
+    "product_name": "Kardiostan 100mg Film-Coated Tablet",
+    "prescription_drug": true,
+    "indication": "Used in treatment of cardiovascular disease",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "101501",
+    "max_range": "101999"
+  },
+  {
+    "code": "101504",
+    "product_name": "Neosartan 100mg Film-Coated Tablet",
+    "prescription_drug": true,
+    "indication": "Used in treatment of cardiovascular disease",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "101501",
+    "max_range": "101999"
+  },
+  {
+    "code": "101505",
+    "product_name": "Wilopres 100mg Film-Coated Tablet",
+    "prescription_drug": true,
+    "indication": "Used in treatment of cardiovascular disease",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "101501",
+    "max_range": "101999"
+  },
+  {
+    "code": "100501",
+    "product_name": "Arbloc 50mg Film-Coated Tablet",
+    "prescription_drug": true,
+    "indication": "Used in treatment of cardiovascular disease",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "100501",
+    "max_range": "100999"
+  },
+  {
+    "code": "100502",
+    "product_name": "Neosartan 50mg Film-Coated Tablet",
+    "prescription_drug": true,
+    "indication": "Used in treatment of cardiovascular disease",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "100501",
+    "max_range": "100999"
+  },
+  {
+    "code": "100503",
+    "product_name": "Zarnat 50mg Film-Coated Tablet",
+    "prescription_drug": true,
+    "indication": "Used in treatment of cardiovascular disease",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "100501",
+    "max_range": "100999"
+  },
+  {
+    "code": "100504",
+    "product_name": "Vamzar 50mg Film-Coated Tablet",
+    "prescription_drug": true,
+    "indication": "Used in treatment of cardiovascular disease",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "100501",
+    "max_range": "100999"
+  },
+  {
+    "code": "100505",
+    "product_name": "Vivasartan 50mg Film-Coated Tablet",
+    "prescription_drug": true,
+    "indication": "Used in treatment of cardiovascular disease",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "100501",
+    "max_range": "100999"
+  },
+  {
+    "code": "100001",
+    "product_name": "Kenzar 50mg Tablet",
+    "prescription_drug": true,
+    "indication": "Used in treatment of cardiovascular disease",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "100001",
+    "max_range": "100499"
+  },
+  {
+    "code": "100002",
+    "product_name": "Lifezar 50mg Tablet",
+    "prescription_drug": true,
+    "indication": "Used in treatment of cardiovascular disease",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "100001",
+    "max_range": "100499"
+  },
+  {
+    "code": "100003",
+    "product_name": "Cozaar 50mg Tablet",
+    "prescription_drug": true,
+    "indication": "Used in treatment of cardiovascular disease",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "100001",
+    "max_range": "100499"
+  },
+  {
+    "code": "101001",
+    "product_name": "Lifezar 100mg Tablet",
+    "prescription_drug": true,
+    "indication": "Used in treatment of cardiovascular disease",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "101001",
+    "max_range": "101499"
+  },
+  {
+    "code": "101002",
+    "product_name": "Cozaar 100mg Tablet",
+    "prescription_drug": true,
+    "indication": "Used in treatment of cardiovascular disease",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "101001",
+    "max_range": "101499"
+  },
+  {
+    "code": "200001",
+    "product_name": "Glucophage XR 1g Extended-Release Tablet",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of diabetes",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "200001",
+    "max_range": "200499"
+  },
+  {
+    "code": "200002",
+    "product_name": "Fornidd XR 1g Extended-Release Tablet",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of diabetes",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "200001",
+    "max_range": "200499"
+  },
+  {
+    "code": "200003",
+    "product_name": "Proglutrol 1000 1g Extended-Release Tablet",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of diabetes",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "200001",
+    "max_range": "200499"
+  },
+  {
+    "code": "202501",
+    "product_name": "Glucophage XR 750mg Extended-Release Tablet",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of diabetes",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "202501",
+    "max_range": "202999"
+  },
+  {
+    "code": "201501",
+    "product_name": "Glucophage 500mg Film-Coated Tablet",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of diabetes",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "201501",
+    "max_range": "201999"
+  },
+  {
+    "code": "201502",
+    "product_name": "Fornidd 500mg Film-Coated Tablet",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of diabetes",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "201501",
+    "max_range": "201999"
+  },
+  {
+    "code": "201503",
+    "product_name": "I-Max 500mg Film-Coated Tablet",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of diabetes",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "201501",
+    "max_range": "201999"
+  },
+  {
+    "code": "203001",
+    "product_name": "Gludin 850mg Film-Coated Tablet",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of diabetes",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "203001",
+    "max_range": "203499"
+  },
+  {
+    "code": "200501",
+    "product_name": "Glumet 1g Tablet",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of diabetes",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "200501",
+    "max_range": "200999"
+  },
+  {
+    "code": "202001",
+    "product_name": "Glumet 500mg Tablet",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of diabetes",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "202001",
+    "max_range": "202499"
+  },
+  {
+    "code": "203501",
+    "product_name": "Humamet 850mg Tablet",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of diabetes",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "203501",
+    "max_range": "203999"
+  },
+  {
+    "code": "300001",
+    "product_name": "Salbusol 100mcg/actuation Metered Dose Inhaler",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of obstructive airway diseases.",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "300001",
+    "max_range": "300499"
+  },
+  {
+    "code": "300002",
+    "product_name": "Derihaler-100 100mcg/actuation Metered Dose Inhaler",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of obstructive airway diseases.",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "300001",
+    "max_range": "300499"
+  },
+  {
+    "code": "300003",
+    "product_name": "Asmalin 100mcg/actuation Metered Dose Inhaler",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of obstructive airway diseases.",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "300001",
+    "max_range": "300499"
+  },
+  {
+    "code": "300004",
+    "product_name": "Ventolin 100mcg/actuation Metered Dose Inhaler",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of obstructive airway diseases.",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "300001",
+    "max_range": "300499"
+  },
+  {
+    "code": "300005",
+    "product_name": "Asmacaire 100mcg/actuation Metered Dose Inhaler",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of obstructive airway diseases.",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "300001",
+    "max_range": "300499"
+  },
+  {
+    "code": "300501",
+    "product_name": "Ventolin 1mg/1ml Solution for Inhalation",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of obstructive airway diseases.",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "300501",
+    "max_range": "300999"
+  },
+  {
+    "code": "300502",
+    "product_name": "Asmacaire 1mg/1ml Solution for Inhalation",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of obstructive airway diseases.",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "300501",
+    "max_range": "300999"
+  },
+  {
+    "code": "300505",
+    "product_name": "Asmalin 1mg/1ml Solution for Inhalation",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of obstructive airway diseases.",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "300501",
+    "max_range": "300999"
+  },
+  {
+    "code": "300506",
+    "product_name": "Hivent EM 1mg/mL (0.1% w/v) Solution for Nebulization",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of obstructive airway diseases.",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "300501",
+    "max_range": "300999"
+  },
+  {
+    "code": "303004",
+    "product_name": "Asmacaire 2mg/5ml x 60ml Syrup",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of obstructive airway diseases.",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "303001",
+    "max_range": "303499"
+  },
+  {
+    "code": "303001",
+    "product_name": "Asmalin 2mg/5ml x 60ml Syrup",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of obstructive airway diseases.",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "303001",
+    "max_range": "303499"
+  },
+  {
+    "code": "303005",
+    "product_name": "Efamed 2mg/5ml x 60ml Syrup",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of obstructive airway diseases.",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1
+  },
+  {
+    "code": "303002",
+    "product_name": "Ventar 2mg/5ml x 60ml Syrup",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of obstructive airway diseases.",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "303001",
+    "max_range": "303499"
+  },
+  {
+    "code": "302501",
+    "product_name": "Prox S 2mg/5ml x 120ml Syrup",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of obstructive airway diseases.",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "302501",
+    "max_range": "302999"
+  },
+  {
+    "code": "302001",
+    "product_name": "Ventolin 2mg Tablet",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of obstructive airway diseases.",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "302001",
+    "max_range": "302499"
+  },
+  {
+    "code": "302002",
+    "product_name": "Ventar 2mg Tablet",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of obstructive airway diseases.",
+    "provider": "Mercury Drug Store",
+    "provider_code": 1,
+    "min_range": "302001",
+    "max_range": "302499"
+  },
+  {
+    "code": "201001",
+    "product_name": "Normax 500mg Extended-Release Tablet",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of diabetes",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "201001",
+    "max_range": "201499"
+  },
+  {
+    "code": "201002",
+    "product_name": "Metta SR 500mg Extended-Release Tablet",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of diabetes",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "201001",
+    "max_range": "201499"
+  },
+  {
+    "code": "201003",
+    "product_name": "Glumet XR 500mg Extended-Release Tablet",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of diabetes",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "201001",
+    "max_range": "201499"
+  },
+  {
+    "code": "201004",
+    "product_name": "Glucophage 500mg Extended-Release Tablet",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of diabetes",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "201001",
+    "max_range": "201499"
+  },
+  {
+    "code": "202502",
+    "product_name": "Metfor 750mg Extended-Release Tablet",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of diabetes",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "202501",
+    "max_range": "202999"
+  },
+  {
+    "code": "202501",
+    "product_name": "Glucophage XR 750mg Extended-Release Tablet",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of diabetes",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "202501",
+    "max_range": "202999"
+  },
+  {
+    "code": "200004",
+    "product_name": "Glucophage 1g Extended-Release Tablet",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of diabetes",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "200001",
+    "max_range": "200499"
+  },
+  {
+    "code": "201504",
+    "product_name": "Glyformet 500mg Film-Coated Tablet",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of diabetes",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "201501",
+    "max_range": "201999"
+  },
+  {
+    "code": "201505",
+    "product_name": "Neomet 500mg Film-Coated Tablet",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of diabetes",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "201501",
+    "max_range": "201999"
+  },
+  {
+    "code": "201506",
+    "product_name": "Gludin 500mg Film-Coated Tablet",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of diabetes",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "201501",
+    "max_range": "201999"
+  },
+  {
+    "code": "201503",
+    "product_name": "I-Max 500mg Film-Coated Tablet",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of diabetes",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "201501",
+    "max_range": "201999"
+  },
+  {
+    "code": "201507",
+    "product_name": "Watsons 500mg Film-Coated Tablet",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of diabetes",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "201501",
+    "max_range": "201999"
+  },
+  {
+    "code": "201501",
+    "product_name": "Glucophage 500mg Film-Coated Tablet",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of diabetes",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "201501",
+    "max_range": "201999"
+  },
+  {
+    "code": "201508",
+    "product_name": "Humamet 500mg Film-Coated Tablet",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of diabetes",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "201501",
+    "max_range": "201999"
+  },
+  {
+    "code": "203001",
+    "product_name": "Gludin 850mg Film-Coated Tablet",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of diabetes",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "203001",
+    "max_range": "203499"
+  },
+  {
+    "code": "202001",
+    "product_name": "Glumet 500mg Tablet",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of diabetes",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "202001",
+    "max_range": "202499"
+  },
+  {
+    "code": "202002",
+    "product_name": "RiteMED 500mg Tablet",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of diabetes",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "202001",
+    "max_range": "202499"
+  },
+  {
+    "code": "203501",
+    "product_name": "Glumet 850mg Tablet",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of diabetes",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "203501",
+    "max_range": "203999"
+  },
+  {
+    "code": "203502",
+    "product_name": "RiteMED 850mg Tablet",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of diabetes",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "203501",
+    "max_range": "203999"
+  },
+  {
+    "code": "203501",
+    "product_name": "Humamet 850mg Tablet",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of diabetes",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "203501",
+    "max_range": "203999"
+  },
+  {
+    "code": "100506",
+    "product_name": "Watsons (Losartan) 50mg Film-Coated Tablet",
+    "prescription_drug": true,
+    "indication": "Used in treatment of cardiovascular disease",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "100501",
+    "max_range": "100999"
+  },
+  {
+    "code": "100507",
+    "product_name": "RiteMED 50mg Film-Coated Tablet",
+    "prescription_drug": true,
+    "indication": "Used in treatment of cardiovascular disease",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "100501",
+    "max_range": "100999"
+  },
+  {
+    "code": "100508",
+    "product_name": "Kenzar 50mg Film-Coated Tablet",
+    "prescription_drug": true,
+    "indication": "Used in treatment of cardiovascular disease",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "100501",
+    "max_range": "100999"
+  },
+  {
+    "code": "100503",
+    "product_name": "Zarnat 50mg Film-Coated Tablet",
+    "prescription_drug": true,
+    "indication": "Used in treatment of cardiovascular disease",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "100501",
+    "max_range": "100999"
+  },
+  {
+    "code": "100505",
+    "product_name": "Vivasartan 50mg Film-Coated Tablet",
+    "prescription_drug": true,
+    "indication": "Used in treatment of cardiovascular disease",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "100501",
+    "max_range": "100999"
+  },
+  {
+    "code": "100509",
+    "product_name": "Lanzaar 50 50mg Film-Coated Tablet",
+    "prescription_drug": true,
+    "indication": "Used in treatment of cardiovascular disease",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "100501",
+    "max_range": "100999"
+  },
+  {
+    "code": "101506",
+    "product_name": "Watsons (Losartan) 100mg Film-Coated Tablet",
+    "prescription_drug": true,
+    "indication": "Used in treatment of cardiovascular disease",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "101501",
+    "max_range": "101999"
+  },
+  {
+    "code": "101501",
+    "product_name": "Kenzar 100mg Film-Coated Tablet",
+    "prescription_drug": true,
+    "indication": "Used in treatment of cardiovascular disease",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "101501",
+    "max_range": "101999"
+  },
+  {
+    "code": "101508",
+    "product_name": "Vivasartan 100mg Film-Coated Tablet",
+    "prescription_drug": true,
+    "indication": "Used in treatment of cardiovascular disease",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "101501",
+    "max_range": "101999"
+  },
+  {
+    "code": "101509",
+    "product_name": "Arbloc 100mg Film-Coated Tablet",
+    "prescription_drug": true,
+    "indication": "Used in treatment of cardiovascular disease",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "101501",
+    "max_range": "101999"
+  },
+  {
+    "code": "101510",
+    "product_name": "Getzar 100mg Film-Coated Tablet",
+    "prescription_drug": true,
+    "indication": "Used in treatment of cardiovascular disease",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "101501",
+    "max_range": "101999"
+  },
+  {
+    "code": "101511",
+    "product_name": "Zarnat 100mg Film-Coated Tablet",
+    "prescription_drug": true,
+    "indication": "Used in treatment of cardiovascular disease",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "101501",
+    "max_range": "101999"
+  },
+  {
+    "code": "101003",
+    "product_name": "RiteMED 100mg Tablet",
+    "prescription_drug": true,
+    "indication": "Used in treatment of cardiovascular disease",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "101001",
+    "max_range": "101499"
+  },
+  {
+    "code": "101002",
+    "product_name": "Cozaar 100mg Tablet",
+    "prescription_drug": true,
+    "indication": "Used in treatment of cardiovascular disease",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "101001",
+    "max_range": "101499"
+  },
+  {
+    "code": "101001",
+    "product_name": "Lifezar 100mg Tablet",
+    "prescription_drug": true,
+    "indication": "Used in treatment of cardiovascular disease",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "101001",
+    "max_range": "101499"
+  },
+  {
+    "code": "100002",
+    "product_name": "Lifezar 50mg Tablet",
+    "prescription_drug": true,
+    "indication": "Used in treatment of cardiovascular disease",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "100001",
+    "max_range": "100499"
+  },
+  {
+    "code": "100004",
+    "product_name": "Getzar 50mg Tablet",
+    "prescription_drug": true,
+    "indication": "Used in treatment of cardiovascular disease",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "100001",
+    "max_range": "100499"
+  },
+  {
+    "code": "100003",
+    "product_name": "Cozaar 50mg Tablet",
+    "prescription_drug": true,
+    "indication": "Used in treatment of cardiovascular disease",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "100001",
+    "max_range": "100499"
+  },
+  {
+    "code": "300004",
+    "product_name": "Ventolin 100mcg/actuation Metered Dose Inhaler",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of obstructive airway diseases.",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "300001",
+    "max_range": "300499"
+  },
+  {
+    "code": "300005",
+    "product_name": "Asmacaire 100mcg/actuation Metered Dose Inhaler",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of obstructive airway diseases.",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "300001",
+    "max_range": "300499"
+  },
+  {
+    "code": "300003",
+    "product_name": "Asmalin 100mcg/actuation Metered Dose Inhaler",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of obstructive airway diseases.",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "300001",
+    "max_range": "300499"
+  },
+  {
+    "code": "301501",
+    "product_name": "Ventolin 200 mcg Rotacap",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of obstructive airway diseases.",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "301501",
+    "max_range": "301999"
+  },
+  {
+    "code": "300503",
+    "product_name": "Ventar 1mg/1ml x 30 ml Nebulizing Solution For Inhalation",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of obstructive airway diseases.",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "300501",
+    "max_range": "300999"
+  },
+  {
+    "code": "301001",
+    "product_name": "Ventolin 2.5mg/2.5ml 1 Nebule Solution for Inhalation",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of obstructive airway diseases.",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "301001",
+    "max_range": "301499"
+  },
+  {
+    "code": "300502",
+    "product_name": "Asmacaire 1mg/1ml Solution for Inhalation",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of obstructive airway diseases.",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "300501",
+    "max_range": "300999"
+  },
+  {
+    "code": "300506",
+    "product_name": "Hivent EM 1mg/mL (0.1% w/v) Solution for Nebulization",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of obstructive airway diseases.",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "300501",
+    "max_range": "300999"
+  },
+  {
+    "code": "303001",
+    "product_name": "Asmalin 2mg/5ml x 60ml Syrup",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of obstructive airway diseases.",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "303001",
+    "max_range": "303499"
+  },
+  {
+    "code": "303001",
+    "product_name": "Asfrenon 2mg/5ml x 60ml Syrup",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of obstructive airway diseases.",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "303001",
+    "max_range": "303499"
+  },
+  {
+    "code": "302501",
+    "product_name": "Prox-s 2mg/5ml x 120ml Syrup",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of obstructive airway diseases.",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "302501",
+    "max_range": "302999"
+  },
+  {
+    "code": "120019",
+    "product_name": "RiteMED 2mg Tablet",
+    "prescription_drug": true,
+    "indication": "Used in the treatment of obstructive airway diseases.",
+    "provider": "Watsons Pharmacy",
+    "provider_code": 2,
+    "min_range": "302001",
+    "max_range": "302499"
+  }
+]
