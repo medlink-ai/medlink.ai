@@ -20,7 +20,6 @@ module.exports.medList = async (event) => {
     headers: headers,
     body: JSON.stringify(results), // X is the response that you want to return
   };
-  console.log(response);
 
   return response;
 };
