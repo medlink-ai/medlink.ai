@@ -6,22 +6,25 @@ import QRCode from "react-qr-code";
 import Link from "next/link";
 
 import { io } from "socket.io-client";
+import { ProviderDetail } from "@/constants/types";
 
 export default function PolygonIDVerifier({
-    providerInformation,
     credentialType,
-    issuerOrHowToLink,
     onVerificationResult,
+    verifier,
+    max_range,
+    min_range,
+    patient_wallet_address,
+    item,
     style,
 }: {
-    providerInformation: {
-        drugName: string;
-        storeName: string;
-        description: string;
-    };
     credentialType: string;
-    issuerOrHowToLink: string;
     onVerificationResult: Dispatch<SetStateAction<boolean>>;
+    verifier: string;
+    max_range: string;
+    min_range: string;
+    patient_wallet_address: string;
+    item: ProviderDetail;
     style: string;
 }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -36,7 +39,10 @@ export default function PolygonIDVerifier({
         ? process.env.NEXT_PUBLIC_VERIFICATION_SERVER_PUBLIC_URL!
         : process.env.NEXT_PUBLIC_VERIFICATION_SERVER_LOCAL_HOST_URL!;
 
-    const getQrCodeApi = (sessionId: string) => serverUrl + `/api/get-auth-qr?sessionId=${sessionId}`;
+    const getQrCodeApi = (sessionId: string, verifier: string, max_range: string, min_range: string, patient_wallet_address: string) =>
+        `${serverUrl}/api/get-auth-qr?sessionId=${sessionId}&schema=${encodeURIComponent(
+            process.env.NEXT_PUBLIC_POLYGON_ID_SCHEME!
+        )}&verifier=${encodeURIComponent(verifier)}&max_range=${max_range}&min_range=${min_range}&patient_wallet_address=${patient_wallet_address}`;
 
     const socket = io(serverUrl);
 
@@ -52,7 +58,7 @@ export default function PolygonIDVerifier({
 
     useEffect(() => {
         const fetchQrCode = async () => {
-            const response = await fetch(getQrCodeApi(sessionId));
+            const response = await fetch(getQrCodeApi(sessionId, verifier, max_range, min_range, patient_wallet_address));
             const data = await response.text();
             return JSON.parse(data);
         };
@@ -98,9 +104,9 @@ export default function PolygonIDVerifier({
                 className="p-6 border-1 border-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-900 dark:hover:bg-opacity-70 hover:transition-background cursor-pointer flex flex-col justify-center items-center rounded-lg gap-2"
                 onClick={onOpen}
             >
-                <h1 className="text-lg font-bold bg-zinc-200 dark:bg-zinc-900 py-1 px-2 rounded-lg">{providerInformation.storeName.toUpperCase()}</h1>
-                <h2 className="text-md font-semibold text-primary">{providerInformation.drugName}</h2>
-                <h3 className="text-md">{providerInformation.description}</h3>
+                <h1 className="text-lg font-bold bg-zinc-200 dark:bg-zinc-900 py-1 px-2 rounded-lg">{verifier}</h1>
+                <h2 className="text-md font-semibold text-primary">{item.product_name}</h2>
+                <h3 className="text-md">{item.indication}</h3>
             </div>
 
             {qrCodeData && (
@@ -155,12 +161,12 @@ export default function PolygonIDVerifier({
                             </Button>
 
                             <Button>
-                                <Link href={issuerOrHowToLink} target="_blank" className="flex gap-2 justify-center items-center">
+                                <div className="flex gap-2 justify-center items-center">
                                     <h1>Get a {credentialType} VC</h1>
                                     <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512" className="dark:fill-white">
                                         <path d="M352 0c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9L370.7 96 201.4 265.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L416 141.3l41.4 41.4c9.2 9.2 22.9 11.9 34.9 6.9s19.8-16.6 19.8-29.6V32c0-17.7-14.3-32-32-32H352zM80 32C35.8 32 0 67.8 0 112V432c0 44.2 35.8 80 80 80H400c44.2 0 80-35.8 80-80V320c0-17.7-14.3-32-32-32s-32 14.3-32 32V432c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16H192c17.7 0 32-14.3 32-32s-14.3-32-32-32H80z" />
                                     </svg>
-                                </Link>
+                                </div>
                             </Button>
                         </ModalFooter>
                     </ModalContent>
