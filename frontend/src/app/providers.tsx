@@ -7,10 +7,10 @@ import { mainnet, polygon, optimism, arbitrum } from "wagmi/chains";
 import { SessionProvider } from "next-auth/react";
 import { publicProvider } from "wagmi/providers/public";
 import { ToastContainer } from "react-toastify";
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, createContext, useEffect, useState } from "react";
 
 import "react-toastify/dist/ReactToastify.css";
-import { createContext } from "vm";
+import { Consumer } from "@/constants/types";
 
 export const { chains, publicClient } = configureChains([mainnet, polygon, optimism, arbitrum], [publicProvider()]);
 
@@ -50,13 +50,25 @@ function ToastProvider() {
     );
 }
 
+export const ChainlinkFunctionContext = createContext<{
+    consumer: Consumer | undefined;
+    setConsumer: Dispatch<SetStateAction<Consumer | undefined>>;
+}>({
+    consumer: undefined,
+    setConsumer: () => {},
+});
+
 export function Providers({ children, session }: { children: React.ReactNode; session: any }) {
+    const [consumer, setConsumer] = useState(localStorage.getItem("consumer") ? JSON.parse(localStorage.getItem("consumer")!) : undefined);
+
     return (
         <NextUIProvider>
             <NextThemesProvider attribute="class" defaultTheme="dark">
                 <WagmiConfig config={config}>
                     <ToastProvider />
-                    <SessionProvider session={session}>{children}</SessionProvider>
+                    <SessionProvider session={session}>
+                        <ChainlinkFunctionContext.Provider value={{ consumer, setConsumer }}>{children}</ChainlinkFunctionContext.Provider>
+                    </SessionProvider>
                 </WagmiConfig>
             </NextThemesProvider>
         </NextUIProvider>
