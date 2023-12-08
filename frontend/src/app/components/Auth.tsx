@@ -72,6 +72,7 @@ export default function Auth() {
                 await axios.post<Consumer>("/consumer/api").then((consumer) => {
                     const { consumerAddress, subscriptionId } = consumer.data;
                     localStorage.setItem("consumer", JSON.stringify({ consumerAddress, subscriptionId }));
+                    setIsConsumerDetected(true);
                 });
             };
 
