@@ -1,9 +1,8 @@
 "use client";
 
 import PolygonIDVerifier from "@/app/components/PolygonIDVerifier";
-import { MockDrugDetails } from "@/constants";
 
-import { DrugDetails, ProviderDetail } from "@/constants/types";
+import { DrugDetails, ErrorData, ProviderDetail } from "@/constants/types";
 import { Input, Breadcrumbs, BreadcrumbItem, Button, Spinner, Switch } from "@nextui-org/react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -30,7 +29,7 @@ function Budget({
         const getDrugDetails = async () => {
             try {
                 setIsLoading(true);
-                const res = await axios.post<DrugDetails>(
+                const res = await axios.post<DrugDetails | ErrorData>(
                     `/price_index/api`,
                     { product: product },
                     {
@@ -42,11 +41,12 @@ function Budget({
                 );
                 const data = res.data;
 
-                if (res.status === 500) {
+                if ((data as ErrorData).status === 500) {
+                    console.log("Error fetching drug details:", data);
                     toast.error("Something went wrong, please try again later.");
                 }
 
-                setDrugDetail(data);
+                setDrugDetail(data as DrugDetails);
             } catch (error) {
                 console.error("Error fetching drug details:", error);
                 toast.error("Something went wrong, please try again later.");
@@ -231,18 +231,25 @@ function Providers({
     );
 }
 
-function Breadcrumb({ product, confirmation = false }: { product: string; confirmation: boolean }) {
+function Breadcrumb({ product, confirmation = false, onNavigateBack }: { product: string; confirmation: boolean; onNavigateBack: () => void }) {
     const router = useRouter();
     return (
         <Breadcrumbs>
             <BreadcrumbItem
                 onPress={() => {
+                    onNavigateBack();
                     router.push("/price_index");
                 }}
             >
                 Price Index
             </BreadcrumbItem>
-            <BreadcrumbItem>{product}</BreadcrumbItem>
+            <BreadcrumbItem
+                onPress={() => {
+                    onNavigateBack();
+                }}
+            >
+                {product}
+            </BreadcrumbItem>
             {confirmation && <BreadcrumbItem>Confirm Order</BreadcrumbItem>}
         </Breadcrumbs>
     );
@@ -351,7 +358,14 @@ export default function Page({ params }: { params: { product: string } }) {
 
     return (
         <div className="flex flex-col w-full h-[calc(100vh-64px)] py-6 px-6">
-            <Breadcrumb product={decodedProducts} confirmation={provedPrescription} />
+            <Breadcrumb
+                product={decodedProducts}
+                confirmation={provedPrescription}
+                onNavigateBack={() => {
+                    setProvedPrescription(false);
+                    setBudget(undefined);
+                }}
+            />
 
             <div className="flex w-full h-full gap-6 py-4">
                 {!provedPrescription ? (

@@ -20,6 +20,13 @@ export default function Home() {
                     </div>
                 </div>
             )}
+            {isConnected && !localStorage.getItem("consumer") && (
+                <div>
+                    <div className="absolute top-[64px] left-0 w-full h-[calc(100vh-64px)] bg-background bg-opacity-70 backdrop-blur-md z-50">
+                        <div className="flex h-full justify-center items-center">Please wait for consumer creation before enjoying Medlink.AI</div>
+                    </div>
+                </div>
+            )}
             <div className="flex w-full h-full p-2">
                 <div className={`${isDealExpanded ? "w-[80%]" : "w-full"} flex justify-items-center items-center transition-all`}>
                     <Chat />
