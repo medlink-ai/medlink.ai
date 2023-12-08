@@ -1,12 +1,27 @@
 import { Role } from "@/constants";
 import { ScrollShadow, Textarea, Button, Switch } from "@nextui-org/react";
 import dayjs from "dayjs";
-import { useTheme } from "next-themes";
 import { useState, useRef, useEffect } from "react";
 import { MetaMaskAvatar } from "react-metamask-avatar";
 import { useAccount } from "wagmi";
 import { Message, getSavedMessages, saveMessage, clearLocalStorageKey } from "../utils/utils";
 import Image from "next/image";
+
+function VerifyDoctor() {
+    return (
+        <div className="flex flex-col h-full w-full justify-center items-center p-8 gap-6">
+            <h1 className="font-bold text-xl w-[80%] text-center">
+                To verify your credential as licensed medical practitioner, please use your Polygon ID Wallet app to scan this QR code.
+            </h1>
+            <div className="w-56 h-56 bg-black"></div>
+            <h2 className="font-semi-bold text-lg text-center">Type: LicenseValidation</h2>
+            <h3 className="text-center w-[80%]">
+                Please note: This procedure will utilize decentralized oracle networks to authenticate the validity of a medical professional’s
+                license in a specific country.
+            </h3>
+        </div>
+    );
+}
 
 function ChatBubble({ msg, status }: { msg: Message; status?: "loading" | "error" }) {
     const { address } = useAccount();
@@ -49,6 +64,8 @@ export function Chat() {
     const workerRef = useRef<Worker | null>(null);
 
     const [mode, setMode] = useState<Role>(Role.PATIENT);
+
+    const [isVerified, setIsVerified] = useState(false);
 
     const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -121,36 +138,42 @@ export function Chat() {
     };
 
     return (
-        <div className="flex flex-col justify-between w-full">
-            <ScrollShadow className={`2xl:h-[82vh] h-[74vh] px-4  overflow-y-auto`}>
-                {messages.map((msg, index) => (
-                    <ChatBubble key={index} msg={msg} />
-                ))}
-                {(isLoading || error) && (
-                    <ChatBubble
-                        msg={{
-                            sender: Role.BOT,
-                            text: isLoading ? "Thinking..." : error!,
-                            timestamp: dayjs(),
+        <div className="flex flex-col justify-between w-full h-[calc(100vh-64px)]">
+            {(isVerified && mode === Role.DOCTOR) || mode === Role.PATIENT ? (
+                <ScrollShadow className={`2xl:h-[82vh] h-[74vh] px-4 overflow-y-auto`}>
+                    {messages.map((msg, index) => (
+                        <ChatBubble key={index} msg={msg} />
+                    ))}
+                    {(isLoading || error) && (
+                        <ChatBubble
+                            msg={{
+                                sender: Role.BOT,
+                                text: isLoading ? "Thinking..." : error!,
+                                timestamp: dayjs(),
+                            }}
+                            status={isLoading ? "loading" : "error"}
+                        />
+                    )}
+                </ScrollShadow>
+            ) : (
+                <VerifyDoctor />
+            )}
+
+            <div className="w-full flex flex-col gap-2 px-4 py-2">
+                {((isVerified && mode === Role.DOCTOR) || mode === Role.PATIENT) && (
+                    <Textarea
+                        disabled={isLoading}
+                        ref={inputRef}
+                        value={question}
+                        onChange={(e) => setQuestion(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter" && !e.shiftKey) {
+                                e.preventDefault();
+                                handleSubmit(e);
+                            }
                         }}
-                        status={isLoading ? "loading" : "error"}
                     />
                 )}
-            </ScrollShadow>
-
-            <div className="w-full flex flex-col gap-2 px-4">
-                <Textarea
-                    disabled={isLoading}
-                    ref={inputRef}
-                    value={question}
-                    onChange={(e) => setQuestion(e.target.value)}
-                    onKeyDown={(e) => {
-                        if (e.key === "Enter" && !e.shiftKey) {
-                            e.preventDefault();
-                            handleSubmit(e);
-                        }
-                    }}
-                />
 
                 <div className="flex w-full justify-end gap-4">
                     <Switch
@@ -172,13 +195,17 @@ export function Chat() {
                         {mode}
                     </Switch>
 
-                    <Button onClick={handleClear} className="w-fit" disabled={isLoading}>
-                        Clear
-                    </Button>
+                    {((isVerified && mode === Role.DOCTOR) || mode === Role.PATIENT) && (
+                        <>
+                            <Button onClick={handleClear} className="w-fit" disabled={isLoading}>
+                                Clear
+                            </Button>
 
-                    <Button onClick={handleSubmit} className="w-fit bg-primary text-white" disabled={isLoading}>
-                        Send
-                    </Button>
+                            <Button onClick={handleSubmit} className="w-fit bg-primary text-white" disabled={isLoading}>
+                                Send
+                            </Button>
+                        </>
+                    )}
                 </div>
             </div>
         </div>
