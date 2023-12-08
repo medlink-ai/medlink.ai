@@ -1,6 +1,5 @@
 import { ProviderDetail } from "@/constants/types";
 import axios from "axios";
-import { Provider } from "react";
 
 export async function POST(request: Request) {
     try {
