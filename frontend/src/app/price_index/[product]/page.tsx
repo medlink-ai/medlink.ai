@@ -42,7 +42,7 @@ function Budget({
                 );
                 const data = res.data;
 
-                if (data.code === "404") {
+                if (res.status === 500) {
                     toast.error("Something went wrong, please try again later.");
                 }
 
