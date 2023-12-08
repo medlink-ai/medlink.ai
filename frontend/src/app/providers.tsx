@@ -7,10 +7,10 @@ import { mainnet, polygon, optimism, arbitrum } from "wagmi/chains";
 import { SessionProvider } from "next-auth/react";
 import { publicProvider } from "wagmi/providers/public";
 import { ToastContainer } from "react-toastify";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import "react-toastify/dist/ReactToastify.css";
-import css from "styled-jsx/css";
+import { createContext } from "vm";
 
 export const { chains, publicClient } = configureChains([mainnet, polygon, optimism, arbitrum], [publicProvider()]);
 

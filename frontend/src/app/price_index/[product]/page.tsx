@@ -211,19 +211,20 @@ function Providers({
                     <Spinner className="mt-4" />
                 ) : (
                     <>
-                        {providers.map((provider, index) => (
-                            <PolygonIDVerifier
-                                key={index}
-                                credentialType={provider.prescription_drug ? "PrescriptionMedicine" : "NonPrescriptionMedicine"}
-                                onVerificationResult={setProvedPrescription}
-                                verifier={provider.provider}
-                                max_range={provider.max_range}
-                                min_range={provider.min_range}
-                                patient_wallet_address={address!}
-                                item={provider}
-                                style={index === providers.length - 1 ? "mb-10" : ""}
-                            />
-                        ))}
+                        {providers.length > 0 &&
+                            providers.map((provider, index) => (
+                                <PolygonIDVerifier
+                                    key={index}
+                                    credentialType={provider.prescription_drug ? "PrescriptionMedicine" : "NonPrescriptionMedicine"}
+                                    onVerificationResult={setProvedPrescription}
+                                    verifier={provider.provider}
+                                    max_range={provider.max_range}
+                                    min_range={provider.min_range}
+                                    patient_wallet_address={address!}
+                                    item={provider}
+                                    style={index === providers.length - 1 ? "mb-10" : ""}
+                                />
+                            ))}
                     </>
                 )}
             </div>

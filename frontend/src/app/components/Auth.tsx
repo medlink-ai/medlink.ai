@@ -5,14 +5,14 @@ import { getCsrfToken, signIn, useSession, signOut } from "next-auth/react";
 import { SiweMessage } from "siwe";
 import { useAccount, useConnect, useDisconnect, useNetwork, useSignMessage } from "wagmi";
 import { InjectedConnector } from "wagmi/connectors/injected";
-import { useCallback, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useCallback, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 import { redirect, useRouter, useSearchParams } from "next/navigation";
 import { MetaMaskAvatar } from "react-metamask-avatar";
-import { on } from "events";
 import axios from "axios";
 import { Consumer } from "@/constants/types";
+import { ChainlinkFunctionContext } from "../page";
 
 export async function getServerSideProps(context: any) {
     return {
@@ -41,6 +41,11 @@ export default function Auth() {
 
     const [isMounted, setIsMounted] = useState(false);
 
+    const { setIsConsumerDetected } = useContext(ChainlinkFunctionContext) as {
+        isConsumerDetected: boolean;
+        setIsConsumerDetected: Dispatch<SetStateAction<boolean>>;
+    };
+
     const handleLogin = useCallback(async () => {
         try {
             const callbackUrl = "/price_index";
@@ -67,6 +72,7 @@ export default function Auth() {
                 await axios.post<Consumer>("/consumer/api").then((consumer) => {
                     const { consumerAddress, subscriptionId } = consumer.data;
                     localStorage.setItem("consumer", JSON.stringify({ consumerAddress, subscriptionId }));
+                    setIsConsumerDetected(true);
                 });
             };
 
