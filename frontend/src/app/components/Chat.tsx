@@ -15,16 +15,16 @@ function ChatBubble({ msg, status }: { msg: Message; status?: "loading" | "error
         <div className={`message chat ${msg.sender === Role.BOT ? "chat-start" : "chat-end"}`}>
             <div className="chat-image avatar">
                 {msg.sender === Role.BOT ? (
-                    <Image src="/medlink.ai.png" width="40" height="40" alt="Medlink.AI" className="rounded-full" />
+                    <Image src="/medlink.ai.png" width="40" height="40" alt="Medlink.AI" className="rounded-full ring ring-green-1100" />
                 ) : (
-                    <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                    <div className="w-10 rounded-full ring ring-green-1000 ring-offset-green-1100 ring-offset-2">
                         <MetaMaskAvatar address={address!} size={40} />
                     </div>
                 )}
             </div>
             <div className="chat-header flex gap-2 items-center">
                 <div>{msg.sender}</div>
-                <time className="text-xs opacity-50">{dayjs(msg.timestamp).format("YYYY-MM-DD HH:mm:ss")}</time>
+                {msg.timestamp && <time className="text-xs opacity-50">{dayjs(msg.timestamp).format("YYYY-MM-DD HH:mm:ss")}</time>}
             </div>
 
             <div
@@ -122,7 +122,7 @@ export function Chat() {
 
     return (
         <div className="flex flex-col justify-between w-full">
-            <ScrollShadow className={`2xl:h-[82vh] h-[74vh] pr-4  overflow-y-auto`}>
+            <ScrollShadow className={`2xl:h-[82vh] h-[74vh] px-4  overflow-y-auto`}>
                 {messages.map((msg, index) => (
                     <ChatBubble key={index} msg={msg} />
                 ))}
@@ -138,7 +138,7 @@ export function Chat() {
                 )}
             </ScrollShadow>
 
-            <div className="w-full flex flex-col gap-2 pr-4">
+            <div className="w-full flex flex-col gap-2 px-4">
                 <Textarea
                     disabled={isLoading}
                     ref={inputRef}
@@ -176,7 +176,7 @@ export function Chat() {
                         Clear
                     </Button>
 
-                    <Button onClick={handleSubmit} className="w-fit bg-primary" disabled={isLoading}>
+                    <Button onClick={handleSubmit} className="w-fit bg-primary text-white" disabled={isLoading}>
                         Send
                     </Button>
                 </div>

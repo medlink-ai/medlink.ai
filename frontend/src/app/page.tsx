@@ -20,12 +20,12 @@ export default function Home() {
                     </div>
                 </div>
             )}
-            <div className="grid grid-cols-5 w-full h-full p-2">
-                <div className={`${isDealExpanded ? "col-span-4" : "col-span-5"} flex justify-items-center items-center`}>
+            <div className="flex w-full h-full p-2">
+                <div className={`${isDealExpanded ? "w-[80%]" : "w-full"} flex justify-items-center items-center transition-all`}>
                     <Chat />
                 </div>
 
-                <div className={`${isDealExpanded ? "w-full col-span-1" : "w-0 col-span-0 collapse"} flex `}>
+                <div className={`${isDealExpanded ? "w-[20%]" : "w-0 collapse"} flex transition-all`}>
                     <Divider orientation="vertical" className="mr-4" />
                     <div>Some information</div>
                 </div>

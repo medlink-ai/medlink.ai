@@ -5,7 +5,6 @@ import { Providers } from "./providers";
 import Nav from "@/app/components/Navbar";
 import { authOption } from "@/lib/auth";
 import { getServerSession } from "next-auth";
-import Chatbot from "./components/Chatbot";
 
 const albert_sans = Albert_Sans({ subsets: ["latin"] });
 
@@ -23,7 +22,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 <Providers session={session}>
                     <Nav />
                     {children}
-                    {/* <Chatbot /> */}
                 </Providers>
             </body>
         </html>
