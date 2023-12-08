@@ -27,8 +27,8 @@ export const getResponsePriceIndex = async (data: any): Promise<void | null> => 
 
 export const getResponseProvider = async (data: any): Promise<any | null> => {
     try {        
+        console.log(data);
         const parsedData: ProductData[] = JSON.parse(data);
-
         const results = await Promise.all(parsedData.map(async (item) => {
             const { p: providerCode, b: productCode } = item;
 

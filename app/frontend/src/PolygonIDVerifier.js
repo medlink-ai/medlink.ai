@@ -19,12 +19,8 @@ import QRCode from "react-qr-code";
 
 import { io } from "socket.io-client";
 
-const linkDownloadPolygonIDWalletApp =
-  "https://0xpolygonid.github.io/tutorials/wallet/wallet-overview/#quick-start";
-
 function PolygonIDVerifier({
   credentialType,
-  issuerOrHowToLink,
   onVerificationResult,
   publicServerURL,
   localServerURL,
@@ -106,11 +102,6 @@ function PolygonIDVerifier({
     onVerificationResult(result);
   };
 
-  function openInNewTab(url) {
-    var win = window.open(url, "_blank");
-    win.focus();
-  }
-
   return (
     <div>
       <Box p={4} _hover={{ backgroundColor: "gray.100", border: "1px", borderColor: "gray.300" }} cursor="pointer" onClick={onOpen}>
@@ -166,12 +157,12 @@ function PolygonIDVerifier({
             </ModalBody>
 
             <ModalFooter>
-              <Button fontSize={"10px"} margin={1} colorScheme="teal" onClick={() => openInNewTab(linkDownloadPolygonIDWalletApp)}>
+              <Button fontSize={"10px"} margin={1} colorScheme="teal">
                 Download the Polygon ID Wallet App{" "}
                 <ExternalLinkIcon marginLeft={2} />
               </Button>
 
-              <Button fontSize={"10px"} margin={1} colorScheme="teal" onClick={() => openInNewTab(issuerOrHowToLink)}>
+              <Button fontSize={"10px"} margin={1} colorScheme="teal">
                 Get a {credentialType} VC <ExternalLinkIcon marginLeft={2} />
               </Button>
             </ModalFooter>

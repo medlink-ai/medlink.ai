@@ -6,7 +6,7 @@ import { Center, Container } from "@chakra-ui/react";
 import axios from "axios";
 
 function App() {
-  const [provedPrescription, setProvedPrescription] = useState(false);
+  const [provedPrescription, setProvedPrescription] = useState(true);
   const [apiData, setApiData] = useState([]);
 
   useEffect(() => {
@@ -30,7 +30,6 @@ function App() {
         <Center className="vc-check-page">
         <Container>
           {apiData.map((item, index) => {
-            console.log("Min Range:", item); // Log each item
             return (
               <PolygonIDVerifier
                 key={index}

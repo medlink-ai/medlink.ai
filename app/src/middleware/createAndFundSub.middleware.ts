@@ -17,6 +17,8 @@ const createAndFundSub = async (NETWORK: keyof Networks, consumerAddress: string
             functionsRouterAddress
         })
 
+        console.log('subscriptionManager:', subscriptionManager)
+
         console.log(`Subscrition manager starting to initialize...`)
 
         await subscriptionManager.initialize();
@@ -43,7 +45,7 @@ const createAndFundSub = async (NETWORK: keyof Networks, consumerAddress: string
 
         return subscriptionId.toString();
     } catch (error: any) {
-        console.log('Create and fund subscription failed.');
+        console.log('Create and fund subscription failed.', error);
         throw new HttpException(400, error);
     }
 }

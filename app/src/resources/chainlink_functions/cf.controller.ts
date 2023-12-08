@@ -115,14 +115,6 @@ class ChainlinkFunctionsController implements Controller {
             const response = await this.ChainlinkFunctionsService.readResponse(consumerAddress);
             const result = await getResponsePriceIndex(response);
 
-            // fs.writeFile('priceIndex.json', JSON.stringify(result, null, 2), 'utf-8', (err) => {
-            //     if (err) {
-            //         console.error('Error writing to file:', err);
-            //     } else {
-            //         console.log('Price Index data has been stored locally')
-            //     }
-            // })
-
             if (result) {
                 res.status(200).json(result);
                 return result;

@@ -13,14 +13,14 @@ import {
 
 const USD_TO_MATIC_EXCHANGE_RATE = 0.01;
 
-function MedicineStore() {
+function MedicineStore({item, amount}) {
   const [quantity, setQuantity] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
 
   // Placeholder for medicine details
   const medicineDetails = {
-    name: "Metformin (Glyformet) 500mg Film-Coated Tablet",
-    priceUSD: 10.99, // Add your actual price in USD
+    name: "metformin",
+    priceUSD: parseFloat(amount), // Add your actual price in USD
   };
 
   const totalPriceUSD = (quantity * medicineDetails.priceUSD).toFixed(2);
@@ -37,9 +37,7 @@ function MedicineStore() {
   };
 
   const handlePay = async () => {
-    // Implement your payment logic here
     setIsLoading(true);
-    // Simulating payment process with a delay
     setTimeout(() => {
       alert(`Order confirmed for ${quantity} ${medicineDetails.name}`);
       setIsLoading(false);
