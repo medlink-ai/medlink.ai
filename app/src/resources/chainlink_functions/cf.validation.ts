@@ -8,11 +8,11 @@ const createAndFundSub = Joi.object({
 
 const postFunctionsRequest = Joi.object({
     consumerAddress: Joi.string().required(),
-    subscriptionId: Joi.string().required(),
-    drug_details: Joi.string().required(),
 })
 
 const functionRequestProvider = Joi.object({
+    consumerAddress: Joi.string().required(),
+    subscriptionId: Joi.string().required(),
     drug: Joi.string().required(),
     amount: Joi.string().required()
 })

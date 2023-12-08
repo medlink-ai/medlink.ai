@@ -106,22 +106,16 @@ class ChainlinkFunctionsController implements Controller {
         try {
             await new Promise(resolve => setTimeout(resolve, 5000));
 
-            const fileContent = await readFileAsync('config.json', 'utf-8');
-            const parsedData = JSON.parse(fileContent);
-            console.log('Read data from file:', parsedData);
+            const { consumerAddress } = req.body;
 
-            const consumerAddress = parsedData.consumerAddress;
+            // const fileContent = await readFileAsync('config.json', 'utf-8');
+            // const parsedData = JSON.parse(fileContent);
+            // console.log('Read data from file:', parsedData);
+
+            // const consumerAddress = parsedData.consumerAddress;
 
             const response = await this.ChainlinkFunctionsService.readResponse(consumerAddress);
             const result = await getResponsePriceIndex(response);
-
-            // fs.writeFile('priceIndex.json', JSON.stringify(result, null, 2), 'utf-8', (err) => {
-            //     if (err) {
-            //         console.error('Error writing to file:', err);
-            //     } else {
-            //         console.log('Price Index data has been stored locally')
-            //     }
-            // })
 
             if (result) {
                 res.status(200).json(result);
@@ -142,19 +136,19 @@ class ChainlinkFunctionsController implements Controller {
             const deployedConsumerAddress = (await this.ChainlinkFunctionsService.deployConsumerContract("polygonMumbai")).toString();
             const subscriptionId = await this.ChainlinkFunctionsService.createAndFundSub("polygonMumbai", deployedConsumerAddress, linkAmount);
 
-            // Store data in localStorage
-            const data = {
-                consumerAddress: deployedConsumerAddress,
-                subscriptionId: subscriptionId,
-            };
+            // // Store data in localStorage
+            // const data = {
+            //     consumerAddress: deployedConsumerAddress,
+            //     subscriptionId: subscriptionId,
+            // };
 
-            fs.writeFile('config.json', JSON.stringify(data, null, 2), 'utf-8', (err) => {
-                if (err) {
-                    console.error('Error writing to file:', err);
-                } else {
-                    console.log('Data has been stored locally')
-                }
-            })
+            // fs.writeFile('config.json', JSON.stringify(data, null, 2), 'utf-8', (err) => {
+            //     if (err) {
+            //         console.error('Error writing to file:', err);
+            //     } else {
+            //         console.log('Data has been stored locally')
+            //     }
+            // })
 
             res.status(200).json({ consumerAddress: deployedConsumerAddress, subscriptionId: subscriptionId });
 
@@ -166,14 +160,14 @@ class ChainlinkFunctionsController implements Controller {
 
     private functionsRequest = async (req: Request, res: Response, next: NextFunction): Promise<string | void> => {
         try {
-            const { drug_details } = req.body;
+            const { consumerAddress, subscriptionId, drug_details } = req.body;
 
-            const fileContent = await readFileAsync('config.json', 'utf-8');
-            const parsedData = JSON.parse(fileContent);
-            console.log('Read data from file:', parsedData);
+            // const fileContent = await readFileAsync('config.json', 'utf-8');
+            // const parsedData = JSON.parse(fileContent);
+            // console.log('Read data from file:', parsedData);
 
-            const consumerAddress = parsedData.consumerAddress;
-            const subscriptionId = parsedData.subscriptionId;
+            // const consumerAddress = parsedData.consumerAddress;
+            // const subscriptionId = parsedData.subscriptionId;
 
             const result = await this.ChainlinkFunctionsService.request(consumerAddress, subscriptionId, drug_details);
 
@@ -185,13 +179,14 @@ class ChainlinkFunctionsController implements Controller {
 
     private functionRequestProvider = async (req: Request, res: Response, next: NextFunction): Promise<string | void> => {
         try {
-            const { drug, amount } = req.body;
-            const fileContent = await readFileAsync('config.json', 'utf-8');
-            const parsedData = JSON.parse(fileContent);
-            console.log('Read data from file:', parsedData);
+            const { consumerAddress, subscriptionId, drug, amount } = req.body;
 
-            const consumerAddress = parsedData.consumerAddress;
-            const subscriptionId = parsedData.subscriptionId;
+            // const fileContent = await readFileAsync('config.json', 'utf-8');
+            // const parsedData = JSON.parse(fileContent);
+            // console.log('Read data from file:', parsedData);
+
+            // const consumerAddress = parsedData.consumerAddress;
+            // const subscriptionId = parsedData.subscriptionId;
 
             const result = await this.ChainlinkFunctionsService.requestProvider(consumerAddress, subscriptionId, drug, amount);
 
@@ -207,11 +202,13 @@ class ChainlinkFunctionsController implements Controller {
         try {
             await new Promise(resolve => setTimeout(resolve, 5000));
 
-            const fileContent = await readFileAsync('config.json', 'utf-8');
-            const parsedData = JSON.parse(fileContent);
-            console.log('Read data from file:', parsedData);
+            const { consumerAddress } = req.body;
 
-            const consumerAddress = parsedData.consumerAddress;
+            // const fileContent = await readFileAsync('config.json', 'utf-8');
+            // const parsedData = JSON.parse(fileContent);
+            // console.log('Read data from file:', parsedData);
+
+            // const consumerAddress = parsedData.consumerAddress;
 
             const response = await this.ChainlinkFunctionsService.readResponse(consumerAddress);
             const result = await getResponseProvider(response);
