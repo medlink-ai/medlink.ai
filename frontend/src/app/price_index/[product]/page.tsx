@@ -1,12 +1,13 @@
 "use client";
 
 import PolygonIDVerifier from "@/app/components/PolygonIDVerifier";
+import { ChainlinkFunctionContext } from "@/app/providers";
 
 import { DrugDetails, ErrorData, ProviderDetail } from "@/constants/types";
 import { Input, Breadcrumbs, BreadcrumbItem, Button, Spinner, Switch } from "@nextui-org/react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useAccount } from "wagmi";
 
@@ -25,13 +26,15 @@ function Budget({
     const [isLoading, setIsLoading] = useState(false);
     const [drugDetail, setDrugDetail] = useState<DrugDetails>();
 
+    const { consumer } = useContext(ChainlinkFunctionContext);
+
     useEffect(() => {
         const getDrugDetails = async () => {
             try {
                 setIsLoading(true);
                 const res = await axios.post<DrugDetails | ErrorData>(
                     `/price_index/api`,
-                    { product: product },
+                    { product: product, ...consumer },
                     {
                         headers: {
                             cache: "no-cache",
@@ -147,6 +150,7 @@ function Providers({
     const [isLoading, setIsLoading] = useState(false);
 
     const { address } = useAccount();
+    const { consumer } = useContext(ChainlinkFunctionContext);
 
     useEffect(() => {
         const getProviders = async () => {
@@ -155,7 +159,7 @@ function Providers({
                 setIsProviderLoading(true);
                 const res = await axios.post<ProviderDetail[]>(
                     `/price_index/providers/api`,
-                    { product: product, budget: budget },
+                    { product: product, budget: budget, ...consumer },
                     {
                         headers: {
                             cache: "no-cache",

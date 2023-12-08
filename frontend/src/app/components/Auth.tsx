@@ -5,14 +5,14 @@ import { getCsrfToken, signIn, useSession, signOut } from "next-auth/react";
 import { SiweMessage } from "siwe";
 import { useAccount, useConnect, useDisconnect, useNetwork, useSignMessage } from "wagmi";
 import { InjectedConnector } from "wagmi/connectors/injected";
-import { Dispatch, SetStateAction, useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 import { redirect, useRouter, useSearchParams } from "next/navigation";
 import { MetaMaskAvatar } from "react-metamask-avatar";
 import axios from "axios";
 import { Consumer } from "@/constants/types";
-import { ChainlinkFunctionContext } from "../page";
+import { ChainlinkFunctionContext } from "../providers";
 
 export async function getServerSideProps(context: any) {
     return {
@@ -41,10 +41,7 @@ export default function Auth() {
 
     const [isMounted, setIsMounted] = useState(false);
 
-    const { setIsConsumerDetected } = useContext(ChainlinkFunctionContext) as {
-        isConsumerDetected: boolean;
-        setIsConsumerDetected: Dispatch<SetStateAction<boolean>>;
-    };
+    const { consumer, setConsumer } = useContext(ChainlinkFunctionContext);
 
     const handleLogin = useCallback(async () => {
         try {
@@ -72,7 +69,7 @@ export default function Auth() {
                 await axios.post<Consumer>("/consumer/api").then((consumer) => {
                     const { consumerAddress, subscriptionId } = consumer.data;
                     localStorage.setItem("consumer", JSON.stringify({ consumerAddress, subscriptionId }));
-                    setIsConsumerDetected(true);
+                    setConsumer(consumer.data);
                 });
             };
 
@@ -107,8 +104,6 @@ export default function Auth() {
     }, [isMounted]);
 
     const { isOpen, onOpen, onClose } = useDisclosure();
-
-    const { consumerAddress, subscriptionId } = JSON.parse(localStorage.getItem("consumer") ?? "{}");
 
     return (
         <>
@@ -164,8 +159,8 @@ export default function Auth() {
                 <ModalContent>
                     <div className="flex flex-col items-start gap-2">
                         <h2 className="text-md font-semibold text-primary">Address: {address}</h2>
-                        <h2 className="text-md font-semibold text-primary">Consumer Address: {consumerAddress}</h2>
-                        <h2 className="text-md font-semibold text-primary">Subscription ID: {subscriptionId}</h2>
+                        <h2 className="text-md font-semibold text-primary">Consumer Address: {consumer?.consumerAddress}</h2>
+                        <h2 className="text-md font-semibold text-primary">Subscription ID: {consumer?.subscriptionId}</h2>
                     </div>
                 </ModalContent>
             </Modal>

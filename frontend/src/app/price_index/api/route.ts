@@ -13,10 +13,12 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
     try {
-        const { product } = await request.json();
+        const { product, consumerAddress, subscriptionId } = await request.json();
 
         const functionRequest = await axios.post(`${process.env.API_BASE_URL}/api/chainlink-functions/functions-request-response`, {
             drug_details: product,
+            consumerAddress,
+            subscriptionId,
         });
 
         await functionRequest.data;
@@ -27,7 +29,12 @@ export async function POST(request: Request) {
             try {
                 await new Promise((resolve) => setTimeout(resolve, 5000));
 
-                const functionResponse = await axios.post<DrugDetails>(`${process.env.API_BASE_URL}/api/chainlink-functions/post-functions-response`);
+                const functionResponse = await axios.post<DrugDetails>(
+                    `${process.env.API_BASE_URL}/api/chainlink-functions/post-functions-response`,
+                    {
+                        consumerAddress,
+                    }
+                );
                 const { product_name } = functionResponse.data;
 
                 if (product_name === product) {
