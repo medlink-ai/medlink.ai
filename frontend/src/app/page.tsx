@@ -1,6 +1,6 @@
 "use client";
 
-import { Dispatch, SetStateAction, createContext, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { Chat } from "./components/Chat";
 import { Button, Divider } from "@nextui-org/react";
 import { useAccount } from "wagmi";
