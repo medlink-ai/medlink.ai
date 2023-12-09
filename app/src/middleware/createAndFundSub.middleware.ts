@@ -17,8 +17,6 @@ const createAndFundSub = async (NETWORK: keyof Networks, consumerAddress: string
             functionsRouterAddress
         })
 
-        console.log('subscriptionManager:', subscriptionManager)
-
         console.log(`Subscrition manager starting to initialize...`)
 
         await subscriptionManager.initialize();

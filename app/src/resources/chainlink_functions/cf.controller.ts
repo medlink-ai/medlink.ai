@@ -102,34 +102,6 @@ class ChainlinkFunctionsController implements Controller {
         }
     }
 
-    private postFunctionsResponse = async (req: Request, res: Response, next: NextFunction): Promise<string | void> => {
-        try {
-            await new Promise(resolve => setTimeout(resolve, 5000));
-
-            const { consumerAddress } = req.body;
-
-            // const fileContent = await readFileAsync('config.json', 'utf-8');
-            // const parsedData = JSON.parse(fileContent);
-            // console.log('Read data from file:', parsedData);
-
-            // const consumerAddress = parsedData.consumerAddress;
-
-            const response = await this.ChainlinkFunctionsService.readResponse(consumerAddress);
-            const result = await getResponsePriceIndex(response);
-
-            if (result) {
-                res.status(200).json(result);
-                return result;
-            } else {
-                res.status(404).json({ error: 'No response available' });
-                return 'No response available';
-            }
-        } catch (error: any) {
-            console.log('Read response failed.');
-            next(new HttpException(400, error));
-        }
-    }
-
     private functionsConsumer = async (req: Request, res: Response, next: NextFunction): Promise<string | void> => {
         try {
             const linkAmount = "5";
@@ -161,14 +133,6 @@ class ChainlinkFunctionsController implements Controller {
     private functionsRequest = async (req: Request, res: Response, next: NextFunction): Promise<string | void> => {
         try {
             const { consumerAddress, subscriptionId, drug_details } = req.body;
-
-            // const fileContent = await readFileAsync('config.json', 'utf-8');
-            // const parsedData = JSON.parse(fileContent);
-            // console.log('Read data from file:', parsedData);
-
-            // const consumerAddress = parsedData.consumerAddress;
-            // const subscriptionId = parsedData.subscriptionId;
-
             const result = await this.ChainlinkFunctionsService.request(consumerAddress, subscriptionId, drug_details);
 
             res.status(200).json(result.toString());
@@ -177,17 +141,31 @@ class ChainlinkFunctionsController implements Controller {
         }
     };
 
+    private postFunctionsResponse = async (req: Request, res: Response, next: NextFunction): Promise<string | void> => {
+        try {
+            await new Promise(resolve => setTimeout(resolve, 5000));
+
+            const { consumerAddress } = req.body;
+
+            const response = await this.ChainlinkFunctionsService.readResponse(consumerAddress);
+            const result = await getResponsePriceIndex(response);
+
+            if (result) {
+                res.status(200).json(result);
+                return result;
+            } else {
+                res.status(404).json({ error: 'No response available' });
+                return 'No response available';
+            }
+        } catch (error: any) {
+            console.log('Read response failed.');
+            next(new HttpException(400, error));
+        }
+    }
+
     private functionRequestProvider = async (req: Request, res: Response, next: NextFunction): Promise<string | void> => {
         try {
             const { consumerAddress, subscriptionId, drug, amount } = req.body;
-
-            // const fileContent = await readFileAsync('config.json', 'utf-8');
-            // const parsedData = JSON.parse(fileContent);
-            // console.log('Read data from file:', parsedData);
-
-            // const consumerAddress = parsedData.consumerAddress;
-            // const subscriptionId = parsedData.subscriptionId;
-
             const result = await this.ChainlinkFunctionsService.requestProvider(consumerAddress, subscriptionId, drug, amount);
 
             res.status(200).json(result.toString());
@@ -203,12 +181,6 @@ class ChainlinkFunctionsController implements Controller {
             await new Promise(resolve => setTimeout(resolve, 5000));
 
             const { consumerAddress } = req.body;
-
-            // const fileContent = await readFileAsync('config.json', 'utf-8');
-            // const parsedData = JSON.parse(fileContent);
-            // console.log('Read data from file:', parsedData);
-
-            // const consumerAddress = parsedData.consumerAddress;
 
             const response = await this.ChainlinkFunctionsService.readResponse(consumerAddress);
             const result = await getResponseProvider(response);
