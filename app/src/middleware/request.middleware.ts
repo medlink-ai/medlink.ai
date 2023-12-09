@@ -19,18 +19,37 @@ const sendRequest = async (consumerAddress: string, subscriptionId: string, drug
 
     console.log("Sending the request...");
 
-    const requestTx = await functionsConsumer.sendRequest(
-        source,
-        args,
-        [],
-        subscriptionId,
-        callbackGasLimit,
-    )
+    try {
+        const requestTx = await functionsConsumer.sendRequest(
+            source,
+            args,
+            [],
+            subscriptionId,
+            callbackGasLimit,
+        );
 
-    const txReceipt = await requestTx.wait(1);
-    const requestId = txReceipt.events[2].args.id;
+        const txReceipt = await requestTx.wait(1);
+        const requestId = txReceipt.events[2].args.id;
 
-    return `Request made. Request id is ${requestId}. TxHash is ${requestTx.hash}`;
-}
+        return `Request made. Request id is ${requestId}. TxHash is ${requestTx.hash}`;
+    } catch (error) {
+        console.error('Error in sendRequest:', error);
+
+        // Retry logic: Retry once
+        console.log('Retrying...');
+        const retryTx = await functionsConsumer.sendRequest(
+            source,
+            args,
+            [],
+            subscriptionId,
+            callbackGasLimit,
+        );
+
+        const retryTxReceipt = await retryTx.wait(1);
+        const retryRequestId = retryTxReceipt.events[2].args.id;
+
+        return `Retry successful. Request id is ${retryRequestId}. TxHash is ${retryTx.hash}`;
+    }
+};
 
 export default sendRequest;

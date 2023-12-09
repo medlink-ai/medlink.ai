@@ -7,6 +7,10 @@ import Link from "next/link";
 
 import { io } from "socket.io-client";
 import { ProviderDetail } from "@/constants/types";
+import { useTheme } from "next-themes";
+import { ThemeSwitch } from "./ThemeSwitch";
+import { DarkIcon } from "../icons/Dark";
+import { LightIcon } from "../icons/Light";
 
 export default function PolygonIDVerifier({
     credentialType,
@@ -34,6 +38,9 @@ export default function PolygonIDVerifier({
     const [verificationCheckComplete, setVerificationCheckComplete] = useState(false);
     const [verificationMessage, setVerificationMessage] = useState("");
     const [socketEvents, setSocketEvents] = useState<{ fn: string; status: string }[]>([]);
+
+    const { theme } = useTheme();
+    const [modalTheme, setModalTheme] = useState<"light" | "dark">(theme as "light" | "dark");
 
     const serverUrl = window.location.href.startsWith("https")
         ? process.env.NEXT_PUBLIC_VERIFICATION_SERVER_PUBLIC_URL!
@@ -110,7 +117,12 @@ export default function PolygonIDVerifier({
             </div>
 
             {qrCodeData && (
-                <Modal className="w-fit" isOpen={isOpen} onClose={onClose} size="xl">
+                <Modal
+                    className={`w-fit ${modalTheme === "light" ? "bg-white text-black" : "bg-default-50 text-white"}`}
+                    isOpen={isOpen}
+                    onClose={onClose}
+                    size="xl"
+                >
                     <ModalContent>
                         <ModalHeader className="flex justify-center text-md mt-8">
                             To verify your valid drug prescription, please use your Polygon ID Wallet App to scan this QR Code.
@@ -126,8 +138,19 @@ export default function PolygonIDVerifier({
                             <div className="text-md flex justify-center">{verificationMessage}</div>
 
                             {qrCodeData && !isHandlingVerification && !verificationCheckComplete && (
-                                <div className="flex justify-center items-center mb-1">
+                                <div className="flex flex-col justify-center items-center mb-1 gap-2">
                                     <QRCode value={JSON.stringify(qrCodeData)} />
+                                    {theme === "dark" && (
+                                        <div className="flex gap-2 justify-center items-center">
+                                            <p>Change to light mode if unable to scan</p>
+                                            <div
+                                                onClick={() => setModalTheme(modalTheme === "dark" ? "light" : "dark")}
+                                                className="hover:cursor-pointer"
+                                            >
+                                                {modalTheme === "dark" ? <LightIcon /> : <DarkIcon />}
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                             )}
 

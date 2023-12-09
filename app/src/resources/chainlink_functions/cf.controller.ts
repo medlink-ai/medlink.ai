@@ -135,7 +135,7 @@ class ChainlinkFunctionsController implements Controller {
             const { consumerAddress, subscriptionId, drug_details } = req.body;
             const result = await this.ChainlinkFunctionsService.request(consumerAddress, subscriptionId, drug_details);
 
-            res.status(200).json(result.toString());
+            res.status(200).json(JSON.stringify(result));
         } catch (error: any) {
             next(new HttpException(400, error));
         }
