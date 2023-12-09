@@ -29,7 +29,7 @@ const sendRequest = async (consumerAddress: string, subscriptionId: string, drug
 
     const txReceipt = await requestTx.wait(1);
     const requestId = txReceipt.events[2].args.id;
-    console.log(`Request made. Request id is ${requestId}. TxHash is ${requestTx.hash}`);
+
     return `Request made. Request id is ${requestId}. TxHash is ${requestTx.hash}`;
 }
 
