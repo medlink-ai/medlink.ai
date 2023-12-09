@@ -1,4 +1,4 @@
-import { DrugDetails } from "./types";
+import { DrugDetails, ProviderDetail } from "./types";
 
 enum Role {
     PATIENT = "Patient",
@@ -28,79 +28,47 @@ const MockDrugDetails: DrugDetails = {
     ],
 };
 
-const MockProviders = [
+const MockProviders: ProviderDetail[] = [
     {
-        issuerOrHowToLink: "https://google.com",
-        credentialType: "DrugPrescription",
-        information: {
-            drugName: "Metformin 1g Extended-Release Tablet",
-            storeName: "Pharmacy A Drug Store",
-            description: "Used in the treatment of diabetes",
-        },
+        code: "100000",
+        product_name: "Metformin 500mg Tablet",
+        prescription_drug: true,
+        indication: "Used in the treatment of obstructive airway diseases.",
+        provider: "Mercury Drug",
+        provider_code: 1,
+        min_range: "100001",
+        max_range: "100499",
     },
     {
-        issuerOrHowToLink: "https://chain.link",
-        credentialType: "DrugPrescription",
-        information: {
-            drugName: "Metformin 1g Extended-Release Tablet",
-            storeName: "Pharmacy B Drug Store",
-            description: "Used in the treatment of diabetes",
-        },
+        code: "100001",
+        product_name: "Metformin 500mg Tablet",
+        prescription_drug: true,
+        indication: "Used in the treatment of obstructive airway diseases.",
+        provider: "Sunshine Pharmacy",
+        provider_code: 2,
+        min_range: "100002",
+        max_range: "100500",
     },
     {
-        issuerOrHowToLink: "https://nextjs.org/",
-        credentialType: "DrugPrescription",
-        information: {
-            drugName: "Metformin 1g Extended-Release Tablet",
-            storeName: "Pharmacy C Drug Store",
-            description: "Used in the treatment of diabetes",
-        },
+        code: "100002",
+        product_name: "Metformin 500mg Tablet",
+        prescription_drug: true,
+        indication: "Used in the treatment of obstructive airway diseases.",
+        provider: "Watsons Pharmacy",
+        provider_code: 3,
+        min_range: "100003",
+        max_range: "100501",
     },
     {
-        issuerOrHowToLink: "https://nextjs.org/",
-        credentialType: "DrugPrescription",
-        information: {
-            drugName: "Metformin 1g Extended-Release Tablet",
-            storeName: "Pharmacy C Drug Store",
-            description: "Used in the treatment of diabetes",
-        },
-    },
-    {
-        issuerOrHowToLink: "https://nextjs.org/",
-        credentialType: "DrugPrescription",
-        information: {
-            drugName: "Metformin 1g Extended-Release Tablet",
-            storeName: "Pharmacy D Drug Store",
-            description: "Used in the treatment of diabetes",
-        },
-    },
-    {
-        issuerOrHowToLink: "https://nextjs.org/",
-        credentialType: "DrugPrescription",
-        information: {
-            drugName: "Metformin 1g Extended-Release Tablet",
-            storeName: "Pharmacy E Drug Store",
-            description: "Used in the treatment of diabetes",
-        },
-    },
-    {
-        issuerOrHowToLink: "https://nextjs.org/",
-        credentialType: "DrugPrescription",
-        information: {
-            drugName: "Metformin 1g Extended-Release Tablet",
-            storeName: "Pharmacy F Drug Store",
-            description: "Used in the treatment of diabetes",
-        },
-    },
-    {
-        issuerOrHowToLink: "https://nextjs.org/",
-        credentialType: "DrugPrescription",
-        information: {
-            drugName: "Metformin 1g Extended-Release Tablet",
-            storeName: "Pharmacy G Drug Store",
-            description: "Used in the treatment of diabetes",
-        },
+        code: "100003",
+        product_name: "Metformin 500mg Tablet",
+        prescription_drug: true,
+        indication: "Used in the treatment of obstructive airway diseases.",
+        provider: "Guardian Pharmacy",
+        provider_code: 4,
+        min_range: "100004",
+        max_range: "100502",
     },
 ];
 
-export { Role, MockDrugDetails };
+export { Role, MockDrugDetails, MockProviders };
