@@ -406,7 +406,13 @@ export default function Page({ params }: { params: { product: string } }) {
                         )}
                     </>
                 ) : (
-                    <ConfirmOrder product={decodedProducts} onCancel={() => setProvedPrescription(false)} />
+                    <ConfirmOrder
+                        product={decodedProducts}
+                        onCancel={() => {
+                            setBudget(undefined);
+                            setProvedPrescription(false);
+                        }}
+                    />
                 )}
             </div>
         </div>
