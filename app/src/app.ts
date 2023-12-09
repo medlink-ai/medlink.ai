@@ -8,7 +8,7 @@ import { Server as HttpServer } from 'http';
 import { Server as SocketServer } from 'socket.io';
 import ErrorMiddleware from '@/middleware/error.middleware';
 import Controller from '@/utils/interfaces/controller.interface';
-import { getAuthQr, getAuthQrMed, handleVerification } from '@/middleware/polygonAuth.middleware';
+import { getAuthQr, getAuthQrMed, handleMedVerification, handleVerification } from '@/middleware/polygonAuth.middleware';
 
 class App {
     public app: Application;
@@ -57,6 +57,11 @@ class App {
             const { walletAddress, licenseNumber } = req.query;
             getAuthQrMed(req, res, this.io, parseFloat(`${licenseNumber}`));
         });
+
+        this.app.post('/api/med-verification-callback', (req: Request, res: Response) => {
+            handleMedVerification(req, res, this.io);
+        });
+        
     }
 
     private setupControllers(controllers: Controller[]): void {

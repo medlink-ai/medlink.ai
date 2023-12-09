@@ -92,41 +92,6 @@ export async function getAuthQr(req: Request, res: Response, io: Server, schema:
     return res.status(200).json(request);
 }
 
-export async function getAuthQrMed(req: Request, res: Response, io: Server, licenseNumber: number): Promise<Response> {
-    const sessionId = req.query.sessionId as string;
-
-    io.sockets.emit(sessionId, socketMessage('getAuthQr', STATUS.IN_PROGRESS, sessionId));
-
-    const uri = `${process.env.HOSTED_SERVER_URL as string}/api/verification-callback?sessionId=${sessionId}`;
-    console.log('uri', uri)
-    const request = auth.createAuthorizationRequest('test flow', process.env.VERIFIER_DID as string, uri);
-
-    request.id = sessionId;
-    request.thid = sessionId;
-
-    const scopes = [
-        {
-            id: 1,
-            circuitId: 'credentialAtomicQuerySigV2',
-            query: {
-                allowedIssuers: ['*'],
-                type: 'LicenseVerifier',
-                context: "ipfs://QmbrCFFUbFP7vxUE6FWx2wq4fQXbipXvKaSkrXm79QnwHJ",
-                credentialSubject: {
-                    license_number: { $eq: licenseNumber },
-                },
-            }
-        }
-    ];
-
-    request.body.scope = [...request.body.scope ?? [], ...scopes];
-    requestMap.set(sessionId, request);
-
-    console.log(`Auth request added to map for session ID: ${sessionId}`);
-
-    return res.status(200).json(request);
-}
-
 export async function handleVerification(req: Request, res: Response, io: Server): Promise<Response> {
     const sessionId = req.query.sessionId as string;
     console.log(`Handling verification for session ID: ${sessionId}`);
@@ -172,4 +137,87 @@ export async function handleVerification(req: Request, res: Response, io: Server
         return res.status(500).json({ error: 'Internal Server Error' });
     }
 }
+
+export async function getAuthQrMed(req: Request, res: Response, io: Server, licenseNumber: number): Promise<Response> {
+    const sessionId = req.query.sessionId as string;
+
+    io.sockets.emit(sessionId, socketMessage('getAuthQrMed', STATUS.IN_PROGRESS, sessionId));
+
+    const uri = `${process.env.HOSTED_SERVER_URL as string}/api/med-verification-callback?sessionId=${sessionId}`;
+ 
+    const request = auth.createAuthorizationRequest('test flow', process.env.VERIFIER_DID as string, uri);
+
+    request.id = sessionId;
+    request.thid = sessionId;
+
+    const scopes = [
+        {
+            id: 6,
+            circuitId: 'credentialAtomicQuerySigV2',
+            query: {
+                allowedIssuers: ['*'],
+                type: 'LicenseVerifier',
+                context: "ipfs://Qmboo29K3Dkoj6Z7UH34QbNRc19jiiWcDPmemHD1AsobXC",
+                credentialSubject: {
+                    license_number: { $eq: licenseNumber },
+                },
+            }
+        }
+    ];
+
+    request.body.scope = [...request.body.scope ?? [], ...scopes];
+    requestMap.set(sessionId, request);
+
+    console.log(`Auth request added to map for session ID: ${sessionId}`);
+
+    return res.status(200).json(request);
+}
+
+export async function handleMedVerification(req: Request, res: Response, io: Server): Promise<Response> {
+    const sessionId = req.query.sessionId as string;
+    console.log(`Handling verification for session ID: ${sessionId}`);
+
+    const authRequest = requestMap.get(sessionId);
+
+    if (!authRequest) {
+        console.error(`Auth request not found for session ID: ${sessionId}`);
+        return res.status(400).json({ error: 'Auth request not found' });
+    }
+
+    io.sockets.emit(sessionId, socketMessage('handleMedVerification', STATUS.IN_PROGRESS, authRequest));
+
+    const raw = await getRawBody(req);
+    const tokenStr = raw.toString().trim();
+
+    const mumbaiContractAddress = '0x134B1BE34911E39A8397ec6289782989729807a4';
+    const keyDir = '../../keys';
+
+    const ethStateResolver = new resolver.EthStateResolver(process.env.RPC_URL as string, mumbaiContractAddress);
+
+    const resolvers = {
+        ['polygon:mumbai']: ethStateResolver,
+    }
+
+    const verifier = await auth.Verifier.newVerifier({
+        stateResolver: resolvers,
+        circuitsDir: path.join(__dirname, keyDir),
+        ipfsGatewayURL:"https://ipfs.io"
+    })
+
+    try {
+		const authResponse = await verifier.fullVerify(tokenStr, authRequest);
+        console.log(authResponse);
+		const userId = authResponse.from;
+		io.sockets.emit(
+			sessionId,
+			socketMessage('handleMedVerification', STATUS.DONE, { message: `User ${userId} successfully authenticated` })
+		);
+		return res.status(200).json({ message: `User ${userId} successfully authenticated` });
+    } catch (error:any) {
+        console.error(`Error in handleVerification: ${error.message}`);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
+
 

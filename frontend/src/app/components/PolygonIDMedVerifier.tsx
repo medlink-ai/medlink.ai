@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect, Dispatch, SetStateAction } from "react";
-import { Modal, ModalContent, ModalHeader, ModalFooter, ModalBody, Button, useDisclosure, Spinner } from "@nextui-org/react";
+import { useState, useEffect, Dispatch, SetStateAction, useMemo } from "react";
+import { Spinner } from "@nextui-org/react";
 import QRCode from "react-qr-code";
 import Link from "next/link";
 
@@ -20,9 +20,8 @@ export default function PolygonIDMedVerifier({
         walletAddress: string;
         licenseNumber: number;
 }) {
-    const { isOpen, onOpen, onClose } = useDisclosure();
     const [sessionId, setSessionId] = useState("");
-    const [qrCodeData, setQrCodeData] = useState<{ body: any } | null>(null);
+    const [qrCodeData, setQrCodeData] = useState<{ body: any }>();
     const [isHandlingVerification, setIsHandlingVerification] = useState(false);
     const [verificationCheckComplete, setVerificationCheckComplete] = useState(false);
     const [verificationMessage, setVerificationMessage] = useState("");
@@ -31,21 +30,20 @@ export default function PolygonIDMedVerifier({
     const { theme } = useTheme();
     const [modalTheme, setModalTheme] = useState<"light" | "dark">(theme as "light" | "dark");
 
-    const serverUrl = window.location.href.startsWith("https") ? process.env.NEXT_PUBLIC_VERIFICATION_SERVER_PUBLIC_URL! : process.env.NEXT_PUBLIC_VERIFICATION_SERVER_LOCAL_HOST_URL!;
+    const serverUrl = window.location.href.startsWith("https") ? process.env.NEXT_PUBLIC_VERIFICATION_SERVER_PUBLIC_URL as string : process.env.NEXT_PUBLIC_VERIFICATION_SERVER_LOCAL_HOST_URL as string;
 
     const getQrCodeApi = (sessionId: string, walletAddress: string, licenseNumber: number) => `${serverUrl}/api/get-med-auth-qr?sessionId=${sessionId}&walletAddress=${encodeURIComponent(walletAddress)}&licenseNumber=${licenseNumber}`;
-    console.log(getQrCodeApi);
-    const socket = io(serverUrl);
+
+    const socket = useMemo(() => io(serverUrl), [serverUrl]);
 
     useEffect(() => {
         socket.on("connect", () => {
-            setSessionId(socket.id);
-            // only watch this session's events
-            socket.on(socket.id, (arg) => {
-                setSocketEvents((socketEvents) => [...socketEvents, arg]);
-            });
+        setSessionId(socket.id);
+        socket.on(socket.id, (arg) => {
+            setSocketEvents((socketEvents) => [...socketEvents, arg]);
         });
-    }, []);
+        });
+    }, [socket]);
 
     useEffect(() => {
         const fetchQrCode = async () => {
@@ -96,7 +94,7 @@ export default function PolygonIDMedVerifier({
                     <div>
                         {isHandlingVerification && (
                             <div>
-                                <p style={{ fontSize: "16px", fontFamily: "sans-serif" }}>Authenticating...</p>
+                                <p className="text-lg font-sans">Authenticating...</p>
                                 <Spinner className="my-2" size="lg" color="primary" />
                             </div>
                         )}
@@ -104,7 +102,7 @@ export default function PolygonIDMedVerifier({
 
                         {qrCodeData && !isHandlingVerification && !verificationCheckComplete && (
                             <div className="flex flex-col justify-center text-center items-center mb-1 gap-2">
-                                <QRCode value={JSON.stringify(qrCodeData)} size={350}/>
+                                <QRCode value={JSON.stringify(qrCodeData)} />
                                 {theme === "dark" && (
                                     <div className="flex gap-2 justify-center items-center">
                                         <p>Change to light mode if unable to scan</p>
@@ -133,3 +131,4 @@ export default function PolygonIDMedVerifier({
         </div>
     );
 }
+

@@ -19,7 +19,7 @@ function VerifyDoctor() {
                 <PolygonIDMedVerifier
                     onVerificationResult={setProvedPrescription}
                     walletAddress={"0xbdA087c59180Ee0E6e660591e907F59DcC30f0EF"}
-                    licenseNumber={123456787}
+                    licenseNumber={123456789}
                 />
             </div>
             <h3 className="text-center w-[50%] text-base">
