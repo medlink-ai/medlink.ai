@@ -109,7 +109,10 @@ export default function PolygonIDVerifier({
         <div className={`h-fit ${style}`}>
             <div
                 className="p-6 border-1 border-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-900 dark:hover:bg-opacity-70 hover:transition-background cursor-pointer flex flex-col justify-center items-center rounded-lg gap-2"
-                onClick={onOpen}
+                onClick={() => {
+                    setModalTheme(theme as "light" | "dark");
+                    onOpen();
+                }}
             >
                 <h1 className="text-lg font-bold bg-zinc-200 dark:bg-zinc-900 py-1 px-2 rounded-lg">{verifier}</h1>
                 <h2 className="text-md font-semibold text-primary">{item.product_name}</h2>
@@ -120,7 +123,10 @@ export default function PolygonIDVerifier({
                 <Modal
                     className={`w-fit ${modalTheme === "light" ? "bg-white text-black" : "bg-default-50 text-white"}`}
                     isOpen={isOpen}
-                    onClose={onClose}
+                    onClose={() => {
+                        onClose();
+                        setModalTheme(theme as "light" | "dark");
+                    }}
                     size="xl"
                 >
                     <ModalContent>

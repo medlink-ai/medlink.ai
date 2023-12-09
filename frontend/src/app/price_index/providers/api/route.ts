@@ -14,7 +14,7 @@ export async function POST(request: Request) {
 
         await functionRequest.data;
 
-        await new Promise((resolve) => setTimeout(resolve, 12000));
+        await new Promise((resolve) => setTimeout(resolve, 18000));
 
         const functionResponse = await axios.post<ProviderDetail[]>(
             `${process.env.API_BASE_URL}/api/chainlink-functions/function-response-provider`,
