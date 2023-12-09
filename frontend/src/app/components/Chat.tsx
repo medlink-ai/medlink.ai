@@ -4,18 +4,25 @@ import dayjs from "dayjs";
 import { useState, useRef, useEffect } from "react";
 import { MetaMaskAvatar } from "react-metamask-avatar";
 import { useAccount } from "wagmi";
+import PolygonIDMedVerifier from "./PolygonIDMedVerifier";
 import { Message, getSavedMessages, saveMessage, clearLocalStorageKey } from "../utils/utils";
 import Image from "next/image";
 
 function VerifyDoctor() {
+    const [provedPrescription, setProvedPrescription] = useState(false);
     return (
         <div className="flex flex-col h-full w-full justify-center items-center p-8 gap-6">
-            <h1 className="font-bold text-xl w-[80%] text-center">
+            <h1 className="font-bold font-sans text-xl w-[50%] text-center">
                 To verify your credential as licensed medical practitioner, please use your Polygon ID Wallet app to scan this QR code.
             </h1>
-            <div className="w-56 h-56 bg-black"></div>
-            <h2 className="font-semi-bold text-lg text-center">Type: LicenseValidation</h2>
-            <h3 className="text-center w-[80%]">
+            <div>
+                <PolygonIDMedVerifier
+                    onVerificationResult={setProvedPrescription}
+                    walletAddress={"0xbdA087c59180Ee0E6e660591e907F59DcC30f0EF"}
+                    licenseNumber={123456787}
+                />
+            </div>
+            <h3 className="text-center w-[50%] text-base">
                 Please note: This procedure will utilize decentralized oracle networks to authenticate the validity of a medical professional’s
                 license in a specific country.
             </h3>

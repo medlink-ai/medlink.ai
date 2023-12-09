@@ -92,6 +92,41 @@ export async function getAuthQr(req: Request, res: Response, io: Server, schema:
     return res.status(200).json(request);
 }
 
+export async function getAuthQrMed(req: Request, res: Response, io: Server, licenseNumber: number): Promise<Response> {
+    const sessionId = req.query.sessionId as string;
+
+    io.sockets.emit(sessionId, socketMessage('getAuthQr', STATUS.IN_PROGRESS, sessionId));
+
+    const uri = `${process.env.HOSTED_SERVER_URL as string}/api/verification-callback?sessionId=${sessionId}`;
+    console.log('uri', uri)
+    const request = auth.createAuthorizationRequest('test flow', process.env.VERIFIER_DID as string, uri);
+
+    request.id = sessionId;
+    request.thid = sessionId;
+
+    const scopes = [
+        {
+            id: 1,
+            circuitId: 'credentialAtomicQuerySigV2',
+            query: {
+                allowedIssuers: ['*'],
+                type: 'LicenseVerifier',
+                context: "ipfs://QmbrCFFUbFP7vxUE6FWx2wq4fQXbipXvKaSkrXm79QnwHJ",
+                credentialSubject: {
+                    license_number: { $eq: licenseNumber },
+                },
+            }
+        }
+    ];
+
+    request.body.scope = [...request.body.scope ?? [], ...scopes];
+    requestMap.set(sessionId, request);
+
+    console.log(`Auth request added to map for session ID: ${sessionId}`);
+
+    return res.status(200).json(request);
+}
+
 export async function handleVerification(req: Request, res: Response, io: Server): Promise<Response> {
     const sessionId = req.query.sessionId as string;
     console.log(`Handling verification for session ID: ${sessionId}`);
@@ -138,36 +173,3 @@ export async function handleVerification(req: Request, res: Response, io: Server
     }
 }
 
-export async function getAuthQrMed(req: Request, res: Response, io: Server, schema: string, walletAddress: string, licenseNumber: number): Promise<Response> {
-    const sessionId = req.query.sessionId as string;
-
-    io.sockets.emit(sessionId, socketMessage('getAuthQr', STATUS.IN_PROGRESS, sessionId));
-
-    const uri = `${process.env.HOSTED_SERVER_URL as string}/api/verification-callback?sessionId=${sessionId}`;
-    const request = auth.createAuthorizationRequest('test flow', process.env.VERIFIER_DID as string, uri);
-
-    request.id = sessionId;
-    request.thid = sessionId;
-
-    const scopes = [
-        {
-            id: 1,
-            circuitId: 'credentialAtomicQuerySigV2',
-            query: {
-                allowedIssuers: ['*'],
-                type: 'LicenseValidation',
-                context: schema,
-                credentialSubject: {
-                    license_number: { $eq: licenseNumber },
-                },
-            }
-        }
-    ];
-
-    request.body.scope = [...request.body.scope ?? [], ...scopes];
-    requestMap.set(sessionId, request);
-
-    console.log(`Auth request added to map for session ID: ${sessionId}`);
-
-    return res.status(200).json(request);
-}
