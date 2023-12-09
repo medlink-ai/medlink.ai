@@ -1,15 +1,17 @@
 "use client";
 
-import { Role } from "@/constants";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Chat } from "./components/Chat";
 import { Button, Divider } from "@nextui-org/react";
 import { useAccount } from "wagmi";
+import { ChainlinkFunctionContext } from "./providers";
+import { isUndefined } from "lodash";
 
 export default function Home() {
     const [isDealExpanded, setIsDealExpanded] = useState(true);
-
     const { isConnected } = useAccount();
+
+    const { consumer } = useContext(ChainlinkFunctionContext);
 
     return (
         <main className="flex flex-col items-center w-full h-[calc(100vh-64px)] bg-background">
@@ -17,6 +19,13 @@ export default function Home() {
                 <div>
                     <div className="absolute top-[64px] left-0 w-full h-[calc(100vh-64px)] bg-opacity-70 backdrop-blur-md z-50">
                         <div className="flex h-full justify-center items-center">Please sign in to enjoy Medlink.AI</div>
+                    </div>
+                </div>
+            )}
+            {isConnected && isUndefined(consumer) && (
+                <div>
+                    <div className="absolute top-[64px] left-0 w-full h-[calc(100vh-64px)] bg-background bg-opacity-70 backdrop-blur-md z-50">
+                        <div className="flex h-full justify-center items-center">Please wait for consumer creation before enjoying Medlink.AI</div>
                     </div>
                 </div>
             )}

@@ -7,10 +7,10 @@ import { mainnet, polygon, optimism, arbitrum } from "wagmi/chains";
 import { SessionProvider } from "next-auth/react";
 import { publicProvider } from "wagmi/providers/public";
 import { ToastContainer } from "react-toastify";
-import { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, createContext, useEffect, useState } from "react";
 
 import "react-toastify/dist/ReactToastify.css";
-import css from "styled-jsx/css";
+import { Consumer } from "@/constants/types";
 
 export const { chains, publicClient } = configureChains([mainnet, polygon, optimism, arbitrum], [publicProvider()]);
 
@@ -43,20 +43,32 @@ function ToastProvider() {
                 toastClassName={(ctx) =>
                     `${contextClass} absolute flex p-1 min-h-10 rounded-md justify-between overflow-hidden cursor-pointer top-[50px] right-2 min-w-[300px]`
                 }
-                bodyClassName={() => `text-sm text-${theme === "dark" ? "white" : "black"} font-med block p-3`}
+                bodyClassName={() => `text-sm text-${theme === "dark" ? "white" : "black"} font-med block p-3 flex`}
                 closeButton={false}
             />
         </>
     );
 }
 
+export const ChainlinkFunctionContext = createContext<{
+    consumer: Consumer | undefined;
+    setConsumer: Dispatch<SetStateAction<Consumer | undefined>>;
+}>({
+    consumer: undefined,
+    setConsumer: () => {},
+});
+
 export function Providers({ children, session }: { children: React.ReactNode; session: any }) {
+    const [consumer, setConsumer] = useState(localStorage.getItem("consumer") ? JSON.parse(localStorage.getItem("consumer")!) : undefined);
+
     return (
         <NextUIProvider>
             <NextThemesProvider attribute="class" defaultTheme="dark">
                 <WagmiConfig config={config}>
                     <ToastProvider />
-                    <SessionProvider session={session}>{children}</SessionProvider>
+                    <SessionProvider session={session}>
+                        <ChainlinkFunctionContext.Provider value={{ consumer, setConsumer }}>{children}</ChainlinkFunctionContext.Provider>
+                    </SessionProvider>
                 </WagmiConfig>
             </NextThemesProvider>
         </NextUIProvider>

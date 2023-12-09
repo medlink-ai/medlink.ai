@@ -1,13 +1,14 @@
 "use client";
 
 import PolygonIDVerifier from "@/app/components/PolygonIDVerifier";
-import { MockDrugDetails } from "@/constants";
+import { ChainlinkFunctionContext } from "@/app/providers";
 
-import { DrugDetails, ProviderDetail } from "@/constants/types";
+import { DrugDetails, ErrorData, ProviderDetail } from "@/constants/types";
 import { Input, Breadcrumbs, BreadcrumbItem, Button, Spinner, Switch } from "@nextui-org/react";
 import axios from "axios";
+import { delay, isUndefined } from "lodash";
 import { useRouter } from "next/navigation";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useAccount } from "wagmi";
 
@@ -26,13 +27,16 @@ function Budget({
     const [isLoading, setIsLoading] = useState(false);
     const [drugDetail, setDrugDetail] = useState<DrugDetails>();
 
+    const { consumer } = useContext(ChainlinkFunctionContext);
+    const router = useRouter();
+
     useEffect(() => {
         const getDrugDetails = async () => {
             try {
                 setIsLoading(true);
-                const res = await axios.post<DrugDetails>(
+                const res = await axios.post<DrugDetails | ErrorData>(
                     `/price_index/api`,
-                    { product: product },
+                    { product: product, ...consumer },
                     {
                         headers: {
                             cache: "no-cache",
@@ -42,11 +46,13 @@ function Budget({
                 );
                 const data = res.data;
 
-                if (res.status === 500) {
-                    toast.error("Something went wrong, please try again later.");
+                if ((data as ErrorData).status === 500 || (data as ErrorData).status === 404) {
+                    console.log("Error fetching drug details:", data);
+                    toast.error("Something went wrong, please try again later. Navigating back...");
+                    delay(() => router.back(), 5000);
                 }
 
-                setDrugDetail(data);
+                setDrugDetail(data as DrugDetails);
             } catch (error) {
                 console.error("Error fetching drug details:", error);
                 toast.error("Something went wrong, please try again later.");
@@ -66,7 +72,10 @@ function Budget({
             </div>
 
             {isLoading && !drugDetail ? (
-                <Spinner className="mt-8" />
+                <div className="flex justify-center items-center gap-4 mt-8">
+                    <h1 className="font-bold text-lg">Fetching Price Index...</h1>
+                    <Spinner />
+                </div>
             ) : (
                 drugDetail &&
                 drugDetail.price_index && (
@@ -133,11 +142,13 @@ function Budget({
 function Providers({
     product,
     budget,
+    setBudget,
     setProvedPrescription,
     setIsProviderLoading,
 }: {
     product: string;
     budget: string | undefined;
+    setBudget: Dispatch<SetStateAction<string | undefined>>;
     setProvedPrescription: Dispatch<SetStateAction<boolean>>;
     setIsProviderLoading: Dispatch<SetStateAction<boolean>>;
 }) {
@@ -147,15 +158,20 @@ function Providers({
     const [isLoading, setIsLoading] = useState(false);
 
     const { address } = useAccount();
+    const { consumer } = useContext(ChainlinkFunctionContext);
 
     useEffect(() => {
+        console.log("budget", budget);
+        if (isUndefined(budget)) {
+            return;
+        }
         const getProviders = async () => {
             try {
                 setIsLoading(true);
                 setIsProviderLoading(true);
-                const res = await axios.post<ProviderDetail[]>(
+                const res = await axios.post<ProviderDetail[] | ErrorData>(
                     `/price_index/providers/api`,
-                    { product: product, budget: budget },
+                    { product: product, budget: budget, ...consumer },
                     {
                         headers: {
                             cache: "no-cache",
@@ -165,7 +181,13 @@ function Providers({
                 );
                 const data = res.data;
 
-                setProviders(data);
+                if ((data as ErrorData).status === 500 || (data as ErrorData).status === 404) {
+                    console.log("Error fetching provider details:", data);
+                    toast.error("Something went wrong, please try again later. Navigating back...");
+                    delay(() => setBudget(undefined), 5000);
+                }
+
+                setProviders(data as ProviderDetail[]);
             } catch (error) {
                 console.error("Error fetching drug details:", error);
             } finally {
@@ -175,7 +197,7 @@ function Providers({
         };
 
         getProviders();
-    }, []);
+    }, [budget]);
 
     return (
         <div className="w-[50%] h-full overflow-hidden gap-1">
@@ -211,19 +233,20 @@ function Providers({
                     <Spinner className="mt-4" />
                 ) : (
                     <>
-                        {providers.map((provider, index) => (
-                            <PolygonIDVerifier
-                                key={index}
-                                credentialType={provider.prescription_drug ? "PrescriptionMedicine" : "NonPrescriptionMedicine"}
-                                onVerificationResult={setProvedPrescription}
-                                verifier={provider.provider}
-                                max_range={provider.max_range}
-                                min_range={provider.min_range}
-                                patient_wallet_address={address!}
-                                item={provider}
-                                style={index === providers.length - 1 ? "mb-10" : ""}
-                            />
-                        ))}
+                        {providers.length > 0 &&
+                            providers.map((provider, index) => (
+                                <PolygonIDVerifier
+                                    key={index}
+                                    credentialType={provider.prescription_drug ? "PrescriptionMedicine" : "NonPrescriptionMedicine"}
+                                    onVerificationResult={setProvedPrescription}
+                                    verifier={provider.provider}
+                                    max_range={provider.max_range}
+                                    min_range={provider.min_range}
+                                    patient_wallet_address={address!}
+                                    item={provider}
+                                    style={index === providers.length - 1 ? "mb-10" : ""}
+                                />
+                            ))}
                     </>
                 )}
             </div>
@@ -231,18 +254,25 @@ function Providers({
     );
 }
 
-function Breadcrumb({ product, confirmation = false }: { product: string; confirmation: boolean }) {
+function Breadcrumb({ product, confirmation = false, onNavigateBack }: { product: string; confirmation: boolean; onNavigateBack: () => void }) {
     const router = useRouter();
     return (
         <Breadcrumbs>
             <BreadcrumbItem
                 onPress={() => {
+                    onNavigateBack();
                     router.push("/price_index");
                 }}
             >
                 Price Index
             </BreadcrumbItem>
-            <BreadcrumbItem>{product}</BreadcrumbItem>
+            <BreadcrumbItem
+                onPress={() => {
+                    onNavigateBack();
+                }}
+            >
+                {product}
+            </BreadcrumbItem>
             {confirmation && <BreadcrumbItem>Confirm Order</BreadcrumbItem>}
         </Breadcrumbs>
     );
@@ -351,7 +381,14 @@ export default function Page({ params }: { params: { product: string } }) {
 
     return (
         <div className="flex flex-col w-full h-[calc(100vh-64px)] py-6 px-6">
-            <Breadcrumb product={decodedProducts} confirmation={provedPrescription} />
+            <Breadcrumb
+                product={decodedProducts}
+                confirmation={provedPrescription}
+                onNavigateBack={() => {
+                    setProvedPrescription(false);
+                    setBudget(undefined);
+                }}
+            />
 
             <div className="flex w-full h-full gap-6 py-4">
                 {!provedPrescription ? (
@@ -362,6 +399,7 @@ export default function Page({ params }: { params: { product: string } }) {
                             <Providers
                                 product={decodedProducts}
                                 budget={budget}
+                                setBudget={setBudget}
                                 setProvedPrescription={setProvedPrescription}
                                 setIsProviderLoading={setIsProviderLoading}
                             />

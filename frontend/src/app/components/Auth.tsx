@@ -1,16 +1,18 @@
 "use client";
 
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/react";
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Modal, ModalContent, useDisclosure } from "@nextui-org/react";
 import { getCsrfToken, signIn, useSession, signOut } from "next-auth/react";
 import { SiweMessage } from "siwe";
 import { useAccount, useConnect, useDisconnect, useNetwork, useSignMessage } from "wagmi";
 import { InjectedConnector } from "wagmi/connectors/injected";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { redirect, useRouter, useSearchParams } from "next/navigation";
 import { MetaMaskAvatar } from "react-metamask-avatar";
-import { on } from "events";
+import axios from "axios";
+import { Consumer } from "@/constants/types";
+import { ChainlinkFunctionContext } from "../providers";
 
 export async function getServerSideProps(context: any) {
     return {
@@ -39,6 +41,8 @@ export default function Auth() {
 
     const [isMounted, setIsMounted] = useState(false);
 
+    const { consumer, setConsumer } = useContext(ChainlinkFunctionContext);
+
     const handleLogin = useCallback(async () => {
         try {
             const callbackUrl = "/price_index";
@@ -60,6 +64,22 @@ export default function Auth() {
                 signature,
                 callbackUrl,
             });
+
+            const createConsumer = async () => {
+                await axios.post<Consumer>("/consumer/api").then((consumer) => {
+                    const { consumerAddress, subscriptionId } = consumer.data;
+                    localStorage.setItem("consumer", JSON.stringify({ consumerAddress, subscriptionId }));
+                    setConsumer(consumer.data);
+                });
+            };
+
+            if (!localStorage.getItem("consumer")) {
+                toast.promise(createConsumer, {
+                    pending: "Creating consumer",
+                    success: "Consumer created successfully🥳",
+                    error: "Consumer creation failed, please try again 🤯",
+                });
+            }
         } catch (error) {
             window.alert(error);
         }
@@ -83,6 +103,8 @@ export default function Auth() {
         }
     }, [isMounted]);
 
+    const { isOpen, onOpen, onClose } = useDisclosure();
+
     return (
         <>
             {isConnected ? (
@@ -100,8 +122,19 @@ export default function Auth() {
                             </Button>
                         </DropdownTrigger>
                         <DropdownMenu aria-label="Static Actions">
-                            <DropdownItem key="new">View Profile</DropdownItem>
-                            <DropdownItem key="delete" className="text-danger" color="danger" onClick={() => disconnect()}>
+                            <DropdownItem key="new" onClick={onOpen}>
+                                View Profile
+                            </DropdownItem>
+
+                            <DropdownItem
+                                key="delete"
+                                className="text-danger"
+                                color="danger"
+                                onClick={() => {
+                                    disconnect();
+                                    redirect("/?unauth=true");
+                                }}
+                            >
                                 Disconnect
                             </DropdownItem>
                         </DropdownMenu>
@@ -122,6 +155,15 @@ export default function Auth() {
                     Sign In With Ethereum
                 </Button>
             )}
+            <Modal className="w-fit py-12 px-8" isOpen={isOpen} onClose={onClose} size="2xl">
+                <ModalContent>
+                    <div className="flex flex-col items-start gap-2">
+                        <h2 className="text-md font-semibold text-primary">Address: {address}</h2>
+                        <h2 className="text-md font-semibold text-primary">Consumer Address: {consumer?.consumerAddress}</h2>
+                        <h2 className="text-md font-semibold text-primary">Subscription ID: {consumer?.subscriptionId}</h2>
+                    </div>
+                </ModalContent>
+            </Modal>
         </>
     );
 }

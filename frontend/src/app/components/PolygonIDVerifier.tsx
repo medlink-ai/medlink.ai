@@ -40,7 +40,9 @@ export default function PolygonIDVerifier({
         : process.env.NEXT_PUBLIC_VERIFICATION_SERVER_LOCAL_HOST_URL!;
 
     const getQrCodeApi = (sessionId: string, verifier: string, max_range: string, min_range: string, patient_wallet_address: string) =>
-        `${serverUrl}/api/get-auth-qr?sessionId=${sessionId}&schema=${encodeURIComponent(process.env.NEXT_PUBLIC_POLYGON_ID_SCHEME as string)}&verifier=${encodeURIComponent(verifier)}&max_range=${max_range}&min_range=${min_range}&patient_wallet_address=${patient_wallet_address}`;
+        `${serverUrl}/api/get-auth-qr?sessionId=${sessionId}&schema=${encodeURIComponent(
+            process.env.NEXT_PUBLIC_POLYGON_ID_SCHEME as string
+        )}&verifier=${encodeURIComponent(verifier)}&max_range=${max_range}&min_range=${min_range}&patient_wallet_address=${patient_wallet_address}`;
 
     const socket = io(serverUrl);
 

@@ -30,3 +30,21 @@ export interface ProviderDetail {
     min_range: string;
     max_range: string;
 }
+
+export interface ErrorData {
+    data: {
+        code: string;
+        config: object;
+        message: string;
+        name: string;
+        stack: string;
+        status: number;
+    };
+    message: string;
+    status: number;
+}
+
+export interface Consumer {
+    consumerAddress: string;
+    subscriptionId: string;
+}
