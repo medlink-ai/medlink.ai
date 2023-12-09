@@ -42,18 +42,13 @@ export default function PolygonIDVerifier({
     const { theme } = useTheme();
     const [modalTheme, setModalTheme] = useState<"light" | "dark">(theme as "light" | "dark");
 
-    const serverUrl = window.location.href.startsWith("https")
-        ? process.env.NEXT_PUBLIC_VERIFICATION_SERVER_PUBLIC_URL!
-        : process.env.NEXT_PUBLIC_VERIFICATION_SERVER_LOCAL_HOST_URL!;
+    const serverUrl = window.location.href.startsWith("https") ? process.env.NEXT_PUBLIC_VERIFICATION_SERVER_PUBLIC_URL! : process.env.NEXT_PUBLIC_VERIFICATION_SERVER_LOCAL_HOST_URL!;
 
-    const getQrCodeApi = (sessionId: string, verifier: string, max_range: string, min_range: string, patient_wallet_address: string) =>
-        `${serverUrl}/api/get-auth-qr?sessionId=${sessionId}&schema=${encodeURIComponent(
-            process.env.NEXT_PUBLIC_POLYGON_ID_SCHEME as string
-        )}&verifier=${encodeURIComponent(verifier)}&max_range=${max_range}&min_range=${min_range}&patient_wallet_address=${patient_wallet_address}`;
+    const getQrCodeApi = (sessionId: string, verifier: string, max_range: string, min_range: string, patient_wallet_address: string) => `${serverUrl}/api/get-auth-qr?sessionId=${sessionId}&schema=${encodeURIComponent(process.env.NEXT_PUBLIC_POLYGON_ID_SCHEME as string)}&verifier=${encodeURIComponent(verifier)}&max_range=${max_range}&min_range=${min_range}&patient_wallet_address=${patient_wallet_address}`;
+
+    const socket = io(serverUrl);
 
     useEffect(() => {
-        const socket = io(serverUrl);
-
         socket.on("connect", () => {
             setSessionId(socket.id);
             // only watch this session's events
@@ -61,10 +56,6 @@ export default function PolygonIDVerifier({
                 setSocketEvents((socketEvents) => [...socketEvents, arg]);
             });
         });
-
-        return () => {
-            socket.close();
-        };
     }, []);
 
     useEffect(() => {
@@ -95,6 +86,7 @@ export default function PolygonIDVerifier({
                         setTimeout(() => {
                             reportVerificationResult(true);
                         }, 2000);
+                        socket.close();
                     } else {
                         setVerificationMessage("Error verifying prescription");
                     }
@@ -110,13 +102,7 @@ export default function PolygonIDVerifier({
 
     return (
         <div className={`h-fit ${style}`}>
-            <div
-                className="p-6 border-1 border-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-900 dark:hover:bg-opacity-70 hover:transition-background cursor-pointer flex flex-col justify-center items-center rounded-lg gap-2"
-                onClick={() => {
-                    setModalTheme(theme as "light" | "dark");
-                    onOpen();
-                }}
-            >
+            <div className="p-6 border-1 border-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-900 dark:hover:bg-opacity-70 hover:transition-background cursor-pointer flex flex-col justify-center items-center rounded-lg gap-2" onClick={onOpen}>
                 <h1 className="text-lg font-bold bg-zinc-200 dark:bg-zinc-900 py-1 px-2 rounded-lg">{verifier}</h1>
                 <h2 className="text-md font-semibold text-primary">{item.product_name}</h2>
                 <h3 className="text-md">{item.indication}</h3>
@@ -126,10 +112,7 @@ export default function PolygonIDVerifier({
                 <Modal
                     className={`w-fit ${modalTheme === "light" ? "bg-white text-black" : "bg-default-50 text-white"}`}
                     isOpen={isOpen}
-                    onClose={() => {
-                        onClose();
-                        setModalTheme(theme as "light" | "dark");
-                    }}
+                    onClose={onClose}
                     size="xl"
                 >
                     <ModalContent>
@@ -139,12 +122,12 @@ export default function PolygonIDVerifier({
 
                         <ModalBody className="flex justify-center text-sm">
                             {isHandlingVerification && (
-                                <div className="flex flex-col w-full justify-center items-center gap-2">
+                                <div>
                                     <p style={{ fontSize: "16px", fontFamily: "sans-serif" }}>Authenticating...</p>
                                     <Spinner className="my-2" size="lg" color="primary" />
                                 </div>
                             )}
-                            <div className="text-md flex w-full justify-center">{verificationMessage}</div>
+                            <div className="text-md flex justify-center">{verificationMessage}</div>
 
                             {qrCodeData && !isHandlingVerification && !verificationCheckComplete && (
                                 <div className="flex flex-col justify-center items-center mb-1 gap-2">

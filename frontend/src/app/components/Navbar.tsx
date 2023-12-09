@@ -24,7 +24,7 @@ export default function Nav() {
         >
             <NavbarBrand className="gap-4">
                 <Image src="/medlink.ai.png" width="40" height="40" alt="Medlink.AI" className="rounded-[50px]" />
-                <Link href="/" className="font-semibold text-white">
+                <Link href="#" className="font-semibold text-white">
                     Medlink.AI
                 </Link>
             </NavbarBrand>
