@@ -6,6 +6,7 @@ import { ChainlinkFunctionContext } from "@/app/providers";
 import { DrugDetails, ErrorData, ProviderDetail } from "@/constants/types";
 import { Input, Breadcrumbs, BreadcrumbItem, Button, Spinner, Switch } from "@nextui-org/react";
 import axios from "axios";
+import { delay, isUndefined } from "lodash";
 import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -27,6 +28,7 @@ function Budget({
     const [drugDetail, setDrugDetail] = useState<DrugDetails>();
 
     const { consumer } = useContext(ChainlinkFunctionContext);
+    const router = useRouter();
 
     useEffect(() => {
         const getDrugDetails = async () => {
@@ -44,9 +46,10 @@ function Budget({
                 );
                 const data = res.data;
 
-                if ((data as ErrorData).status === 500) {
+                if ((data as ErrorData).status === 500 || (data as ErrorData).status === 404) {
                     console.log("Error fetching drug details:", data);
-                    toast.error("Something went wrong, please try again later.");
+                    toast.error("Something went wrong, please try again later. Navigating back...");
+                    delay(() => router.back(), 5000);
                 }
 
                 setDrugDetail(data as DrugDetails);
@@ -69,7 +72,10 @@ function Budget({
             </div>
 
             {isLoading && !drugDetail ? (
-                <Spinner className="mt-8" />
+                <div className="flex justify-center items-center gap-4 mt-8">
+                    <h1 className="font-bold text-lg">Fetching Price Index...</h1>
+                    <Spinner />
+                </div>
             ) : (
                 drugDetail &&
                 drugDetail.price_index && (
@@ -136,11 +142,13 @@ function Budget({
 function Providers({
     product,
     budget,
+    setBudget,
     setProvedPrescription,
     setIsProviderLoading,
 }: {
     product: string;
     budget: string | undefined;
+    setBudget: Dispatch<SetStateAction<string | undefined>>;
     setProvedPrescription: Dispatch<SetStateAction<boolean>>;
     setIsProviderLoading: Dispatch<SetStateAction<boolean>>;
 }) {
@@ -153,11 +161,15 @@ function Providers({
     const { consumer } = useContext(ChainlinkFunctionContext);
 
     useEffect(() => {
+        console.log("budget", budget);
+        if (isUndefined(budget)) {
+            return;
+        }
         const getProviders = async () => {
             try {
                 setIsLoading(true);
                 setIsProviderLoading(true);
-                const res = await axios.post<ProviderDetail[]>(
+                const res = await axios.post<ProviderDetail[] | ErrorData>(
                     `/price_index/providers/api`,
                     { product: product, budget: budget, ...consumer },
                     {
@@ -169,7 +181,13 @@ function Providers({
                 );
                 const data = res.data;
 
-                setProviders(data);
+                if ((data as ErrorData).status === 500 || (data as ErrorData).status === 404) {
+                    console.log("Error fetching provider details:", data);
+                    toast.error("Something went wrong, please try again later. Navigating back...");
+                    delay(() => setBudget(undefined), 5000);
+                }
+
+                setProviders(data as ProviderDetail[]);
             } catch (error) {
                 console.error("Error fetching drug details:", error);
             } finally {
@@ -179,7 +197,7 @@ function Providers({
         };
 
         getProviders();
-    }, []);
+    }, [budget]);
 
     return (
         <div className="w-[50%] h-full overflow-hidden gap-1">
@@ -381,6 +399,7 @@ export default function Page({ params }: { params: { product: string } }) {
                             <Providers
                                 product={decodedProducts}
                                 budget={budget}
+                                setBudget={setBudget}
                                 setProvedPrescription={setProvedPrescription}
                                 setIsProviderLoading={setIsProviderLoading}
                             />
