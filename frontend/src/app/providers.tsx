@@ -59,7 +59,9 @@ export const ChainlinkFunctionContext = createContext<{
 });
 
 export function Providers({ children, session }: { children: React.ReactNode; session: any }) {
-    const [consumer, setConsumer] = useState(localStorage.getItem("consumer") ? JSON.parse(localStorage.getItem("consumer")!) : undefined);
+    const [consumer, setConsumer] = useState(
+        typeof window !== "undefined" && localStorage.getItem("consumer") ? JSON.parse(localStorage.getItem("consumer")!) : undefined
+    );
 
     return (
         <NextUIProvider>
