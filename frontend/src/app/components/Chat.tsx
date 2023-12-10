@@ -103,13 +103,13 @@ function ChatBubble({ msg, status }: { msg: Message; status?: "loading" | "error
 
 export function Chat() {
     const [question, setQuestion] = useState("");
-    const [patientContext, setPatientContext] = useState("");
-    const [doctorContext, setDoctorContext] = useState("");
+    // const [patientContext, setPatientContext] = useState("");
+    // const [doctorContext, setDoctorContext] = useState("");
     const [answer, setAnswer] = useState("");
     const [messages, setMessages] = useState<Message[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const workerRef = useRef<Worker | null>(null);
+    // const workerRef = useRef<Worker | null>(null);
 
     const [mode, setMode] = useState<Role>(Role.PATIENT);
 
@@ -127,62 +127,71 @@ export function Chat() {
 
     const inputRef = useRef<HTMLTextAreaElement>(null);
 
-    useEffect(() => {
-        // Load only patient's messages from local storage
-        const savedMessages = getSavedMessages().filter((msg) => msg.sender === Role.PATIENT || msg.sender === Role.BOT);
-        setMessages(savedMessages);
-        setPatientContext(savedMessages.map((msg) => msg.text).join(" "));
+    // useEffect(() => {
+    //     // Load only patient's messages from local storage
+    //     const savedMessages = getSavedMessages().filter((msg) => msg.sender === Role.PATIENT || msg.sender === Role.BOT);
+    //     setMessages(savedMessages);
+    //     setPatientContext(savedMessages.map((msg) => msg.text).join(" "));
 
-        if (!workerRef.current) {
-            workerRef.current = new Worker(new URL("./worker.js", import.meta.url), { type: "module" });
+    //     if (!workerRef.current) {
+    //         workerRef.current = new Worker(new URL("./worker.js", import.meta.url), { type: "module" });
 
-            workerRef.current.onmessage = (e) => {
-                if (e.data.error) {
-                    setError(e.data.error);
-                    setIsLoading(false);
-                } else {
-                    setAnswer(e.data.answer);
-                    const newMessage: Message = { sender: Role.BOT, text: e.data.answer, timestamp: dayjs() };
-                    if (mode === Role.PATIENT) {
-                        saveMessage(newMessage); // Save bot's response only in Patient mode
-                    }
-                    setMessages((prevMessages) => [...prevMessages, newMessage]);
-                    setIsLoading(false);
-                }
-            };
-        }
+    //         workerRef.current.onmessage = (e) => {
+    //             if (e.data.error) {
+    //                 setError(e.data.error);
+    //                 setIsLoading(false);
+    //             } else {
+    //                 setAnswer(e.data.answer);
+    //                 const newMessage: Message = { sender: Role.BOT, text: e.data.answer, timestamp: dayjs() };
+    //                 if (mode === Role.PATIENT) {
+    //                     saveMessage(newMessage); // Save bot's response only in Patient mode
+    //                 }
+    //                 setMessages((prevMessages) => [...prevMessages, newMessage]);
+    //                 setIsLoading(false);
+    //             }
+    //         };
+    //     }
 
-        return () => {
-            if (workerRef.current) {
-                workerRef.current.terminate();
-                workerRef.current = null;
-            }
-        };
-    }, []);
+    //     return () => {
+    //         if (workerRef.current) {
+    //             workerRef.current.terminate();
+    //             workerRef.current = null;
+    //         }
+    //     };
+    // }, []);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         inputRef.current?.blur();
         if (question) {
             setIsLoading(true);
             setError(null);
             const newMessage: Message = { sender: mode, text: question, timestamp: dayjs() };
-            if (mode === Role.PATIENT) {
-                saveMessage(newMessage); // Save patient's message only in Patient mode
-            }
+            setQuestion("");
+
+            // if (mode === Role.PATIENT) {
+            //     saveMessage(newMessage); // Save patient's message only in Patient mode
+            // }
             setMessages((prevMessages) => [...prevMessages, newMessage]);
 
-            if (mode === Role.PATIENT) {
-                const updatedPatientContext = patientContext + " " + question;
-                setPatientContext(updatedPatientContext);
-                workerRef.current?.postMessage({ question, context: updatedPatientContext, mode });
-            } else {
-                const updatedDoctorContext = patientContext + " " + question;
-                setDoctorContext(updatedDoctorContext);
-                workerRef.current?.postMessage({ question, context: updatedDoctorContext, mode });
-            }
+            // if (mode === Role.PATIENT) {
+            //     const updatedPatientContext = patientContext + " " + question;
+            //     setPatientContext(updatedPatientContext);
+            //     workerRef.current?.postMessage({ question, context: updatedPatientContext, mode });
+            // } else {
+            //     const updatedDoctorContext = patientContext + " " + question;
+            //     setDoctorContext(updatedDoctorContext);
+            //     workerRef.current?.postMessage({ question, context: updatedDoctorContext, mode });
+            // }
 
-            setQuestion("");
+            await axios
+                .post("/chat/api", {
+                    prompt: question,
+                })
+                .then((res) => {
+                    // setMessages((prevMessages) => [...prevMessages, { sender: Role.BOT, text: res.data, timestamp: dayjs() }]);
+                    console.log("res.data", res.data);
+                });
         }
     };
 

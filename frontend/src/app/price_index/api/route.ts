@@ -15,11 +15,14 @@ export async function POST(request: Request) {
     try {
         const { product, consumerAddress, subscriptionId } = await request.json();
 
-        const functionRequest = await axios.post(`${process.env.API_BASE_URL}/api/chainlink-functions/functions-request-response`, {
-            drug_details: product,
-            consumerAddress,
-            subscriptionId,
-        });
+        const functionRequest = await axios.post(
+            `${process.env.NEXT_PUBLIC_VERIFICATION_SERVER_LOCAL_HOST_URL}/api/chainlink-functions/functions-request-response`,
+            {
+                drug_details: product,
+                consumerAddress,
+                subscriptionId,
+            }
+        );
 
         await functionRequest.data;
 
@@ -30,7 +33,7 @@ export async function POST(request: Request) {
                 await new Promise((resolve) => setTimeout(resolve, 5000));
 
                 const functionResponse = await axios.post<DrugDetails>(
-                    `${process.env.API_BASE_URL}/api/chainlink-functions/post-functions-response`,
+                    `${process.env.NEXT_PUBLIC_VERIFICATION_SERVER_LOCAL_HOST_URL}/api/chainlink-functions/post-functions-response`,
                     {
                         consumerAddress,
                     }
