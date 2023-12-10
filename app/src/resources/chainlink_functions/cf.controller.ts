@@ -269,9 +269,9 @@ class ChainlinkFunctionsController implements Controller {
 
     private functionRequestOpenAIPrompt = async (req: Request, res: Response, next: NextFunction): Promise<any[] | string | void> => {
         try {
-            const { consumerAddress, subscriptionId, prompt } = req.body;
+            const { prompt } = req.body;
 
-            const result = await this.ChainlinkFunctionsService.requestPrompt(consumerAddress, subscriptionId, prompt);            
+            const result = await this.ChainlinkFunctionsService.requestPrompt(prompt);            
             res.status(200).json(result.toString());
         } catch (error: any) {
             console.log('Functions consumer for request prompt failed.');
@@ -281,9 +281,7 @@ class ChainlinkFunctionsController implements Controller {
 
     private functionResponseOpenAIPrompt = async (req: Request, res: Response, next: NextFunction): Promise<any[] | string | void> => {
         try {
-            const { consumerAddress } = req.body;
-
-            const result = await this.ChainlinkFunctionsService.readPrompt(consumerAddress);            
+            const result = await this.ChainlinkFunctionsService.readPrompt();            
             res.status(200).json(result.toString());
         } catch (error: any) {
             console.log('Functions consumer for response prompt failed.');
