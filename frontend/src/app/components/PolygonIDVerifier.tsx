@@ -115,7 +115,7 @@ export default function PolygonIDVerifier({
                     size="xl"
                 >
                     <ModalContent>
-                        <ModalHeader className="flex justify-center text-md mt-8">
+                        <ModalHeader className="flex justify-center text-md mt-8 text-center">
                             To verify your valid drug prescription, please use your Polygon ID Wallet App to scan this QR Code.
                         </ModalHeader>
 
@@ -147,14 +147,14 @@ export default function PolygonIDVerifier({
 
                             {qrCodeData.body?.scope[0].query && (
                                 <div style={{ marginTop: "10px" }}>
-                                    <p style={{ fontSize: "16px", fontFamily: "sans-serif" }}>
+                                    <p style={{ fontSize: "16px", fontFamily: "sans-serif", textAlign: "center" }}>
                                         <span style={{ fontWeight: "bold" }}>Type:</span> {qrCodeData.body?.scope[0].query.type}
                                     </p>
                                 </div>
                             )}
 
                             {qrCodeData.body.message && (
-                                <p style={{ fontSize: "16px", fontFamily: "sans-serif" }}>
+                                <p style={{ fontSize: "16px", fontFamily: "sans-serif",  textAlign: "center" }}>
                                     <span style={{ fontWeight: "bold" }}>Verifier:</span> {qrCodeData.body.message}
                                 </p>
                             )}

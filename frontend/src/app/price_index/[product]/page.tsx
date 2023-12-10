@@ -11,6 +11,8 @@ import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useAccount } from "wagmi";
+import { ethers } from 'ethers';
+import aggregatorV3InterfaceABI from './AggregatorV3Interface.json';
 
 function Budget({
     product,
@@ -279,7 +281,23 @@ function Breadcrumb({ product, confirmation = false, onNavigateBack }: { product
 }
 
 function ConfirmOrder({ product, onCancel }: { product: string; onCancel: () => void }) {
-    const USD_TO_MATIC_EXCHANGE_RATE = 0.01;
+
+    const provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL as string);
+    const addr = "0xd0D5e3DB44DE05E9F294BB0a3bEEaF030DE24Ada";
+    const priceFeed = new ethers.Contract(addr, aggregatorV3InterfaceABI.abi, provider);
+
+    const USDtoMatic = () => {
+        const data: any = priceFeed.latestRoundData().then((roundData) => {
+            return ethers.formatUnits(roundData.answer, "wei")
+        })
+
+        const maticToUSD = 1 / parseFloat(data)
+
+        return maticToUSD;
+
+    }
+
+    const USD_TO_MATIC_EXCHANGE_RATE = USDtoMatic();
 
     const [quantity, setQuantity] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
@@ -324,7 +342,7 @@ function ConfirmOrder({ product, onCancel }: { product: string; onCancel: () => 
                 <div className="flex justify-between items-start gap-10 w-full">
                     <div className="flex flex-col w-96 text-left items-start gap-2">
                         <p className="font-bold text-md">Medicine</p>
-                        <p className="font-bold text-teal-500">{medicineDetails.name}</p>
+                        <p className="font-bold text-teal-800">{medicineDetails.name}</p>
                     </div>
 
                     <div className="flex flex-col w-fit items-start text-left gap-2">
@@ -333,11 +351,11 @@ function ConfirmOrder({ product, onCancel }: { product: string; onCancel: () => 
                             <Button
                                 isIconOnly
                                 size="sm"
-                                className="bg-teal-500 text-white rounded-sm"
+                                className="bg-teal-800 text-white rounded-sm"
                                 onClick={handleDecrement}
                                 disabled={quantity === 1}
                             >
-                                -
+                                
                             </Button>
                             <input
                                 value={quantity}
@@ -345,7 +363,7 @@ function ConfirmOrder({ product, onCancel }: { product: string; onCancel: () => 
                                 className="text-center w-12 mx-2"
                                 readOnly
                             />
-                            <Button isIconOnly size="sm" className="bg-teal-500 text-white rounded-sm" onClick={handleIncrement}>
+                            <Button isIconOnly size="sm" className="bg-teal-900 text-white rounded-sm" onClick={handleIncrement}>
                                 +
                             </Button>
                         </div>
@@ -355,7 +373,7 @@ function ConfirmOrder({ product, onCancel }: { product: string; onCancel: () => 
                         <p className="font-bold text-md">Total Prices</p>
                         <div className="flex flex-col text-left space-y-1">
                             <p className="font-bold text-md">{totalPriceMatic} MATIC</p>
-                            <p className="text-xs">(${totalPriceUSD} USD</p>
+                            <p className="text-xs">(${totalPriceUSD} USD)</p>
                         </div>
                     </div>
                 </div>
@@ -364,7 +382,7 @@ function ConfirmOrder({ product, onCancel }: { product: string; onCancel: () => 
                     <Button className="bg-gray-300 text-gray-700 border rounded-lg px-4 py-2 w-[30%]" onClick={onCancel}>
                         Cancel
                     </Button>
-                    <Button className="bg-teal-500 text-white rounded-lg px-4 py-2 w-[70%]" onClick={handlePay} disabled={isLoading}>
+                    <Button className="bg-teal-900 text-white rounded-lg px-4 py-2 w-[70%]" onClick={handlePay} disabled={isLoading}>
                         {isLoading ? <Spinner /> : "Confirm Order"}
                     </Button>
                 </div>

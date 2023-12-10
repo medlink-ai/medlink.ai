@@ -11,7 +11,7 @@ const readResponse = async (consumerAddress: string): Promise<string> => {
 
         if (!isInvalidResponse(responseBytes)) {
             const decodedResponse = decodeResult(responseBytes, ReturnType.string);
-            console.log(decodedResponse);
+            
             return `${decodedResponse}`;
         }
 

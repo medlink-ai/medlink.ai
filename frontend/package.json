@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@chainlink/contracts": "^0.8.0",
     "@nextui-org/react": "^2.2.9",
     "@types/lodash": "^4.14.202",
     "@xenova/transformers": "^2.9.0",

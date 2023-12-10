@@ -173,51 +173,51 @@ export async function getAuthQrMed(req: Request, res: Response, io: Server, lice
     return res.status(200).json(request);
 }
 
-export async function handleMedVerification(req: Request, res: Response, io: Server): Promise<Response> {
-    const sessionId = req.query.sessionId as string;
-    console.log(`Handling verification for session ID: ${sessionId}`);
+// export async function handleMedVerification(req: Request, res: Response, io: Server): Promise<Response> {
+//     const sessionId = req.query.sessionId as string;
+//     console.log(`Handling verification for session ID: ${sessionId}`);
 
-    const authRequest = requestMap.get(sessionId);
+//     const authRequest = requestMap.get(sessionId);
 
-    if (!authRequest) {
-        console.error(`Auth request not found for session ID: ${sessionId}`);
-        return res.status(400).json({ error: 'Auth request not found' });
-    }
+//     if (!authRequest) {
+//         console.error(`Auth request not found for session ID: ${sessionId}`);
+//         return res.status(400).json({ error: 'Auth request not found' });
+//     }
 
-    io.sockets.emit(sessionId, socketMessage('handleMedVerification', STATUS.IN_PROGRESS, authRequest));
+//     io.sockets.emit(sessionId, socketMessage('handleMedVerification', STATUS.IN_PROGRESS, authRequest));
 
-    const raw = await getRawBody(req);
-    const tokenStr = raw.toString().trim();
+//     const raw = await getRawBody(req);
+//     const tokenStr = raw.toString().trim();
 
-    const mumbaiContractAddress = '0x134B1BE34911E39A8397ec6289782989729807a4';
-    const keyDir = '../../keys';
+//     const mumbaiContractAddress = '0x134B1BE34911E39A8397ec6289782989729807a4';
+//     const keyDir = '../../keys';
 
-    const ethStateResolver = new resolver.EthStateResolver(process.env.RPC_URL as string, mumbaiContractAddress);
+//     const ethStateResolver = new resolver.EthStateResolver(process.env.RPC_URL as string, mumbaiContractAddress);
 
-    const resolvers = {
-        ['polygon:mumbai']: ethStateResolver,
-    }
+//     const resolvers = {
+//         ['polygon:mumbai']: ethStateResolver,
+//     }
 
-    const verifier = await auth.Verifier.newVerifier({
-        stateResolver: resolvers,
-        circuitsDir: path.join(__dirname, keyDir),
-        ipfsGatewayURL:"https://ipfs.io"
-    })
+//     const verifier = await auth.Verifier.newVerifier({
+//         stateResolver: resolvers,
+//         circuitsDir: path.join(__dirname, keyDir),
+//         ipfsGatewayURL:"https://ipfs.io"
+//     })
 
-    try {
-		const authResponse = await verifier.fullVerify(tokenStr, authRequest);
-        console.log(authResponse);
-		const userId = authResponse.from;
-		io.sockets.emit(
-			sessionId,
-			socketMessage('handleMedVerification', STATUS.DONE, { message: `User ${userId} successfully authenticated` })
-		);
-		return res.status(200).json({ message: `User ${userId} successfully authenticated` });
-    } catch (error:any) {
-        console.error(`Error in handleVerification: ${error.message}`);
-        return res.status(500).json({ error: 'Internal Server Error' });
-    }
-}
+//     try {
+// 		const authResponse = await verifier.fullVerify(tokenStr, authRequest);
+//         console.log(authResponse);
+// 		const userId = authResponse.from;
+// 		io.sockets.emit(
+// 			sessionId,
+// 			socketMessage('handleMedVerification', STATUS.DONE, { message: `User ${userId} successfully authenticated` })
+// 		);
+// 		return res.status(200).json({ message: `User ${userId} successfully authenticated` });
+//     } catch (error:any) {
+//         console.error(`Error in handleVerification: ${error.message}`);
+//         return res.status(500).json({ error: 'Internal Server Error' });
+//     }
+// }
 
 
 
