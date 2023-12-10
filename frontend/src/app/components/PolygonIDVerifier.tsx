@@ -8,7 +8,6 @@ import Link from "next/link";
 import { io } from "socket.io-client";
 import { ProviderDetail } from "@/constants/types";
 import { useTheme } from "next-themes";
-import { ThemeSwitch } from "./ThemeSwitch";
 import { DarkIcon } from "../icons/Dark";
 import { LightIcon } from "../icons/Light";
 

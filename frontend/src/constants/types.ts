@@ -48,3 +48,9 @@ export interface Consumer {
     consumerAddress: string;
     subscriptionId: string;
 }
+
+export interface DoctorVerification {
+    doctorWalletAddress: string;
+    licenseNumber: number;
+    isVerified: boolean;
+}
