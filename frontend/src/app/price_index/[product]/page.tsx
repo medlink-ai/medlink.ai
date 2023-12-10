@@ -6,13 +6,14 @@ import { ChainlinkFunctionContext } from "@/app/providers";
 import { DrugDetails, ErrorData, ProviderDetail } from "@/constants/types";
 import { Input, Breadcrumbs, BreadcrumbItem, Button, Spinner, Switch } from "@nextui-org/react";
 import axios from "axios";
-import { delay, isUndefined } from "lodash";
+import { delay, isUndefined, set } from "lodash";
 import { useRouter } from "next/navigation";
-import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 import { useAccount } from "wagmi";
-import { ethers } from 'ethers';
-import aggregatorV3InterfaceABI from './AggregatorV3Interface.json';
+import { ethers } from "ethers";
+import aggregatorV3InterfaceABI from "./AggregatorV3Interface.json";
+import { parse } from "path";
 
 function Budget({
     product,
@@ -280,36 +281,37 @@ function Breadcrumb({ product, confirmation = false, onNavigateBack }: { product
     );
 }
 
-function ConfirmOrder({ product, onCancel }: { product: string; onCancel: () => void }) {
+function ConfirmOrder({ product, onCancel, budget }: { product: string; onCancel: () => void; budget: string }) {
+    const [USDtoMaticRate, setUSDtoMaticRate] = useState(0);
+    const [isLoadingRate, setIsLoadingRate] = useState(false);
 
-    const provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL as string);
-    const addr = "0xd0D5e3DB44DE05E9F294BB0a3bEEaF030DE24Ada";
-    const priceFeed = new ethers.Contract(addr, aggregatorV3InterfaceABI.abi, provider);
+    useEffect(() => {
+        const getUSDtoMatic = async () => {
+            setIsLoadingRate(true);
+            const provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL as string);
+            const priceFeed = new ethers.Contract(
+                process.env.NEXT_PUBLIC_PRICE_FEED_CONTRACT_ADDRESS as string,
+                aggregatorV3InterfaceABI.abi,
+                provider
+            );
 
-    const USDtoMatic = () => {
-        const data: any = priceFeed.latestRoundData().then((roundData) => {
-            return ethers.formatUnits(roundData.answer, "wei")
-        })
+            const data: string = await priceFeed.latestRoundData().then((roundData: any) => {
+                return ethers.formatUnits(roundData.answer, "wei");
+            });
 
-        const maticToUSD = 1 / parseFloat(data)
+            const maticToUSD = 1 / (parseFloat(data) * Math.pow(10, -8));
+            setUSDtoMaticRate(maticToUSD);
+            setIsLoadingRate(false);
+        };
 
-        return maticToUSD;
-
-    }
-
-    const USD_TO_MATIC_EXCHANGE_RATE = USDtoMatic();
+        getUSDtoMatic();
+    }, []);
 
     const [quantity, setQuantity] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
 
-    // Placeholder for medicine details
-    const medicineDetails = {
-        name: product,
-        priceUSD: 10.99, // Add your actual price in USD
-    };
-
-    const totalPriceUSD = parseFloat((quantity * medicineDetails.priceUSD).toFixed(2));
-    const totalPriceMatic = parseFloat((totalPriceUSD * USD_TO_MATIC_EXCHANGE_RATE).toFixed(4));
+    const totalPriceUSD = useMemo(() => parseFloat((quantity * parseFloat(budget)).toFixed(2)), [quantity]);
+    const totalPriceMatic = useMemo(() => (totalPriceUSD * USDtoMaticRate).toFixed(4), [totalPriceUSD, USDtoMaticRate]);
 
     const handleIncrement = () => {
         setQuantity((prevQuantity) => prevQuantity + 1);
@@ -326,7 +328,7 @@ function ConfirmOrder({ product, onCancel }: { product: string; onCancel: () => 
         setIsLoading(true);
         // Simulating payment process with a delay
         setTimeout(() => {
-            alert(`Order confirmed for ${quantity} ${medicineDetails.name}`);
+            alert(`Order confirmed for ${quantity} ${product}`);
             setIsLoading(false);
         }, 2000);
     };
@@ -342,7 +344,7 @@ function ConfirmOrder({ product, onCancel }: { product: string; onCancel: () => 
                 <div className="flex justify-between items-start gap-10 w-full">
                     <div className="flex flex-col w-96 text-left items-start gap-2">
                         <p className="font-bold text-md">Medicine</p>
-                        <p className="font-bold text-teal-800">{medicineDetails.name}</p>
+                        <p className="font-bold text-green-1100 dark:text-green-1000">{product}</p>
                     </div>
 
                     <div className="flex flex-col w-fit items-start text-left gap-2">
@@ -351,19 +353,18 @@ function ConfirmOrder({ product, onCancel }: { product: string; onCancel: () => 
                             <Button
                                 isIconOnly
                                 size="sm"
-                                className="bg-teal-800 text-white rounded-sm"
+                                className="bg-green-1100 dark:bg-green-1000 text-white rounded-sm"
                                 onClick={handleDecrement}
                                 disabled={quantity === 1}
                             >
-                                
+                                -
                             </Button>
                             <input
-                                value={quantity}
+                                value={quantity.toString()}
                                 onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
                                 className="text-center w-12 mx-2"
-                                readOnly
                             />
-                            <Button isIconOnly size="sm" className="bg-teal-900 text-white rounded-sm" onClick={handleIncrement}>
+                            <Button isIconOnly size="sm" className="bg-green-1100 dark:bg-green-1000 text-white rounded-sm" onClick={handleIncrement}>
                                 +
                             </Button>
                         </div>
@@ -372,7 +373,17 @@ function ConfirmOrder({ product, onCancel }: { product: string; onCancel: () => 
                     <div className="flex flex-col w-28 items-start text-left gap-2">
                         <p className="font-bold text-md">Total Prices</p>
                         <div className="flex flex-col text-left space-y-1">
-                            <p className="font-bold text-md">{totalPriceMatic} MATIC</p>
+                            <p className="font-bold text-md whitespace-nowrap">
+                                {isLoadingRate ? (
+                                    <div className="flex gap-2">
+                                        <Spinner size="sm" />
+                                        <p className="text-sm">Loading Price Feed...</p>
+                                    </div>
+                                ) : (
+                                    totalPriceMatic
+                                )}{" "}
+                                MATIC
+                            </p>
                             <p className="text-xs">(${totalPriceUSD} USD)</p>
                         </div>
                     </div>
@@ -382,8 +393,13 @@ function ConfirmOrder({ product, onCancel }: { product: string; onCancel: () => 
                     <Button className="bg-gray-300 text-gray-700 border rounded-lg px-4 py-2 w-[30%]" onClick={onCancel}>
                         Cancel
                     </Button>
-                    <Button className="bg-teal-900 text-white rounded-lg px-4 py-2 w-[70%]" onClick={handlePay} disabled={isLoading}>
-                        {isLoading ? <Spinner /> : "Confirm Order"}
+                    <Button
+                        className="bg-green-1100 dark:bg-green-1000 text-white rounded-lg px-4 py-2 w-[70%]"
+                        onClick={handlePay}
+                        disabled={isLoading}
+                        isLoading={isLoading}
+                    >
+                        Confirm Order
                     </Button>
                 </div>
             </div>
@@ -424,7 +440,7 @@ export default function Page({ params }: { params: { product: string } }) {
                         )}
                     </>
                 ) : (
-                    <ConfirmOrder product={decodedProducts} onCancel={() => setProvedPrescription(false)} />
+                    <ConfirmOrder product={decodedProducts} onCancel={() => setProvedPrescription(false)} budget={budget!} />
                 )}
             </div>
         </div>
