@@ -32,6 +32,11 @@ class ChainlinkFunctionsController implements Controller {
         )
 
         this.router.post(
+            `${this.path}/encrypt-secret`,
+            this.encryptSecrets
+        )
+
+        this.router.post(
             `${this.path}/post-functions-request`,
             validationMiddleware(validate.postFunctionsRequest),
             this.postFunctionsRequest
@@ -72,6 +77,16 @@ class ChainlinkFunctionsController implements Controller {
             `${this.path}/function-response-license`,
             this.functionResponseLicense
         )
+
+        this.router.post(
+            `${this.path}/function-request-openai-prompt`,
+            this.functionRequestOpenAIPrompt
+        )
+
+        this.router.post(
+            `${this.path}/function-response-openai-prompt`,
+            this.functionResponseOpenAIPrompt
+        )
     }
 
     private deployConsumer = async (req: Request, res: Response, next: NextFunction): Promise<string | void> => {
@@ -93,6 +108,17 @@ class ChainlinkFunctionsController implements Controller {
             res.status(200).json(subscriptionId);
 
             return subscriptionId.toString();
+        } catch (error: any) {
+            next(new HttpException(400, error));
+        }
+    }
+
+    private encryptSecrets = async (req: Request, res: Response, next: NextFunction): Promise<string | void> => {
+        try {
+            const encryptedSecretReference = await this.ChainlinkFunctionsService.encryptSecretRef("polygonMumbai");
+            res.status(200).json(encryptedSecretReference);
+
+            return encryptedSecretReference.toString();
         } catch (error: any) {
             next(new HttpException(400, error));
         }
@@ -237,6 +263,30 @@ class ChainlinkFunctionsController implements Controller {
             return licenseNumber;
         } catch (error: any) {
             console.log('Read response failed.');
+            next(new HttpException(400, error));
+        }
+    };
+
+    private functionRequestOpenAIPrompt = async (req: Request, res: Response, next: NextFunction): Promise<any[] | string | void> => {
+        try {
+            const { consumerAddress, subscriptionId, prompt } = req.body;
+
+            const result = await this.ChainlinkFunctionsService.requestPrompt(consumerAddress, subscriptionId, prompt);            
+            res.status(200).json(result.toString());
+        } catch (error: any) {
+            console.log('Functions consumer for request prompt failed.');
+            next(new HttpException(400, error));
+        }
+    };
+
+    private functionResponseOpenAIPrompt = async (req: Request, res: Response, next: NextFunction): Promise<any[] | string | void> => {
+        try {
+            const { consumerAddress } = req.body;
+
+            const result = await this.ChainlinkFunctionsService.readPrompt(consumerAddress);            
+            res.status(200).json(result.toString());
+        } catch (error: any) {
+            console.log('Functions consumer for response prompt failed.');
             next(new HttpException(400, error));
         }
     };
