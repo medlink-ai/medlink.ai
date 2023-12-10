@@ -357,10 +357,9 @@ function ConfirmOrder({ product, onCancel, budget }: { product: string; onCancel
                                 -
                             </Button>
                             <input
-                                value={quantity}
+                                value={quantity.toString()}
                                 onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
                                 className="text-center w-12 mx-2"
-                                readOnly
                             />
                             <Button isIconOnly size="sm" className="bg-green-1100 dark:bg-green-1000 text-white rounded-sm" onClick={handleIncrement}>
                                 +
@@ -371,7 +370,7 @@ function ConfirmOrder({ product, onCancel, budget }: { product: string; onCancel
                     <div className="flex flex-col w-28 items-start text-left gap-2">
                         <p className="font-bold text-md">Total Prices</p>
                         <div className="flex flex-col text-left space-y-1">
-                            <p className="font-bold text-md">{totalPriceMatic} MATIC</p>
+                            <p className="font-bold text-md whitespace-nowrap">{totalPriceMatic} MATIC</p>
                             <p className="text-xs">(${totalPriceUSD} USD)</p>
                         </div>
                     </div>
