@@ -3,7 +3,6 @@
 import { useState, useEffect, Dispatch, SetStateAction, useMemo } from "react";
 import { Spinner } from "@nextui-org/react";
 import QRCode from "react-qr-code";
-import Link from "next/link";
 
 import { io } from "socket.io-client";
 import { useTheme } from "next-themes";
@@ -14,11 +13,11 @@ import { LightIcon } from "../icons/Light";
 export default function PolygonIDMedVerifier({
     onVerificationResult,
     walletAddress,
-    licenseNumber
+    licenseNumber,
 }: {
-        onVerificationResult: Dispatch<SetStateAction<boolean>>;
-        walletAddress: string;
-        licenseNumber: number;
+    onVerificationResult: Dispatch<SetStateAction<boolean>>;
+    walletAddress: string;
+    licenseNumber: number;
 }) {
     const [sessionId, setSessionId] = useState("");
     const [qrCodeData, setQrCodeData] = useState<{ body: any }>();
@@ -30,20 +29,25 @@ export default function PolygonIDMedVerifier({
     const { theme } = useTheme();
     const [modalTheme, setModalTheme] = useState<"light" | "dark">(theme as "light" | "dark");
 
-    const serverUrl = window.location.href.startsWith("https") ? process.env.NEXT_PUBLIC_VERIFICATION_SERVER_PUBLIC_URL as string : process.env.NEXT_PUBLIC_VERIFICATION_SERVER_LOCAL_HOST_URL as string;
+    const serverUrl = window.location.href.startsWith("https")
+        ? (process.env.NEXT_PUBLIC_VERIFICATION_SERVER_PUBLIC_URL as string)
+        : (process.env.NEXT_PUBLIC_VERIFICATION_SERVER_LOCAL_HOST_URL as string);
 
-    const getQrCodeApi = (sessionId: string, walletAddress: string, licenseNumber: number) => `${serverUrl}/api/get-med-auth-qr?sessionId=${sessionId}&walletAddress=${encodeURIComponent(walletAddress)}&licenseNumber=${licenseNumber}`;
-
-    const socket = useMemo(() => io(serverUrl), [serverUrl]);
+    const getQrCodeApi = (sessionId: string, walletAddress: string, licenseNumber: number) =>
+        `${serverUrl}/api/get-med-auth-qr?sessionId=${sessionId}&walletAddress=${encodeURIComponent(walletAddress)}&licenseNumber=${licenseNumber}`;
 
     useEffect(() => {
+        const socket = io(serverUrl);
         socket.on("connect", () => {
-        setSessionId(socket.id);
-        socket.on(socket.id, (arg) => {
-            setSocketEvents((socketEvents) => [...socketEvents, arg]);
+            setSessionId(socket.id);
+            socket.on(socket.id, (arg) => {
+                setSocketEvents((socketEvents) => [...socketEvents, arg]);
+            });
         });
-        });
-    }, [socket]);
+        return () => {
+            socket.close();
+        };
+    }, []);
 
     useEffect(() => {
         const fetchQrCode = async () => {
@@ -73,7 +77,6 @@ export default function PolygonIDMedVerifier({
                         setTimeout(() => {
                             reportVerificationResult(true);
                         }, 2000);
-                        socket.close();
                     } else {
                         setVerificationMessage("Error verifying prescription");
                     }
@@ -106,10 +109,7 @@ export default function PolygonIDMedVerifier({
                                 {theme === "dark" && (
                                     <div className="flex gap-2 justify-center items-center">
                                         <p>Change to light mode if unable to scan</p>
-                                        <div
-                                            onClick={() => setModalTheme(modalTheme === "dark" ? "light" : "dark")}
-                                            className="hover:cursor-pointer"
-                                        >
+                                        <div onClick={() => setModalTheme(modalTheme === "dark" ? "light" : "dark")} className="hover:cursor-pointer">
                                             {modalTheme === "dark" ? <LightIcon /> : <DarkIcon />}
                                         </div>
                                     </div>
@@ -124,11 +124,9 @@ export default function PolygonIDMedVerifier({
                                 </p>
                             </div>
                         )}
-
                     </div>
                 </div>
             )}
         </div>
     );
 }
-
