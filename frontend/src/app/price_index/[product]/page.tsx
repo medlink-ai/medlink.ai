@@ -14,6 +14,7 @@ import { useAccount } from "wagmi";
 import { ethers } from "ethers";
 import aggregatorV3InterfaceABI from "./AggregatorV3Interface.json";
 import { parse } from "path";
+import { MockProviders } from "@/constants";
 
 function Budget({
     product,
@@ -231,7 +232,7 @@ function Providers({
                 )}
             </div>
 
-            <div className={viewMode === "list" ? "flex flex-col gap-2 h-full overflow-y-auto" : "grid grid-cols-2 gap-2 overflow-y-auto"}>
+            <div className={viewMode === "list" ? "flex flex-col gap-2 h-full overflow-y-auto" : "h-full grid grid-cols-2 gap-2 overflow-y-auto"}>
                 {isLoading ? (
                     <Spinner className="mt-4" />
                 ) : (
@@ -410,7 +411,7 @@ function ConfirmOrder({ product, onCancel, budget }: { product: string; onCancel
 export default function Page({ params }: { params: { product: string } }) {
     const decodedProducts = decodeURIComponent(params.product);
     const [provedPrescription, setProvedPrescription] = useState(false);
-    const [budget, setBudget] = useState<string | undefined>();
+    const [budget, setBudget] = useState<string | undefined>("");
     const [isProviderLoading, setIsProviderLoading] = useState(false);
 
     return (

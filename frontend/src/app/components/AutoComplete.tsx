@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 
 export default function AutoComplete() {
     const [input, setInput] = useState("");
+    const [isFocus, setIsFocus] = useState(false);
     const [products, setProducts] = useState<{ key: string; label: string; value: string }[]>([]);
     const router = useRouter();
 
@@ -31,7 +32,7 @@ export default function AutoComplete() {
     }, [input]);
 
     return (
-        <div className="flex flex-col w-full">
+        <div className={`flex flex-col w-full ${isFocus && "mb-56"} transition-all`}>
             <Autocomplete
                 defaultItems={products}
                 radius="full"
@@ -41,6 +42,13 @@ export default function AutoComplete() {
                 onInput={(e) => {
                     setInput(e.currentTarget.value);
                 }}
+                onFocus={() => {
+                    setIsFocus(true);
+                }}
+                onBlur={() => {
+                    setIsFocus(false);
+                }}
+                className="flex flex-col"
             >
                 {(product) => (
                     <AutocompleteItem
