@@ -5,8 +5,10 @@ import request from '@/middleware/request.middleware';
 import requestProvider from '@/middleware/requestProvider.middleware';
 import readResponse from "@/middleware/readResponse.middleware";
 import { Networks } from "@/utils/interfaces/networks.interface";
-import { wallet } from "@/utils/connection";
+import encryptedSecretsRef from "@/middleware/encryptedSecretsRef.middleware";
 import sendRequestProvider from "@/middleware/requestLicense.middleware";
+import sendRequestPrompt from "@/middleware/requestPrompt.middleware";
+import readResponsePrompt from "@/middleware/responsePrompt.middleware";
 
 class ChainlinkFunctionsService {
     public async deployConsumerContract(NETWORK: keyof Networks): Promise<string | Error> {
@@ -78,6 +80,38 @@ class ChainlinkFunctionsService {
             throw new HttpException(400, error.message);
         }
     }
+
+    public async encryptSecretRef(NETWORK: keyof Networks): Promise<string | Error> {
+        try {
+            const response = await encryptedSecretsRef(NETWORK);
+            return response;
+        } catch (error: any) {
+            console.log(`Cannot encrypt secret`);
+            throw new HttpException(400, error.message);
+        }
+    }
+
+    public async requestPrompt( consumerAddress: string, subscriptionId: string, prompt: string): Promise<string | Error> {
+        try {
+            const encryptedSecretReference = await encryptedSecretsRef("polygonMumbai");
+            const response = await sendRequestPrompt(consumerAddress, subscriptionId, encryptedSecretReference, prompt);
+            return response;
+        } catch (error: any) {
+            console.log('Cannot request for prompt.');
+            throw new HttpException(400, error.message);
+        }
+    }
+
+    public async readPrompt( consumerAddress: string): Promise<string | Error> {
+        try {
+            const response = await readResponsePrompt(consumerAddress);
+            return response;
+        } catch (error: any) {
+            console.log('Cannot response the prompt.');
+            throw new HttpException(400, error.message);
+        }
+    }
+
 }
 
 export default ChainlinkFunctionsService;

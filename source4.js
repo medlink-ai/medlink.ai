@@ -22,5 +22,4 @@ if (openAIResponse.error) {
 
 const result = openAIResponse.data.choices[0].message.content;
 
-console.log(result);
 return Functions.encodeString(result);
