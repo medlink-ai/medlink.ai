@@ -144,7 +144,7 @@ export default function Auth() {
                 </div>
             ) : (
                 <Button
-                    color="primary"
+                    className="bg-green-1000 text-black"
                     onClick={(e) => {
                         e.preventDefault();
                         if (!isConnected) {
