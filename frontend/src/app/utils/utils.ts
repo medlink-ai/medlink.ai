@@ -9,18 +9,32 @@ export interface Message {
 
 const MESSAGES_KEY = "chat_messages";
 
-export const getSavedMessages = (): Message[] => {
-    const messagesJson = localStorage.getItem(MESSAGES_KEY);
-    if (messagesJson) {
-        return JSON.parse(messagesJson) as Message[];
+type MessageStore = {
+    [role in Role]: Message[];
+};
+
+export const getSavedMessages = (role: Role): Message[] => {
+    const messagesJson: MessageStore | undefined = localStorage.getItem(MESSAGES_KEY)
+        ? JSON.parse(localStorage.getItem(MESSAGES_KEY) as string)
+        : undefined;
+    if (messagesJson && messagesJson[role]) {
+        return messagesJson[role];
     }
     return [];
 };
 
-export const saveMessage = (message: Message): void => {
-    const messages = getSavedMessages();
-    messages.push(message);
-    localStorage.setItem(MESSAGES_KEY, JSON.stringify(messages));
+export const saveMessages = (role: Role, messages: Message[]): void => {
+    const messagesJson: MessageStore | undefined = localStorage.getItem(MESSAGES_KEY)
+        ? JSON.parse(localStorage.getItem(MESSAGES_KEY) as string)
+        : undefined;
+    if (messagesJson) {
+        messagesJson[role] = messages;
+        localStorage.setItem(MESSAGES_KEY, JSON.stringify(messagesJson));
+    } else {
+        const newMessagesJson: MessageStore = {} as MessageStore;
+        newMessagesJson[role] = messages;
+        localStorage.setItem(MESSAGES_KEY, JSON.stringify(newMessagesJson));
+    }
 };
 
 export const clearLocalStorageKey = (key: string): void => {

@@ -1,8 +1,8 @@
 import HttpException from "@/utils/exceptions/http.exception";
 import deployFunctionsConsumerContract from "@/middleware/deployConsumer.middleware";
 import createFundSub from "@/middleware/createAndFundSub.middleware";
-import request from '@/middleware/request.middleware';
-import requestProvider from '@/middleware/requestProvider.middleware';
+import request from "@/middleware/request.middleware";
+import requestProvider from "@/middleware/requestProvider.middleware";
 import readResponse from "@/middleware/readResponse.middleware";
 import { Networks } from "@/utils/interfaces/networks.interface";
 import encryptedSecretsRef from "@/middleware/encryptedSecretsRef.middleware";
@@ -16,7 +16,7 @@ class ChainlinkFunctionsService {
             const deployedConsumerAddress = await deployFunctionsConsumerContract(NETWORK);
             return deployedConsumerAddress;
         } catch (error: any) {
-            console.log('Cannot deploy Functions Consumer contract');
+            console.log("Cannot deploy Functions Consumer contract");
             throw new HttpException(400, error.message);
         }
     }
@@ -26,7 +26,7 @@ class ChainlinkFunctionsService {
             const subscriptionId = await createFundSub(NETWORK, consumerAddress, linkAmount);
             return subscriptionId;
         } catch (error: any) {
-            console.log('Cannot create and fund subscription.');
+            console.log("Cannot create and fund subscription.");
             throw new HttpException(400, error.message);
         }
     }
@@ -36,7 +36,7 @@ class ChainlinkFunctionsService {
             const response = await request(consumerAddress, subscriptionId, drug_details);
             return response;
         } catch (error: any) {
-            console.log('Cannot request for price index.');
+            console.log("Cannot request for price index.");
             throw new HttpException(400, error.message);
         }
     }
@@ -46,7 +46,7 @@ class ChainlinkFunctionsService {
             const response = await requestProvider(consumerAddress, subscriptionId, drug_details, amount);
             return response;
         } catch (error: any) {
-            console.log('Cannot request for price index.');
+            console.log("Cannot request for price index.");
             throw new HttpException(400, error.message);
         }
     }
@@ -66,7 +66,7 @@ class ChainlinkFunctionsService {
             const response = await sendRequestProvider(consumerAddress, subscriptionId, walletAddress);
             return response;
         } catch (error: any) {
-            console.log('Cannot request for price index.');
+            console.log("Cannot request for price index.");
             throw new HttpException(400, error.message);
         }
     }
@@ -91,27 +91,26 @@ class ChainlinkFunctionsService {
         }
     }
 
-    public async requestPrompt( prompt: string): Promise<string | Error> {
+    public async requestPrompt(prompt: string): Promise<string | Error> {
         try {
             const encryptedSecretReference = await encryptedSecretsRef("polygonMumbai");
-            const response = await sendRequestPrompt("0x6E834568787a94C37BFfc25967677b5b57007bc7", "1148", encryptedSecretReference, prompt);
+            const response = await sendRequestPrompt("0x3BB97a03624120336E035Ac9705c4281404953BF", "1148", encryptedSecretReference, prompt);
             return response;
         } catch (error: any) {
-            console.log('Cannot request for prompt.');
+            console.log("Cannot request for prompt.");
             throw new HttpException(400, error.message);
         }
     }
 
     public async readPrompt(): Promise<string | Error> {
         try {
-            const response = await readResponsePrompt("0x6E834568787a94C37BFfc25967677b5b57007bc7");
+            const response = await readResponsePrompt("0x3BB97a03624120336E035Ac9705c4281404953BF");
             return response;
         } catch (error: any) {
-            console.log('Cannot response the prompt.');
+            console.log("Cannot response the prompt.");
             throw new HttpException(400, error.message);
         }
     }
-
 }
 
 export default ChainlinkFunctionsService;

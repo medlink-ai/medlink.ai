@@ -5,7 +5,7 @@ import { useState, useRef, useEffect, Dispatch, SetStateAction } from "react";
 import { MetaMaskAvatar } from "react-metamask-avatar";
 import { useAccount } from "wagmi";
 import PolygonIDMedVerifier from "./PolygonIDMedVerifier";
-import { Message, getSavedMessages, saveMessage, clearLocalStorageKey } from "../utils/utils";
+import { Message, getSavedMessages, clearLocalStorageKey, saveMessages } from "../utils/utils";
 import Image from "next/image";
 import axios from "axios";
 import { DoctorVerification } from "@/constants/types";
@@ -103,13 +103,9 @@ function ChatBubble({ msg, status }: { msg: Message; status?: "loading" | "error
 
 export function Chat() {
     const [question, setQuestion] = useState("");
-    const [patientContext, setPatientContext] = useState("");
-    const [doctorContext, setDoctorContext] = useState("");
-    const [answer, setAnswer] = useState("");
     const [messages, setMessages] = useState<Message[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const workerRef = useRef<Worker | null>(null);
 
     const [mode, setMode] = useState<Role>(Role.PATIENT);
 
@@ -129,60 +125,38 @@ export function Chat() {
 
     useEffect(() => {
         // Load only patient's messages from local storage
-        const savedMessages = getSavedMessages().filter((msg) => msg.sender === Role.PATIENT || msg.sender === Role.BOT);
+        const savedMessages = getSavedMessages(mode);
         setMessages(savedMessages);
-        setPatientContext(savedMessages.map((msg) => msg.text).join(" "));
+    }, [mode]);
 
-        if (!workerRef.current) {
-            workerRef.current = new Worker(new URL("./worker.js", import.meta.url), { type: "module" });
+    useEffect(() => {
+        saveMessages(mode, messages);
+    }, [messages]);
 
-            workerRef.current.onmessage = (e) => {
-                if (e.data.error) {
-                    setError(e.data.error);
-                    setIsLoading(false);
-                } else {
-                    setAnswer(e.data.answer);
-                    const newMessage: Message = { sender: Role.BOT, text: e.data.answer, timestamp: dayjs() };
-                    if (mode === Role.PATIENT) {
-                        saveMessage(newMessage); // Save bot's response only in Patient mode
-                    }
-                    setMessages((prevMessages) => [...prevMessages, newMessage]);
-                    setIsLoading(false);
-                }
-            };
-        }
-
-        return () => {
-            if (workerRef.current) {
-                workerRef.current.terminate();
-                workerRef.current = null;
-            }
-        };
-    }, []);
-
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         inputRef.current?.blur();
         if (question) {
             setIsLoading(true);
             setError(null);
             const newMessage: Message = { sender: mode, text: question, timestamp: dayjs() };
-            if (mode === Role.PATIENT) {
-                saveMessage(newMessage); // Save patient's message only in Patient mode
-            }
+            setQuestion("");
+
             setMessages((prevMessages) => [...prevMessages, newMessage]);
 
-            if (mode === Role.PATIENT) {
-                const updatedPatientContext = patientContext + " " + question;
-                setPatientContext(updatedPatientContext);
-                workerRef.current?.postMessage({ question, context: updatedPatientContext, mode });
-            } else {
-                const updatedDoctorContext = patientContext + " " + question;
-                setDoctorContext(updatedDoctorContext);
-                workerRef.current?.postMessage({ question, context: updatedDoctorContext, mode });
-            }
-
-            setQuestion("");
+            await axios
+                .post("/chat/api", {
+                    prompt: question,
+                })
+                .then((res) => {
+                    setMessages((prevMessages) => [...prevMessages, { sender: Role.BOT, text: res.data, timestamp: dayjs() }]);
+                })
+                .catch((err) => {
+                    setError(err.message);
+                })
+                .finally(() => {
+                    setIsLoading(false);
+                });
         }
     };
 
@@ -204,6 +178,7 @@ export function Chat() {
                     ))}
                     {(isLoading || error) && (
                         <ChatBubble
+                            key="thinking"
                             msg={{
                                 sender: Role.BOT,
                                 text: isLoading ? "Thinking..." : error!,
