@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const getResponsePriceIndex = async (data: any): Promise<void | null> => {
+export const getResponsePriceIndex = async (data: any): Promise<string | null> => {
     try {        
         const parsedData = JSON.parse(data);
         const drug = parsedData.drug;

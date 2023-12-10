@@ -127,16 +127,11 @@ class ChainlinkFunctionsController implements Controller {
 
             const { consumerAddress } = req.body;
 
-            const response = await this.ChainlinkFunctionsService.readResponse(consumerAddress);
+            const response = await this.ChainlinkFunctionsService.response(consumerAddress);
             const result = await getResponsePriceIndex(response);
 
-            if (result) {
-                res.status(200).json(result);
-                return result;
-            } else {
-                res.status(404).json({ error: "No response available" });
-                return "No response available";
-            }
+            res.status(200).json(result);
+            return JSON.stringify(result);
         } catch (error: any) {
             console.log("Read response failed.");
             next(new HttpException(400, error));
@@ -161,7 +156,7 @@ class ChainlinkFunctionsController implements Controller {
 
             const { consumerAddress } = req.body;
 
-            const response = await this.ChainlinkFunctionsService.readResponse(consumerAddress);
+            const response = await this.ChainlinkFunctionsService.readProvider(consumerAddress);
             const result = await getResponseProvider(response);
 
             if (result) {
