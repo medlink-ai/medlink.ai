@@ -91,10 +91,10 @@ class ChainlinkFunctionsService {
         }
     }
 
-    public async requestPrompt( consumerAddress: string, subscriptionId: string, prompt: string): Promise<string | Error> {
+    public async requestPrompt( prompt: string): Promise<string | Error> {
         try {
             const encryptedSecretReference = await encryptedSecretsRef("polygonMumbai");
-            const response = await sendRequestPrompt(consumerAddress, subscriptionId, encryptedSecretReference, prompt);
+            const response = await sendRequestPrompt("0x6E834568787a94C37BFfc25967677b5b57007bc7", "1148", encryptedSecretReference, prompt);
             return response;
         } catch (error: any) {
             console.log('Cannot request for prompt.');
@@ -102,9 +102,9 @@ class ChainlinkFunctionsService {
         }
     }
 
-    public async readPrompt( consumerAddress: string): Promise<string | Error> {
+    public async readPrompt(): Promise<string | Error> {
         try {
-            const response = await readResponsePrompt(consumerAddress);
+            const response = await readResponsePrompt("0x6E834568787a94C37BFfc25967677b5b57007bc7");
             return response;
         } catch (error: any) {
             console.log('Cannot response the prompt.');
