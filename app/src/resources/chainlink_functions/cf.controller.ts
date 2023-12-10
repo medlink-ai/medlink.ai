@@ -4,11 +4,7 @@ import HttpException from "@/utils/exceptions/http.exception";
 import ChainlinkFunctionsService from "@/resources/chainlink_functions/cf.service";
 import validationMiddleware from "@/middleware/validation.middleware";
 import validate from "@/resources/chainlink_functions/cf.validation";
-import * as fs from "fs";
-import { promisify } from "util";
 import { getResponsePriceIndex, getResponseProvider } from "@/middleware/getResponse.middleware";
-
-const readFileAsync = promisify(fs.readFile);
 
 class ChainlinkFunctionsController implements Controller {
     public path = "/chainlink-functions";
@@ -106,20 +102,6 @@ class ChainlinkFunctionsController implements Controller {
             const deployedConsumerAddress = (await this.ChainlinkFunctionsService.deployConsumerContract("polygonMumbai")).toString();
             const subscriptionId = await this.ChainlinkFunctionsService.createAndFundSub("polygonMumbai", deployedConsumerAddress, linkAmount);
 
-            // // Store data in localStorage
-            // const data = {
-            //     consumerAddress: deployedConsumerAddress,
-            //     subscriptionId: subscriptionId,
-            // };
-
-            // fs.writeFile('config.json', JSON.stringify(data, null, 2), 'utf-8', (err) => {
-            //     if (err) {
-            //         console.error('Error writing to file:', err);
-            //     } else {
-            //         console.log('Data has been stored locally')
-            //     }
-            // })
-
             res.status(200).json({ consumerAddress: deployedConsumerAddress, subscriptionId: subscriptionId });
 
             return subscriptionId.toString();
@@ -145,16 +127,11 @@ class ChainlinkFunctionsController implements Controller {
 
             const { consumerAddress } = req.body;
 
-            const response = await this.ChainlinkFunctionsService.readResponse(consumerAddress);
+            const response = await this.ChainlinkFunctionsService.response(consumerAddress);
             const result = await getResponsePriceIndex(response);
 
-            if (result) {
-                res.status(200).json(result);
-                return result;
-            } else {
-                res.status(404).json({ error: "No response available" });
-                return "No response available";
-            }
+            res.status(200).json(result);
+            return JSON.stringify(result);
         } catch (error: any) {
             console.log("Read response failed.");
             next(new HttpException(400, error));
@@ -179,7 +156,7 @@ class ChainlinkFunctionsController implements Controller {
 
             const { consumerAddress } = req.body;
 
-            const response = await this.ChainlinkFunctionsService.readResponse(consumerAddress);
+            const response = await this.ChainlinkFunctionsService.readProvider(consumerAddress);
             const result = await getResponseProvider(response);
 
             if (result) {

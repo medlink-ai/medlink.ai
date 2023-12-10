@@ -63,7 +63,7 @@ class App {
         });
 
         this.app.get("/api/get-med-auth-qr", (req: Request, res: Response) => {
-            const { walletAddress, licenseNumber } = req.query;
+            const { licenseNumber } = req.query;
             getAuthQrMed(req, res, this.io, parseFloat(`${licenseNumber}`));
         });
 

@@ -1,6 +1,4 @@
 import { SecretsManager } from "@chainlink/functions-toolkit";
-import * as fs from "fs";
-import * as path from "path";
 import "dotenv/config";
 import { signer } from "@/utils/connection";
 import HttpException from '@/utils/exceptions/http.exception';

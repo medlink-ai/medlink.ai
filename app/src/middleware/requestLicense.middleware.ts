@@ -5,7 +5,7 @@ import "dotenv/config";
 import { signer } from '@/utils/connection';
 import { abi } from '@/utils/contracts/abi/FunctionsConsumer.json';
 
-const sendRequestProvider = async (consumerAddress: string, subscriptionId: string, walletAddress: string): Promise<string> => {
+const requestLicense = async (consumerAddress: string, subscriptionId: string, walletAddress: string): Promise<string> => {
     if (!consumerAddress || !subscriptionId) {
         throw new Error("Missing required environment variables");
     }
@@ -33,4 +33,4 @@ const sendRequestProvider = async (consumerAddress: string, subscriptionId: stri
     return `Request made. Request id is ${requestId}. TxHash is ${requestTx.hash}`;
 }
 
-export default sendRequestProvider;
+export default requestLicense;

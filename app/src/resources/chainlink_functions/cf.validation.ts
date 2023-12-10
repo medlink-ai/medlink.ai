@@ -1,6 +1,5 @@
 import Joi from 'joi';
 
-
 const createAndFundSub = Joi.object({
     consumerAddress: Joi.string().required(),
     linkAmount: Joi.string().required()

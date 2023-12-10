@@ -5,7 +5,6 @@ import { networks } from "@/utils/networks";
 import HttpException from "@/utils/exceptions/http.exception";
 import { Networks } from "@/utils/interfaces/networks.interface";
 
-
 const createAndFundSub = async (NETWORK: keyof Networks, consumerAddress: string, LINK_AMOUNT: string): Promise<string> => {
     try {
         const functionsRouterAddress = networks[NETWORK].functionsRouter;

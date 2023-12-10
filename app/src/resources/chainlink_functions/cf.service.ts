@@ -3,12 +3,11 @@ import deployFunctionsConsumerContract from "@/middleware/deployConsumer.middlew
 import createFundSub from "@/middleware/createAndFundSub.middleware";
 import request from "@/middleware/request.middleware";
 import requestProvider from "@/middleware/requestProvider.middleware";
-import readResponse from "@/middleware/readResponse.middleware";
 import { Networks } from "@/utils/interfaces/networks.interface";
 import encryptedSecretsRef from "@/middleware/encryptedSecretsRef.middleware";
-import sendRequestProvider from "@/middleware/requestLicense.middleware";
+import requestLicense from "@/middleware/requestLicense.middleware";
 import sendRequestPrompt from "@/middleware/requestPrompt.middleware";
-import readResponsePrompt from "@/middleware/responsePrompt.middleware";
+import readResponse from "@/middleware/readResponse.middleware";
 
 class ChainlinkFunctionsService {
     public async deployConsumerContract(NETWORK: keyof Networks): Promise<string | Error> {
@@ -41,6 +40,16 @@ class ChainlinkFunctionsService {
         }
     }
 
+    public async response(consumerAddress: string): Promise<string | Error> {
+        try {
+            const response = await readResponse(consumerAddress);
+            return response;
+        } catch (error: any) {
+            console.log(`Cannot read provider: ${consumerAddress}`);
+            throw new HttpException(400, error.message);
+        }
+    }
+
     public async requestProvider(consumerAddress: string, subscriptionId: string, drug_details: string, amount: string): Promise<string | Error> {
         try {
             const response = await requestProvider(consumerAddress, subscriptionId, drug_details, amount);
@@ -51,19 +60,19 @@ class ChainlinkFunctionsService {
         }
     }
 
-    public async readResponse(walletAddress: string): Promise<string | Error> {
+    public async readProvider(consumerAddress: string): Promise<string | Error> {
         try {
-            const response = await readResponse(walletAddress);
+            const response = await readResponse(consumerAddress);
             return response;
         } catch (error: any) {
-            console.log(`Cannot license number from: ${walletAddress}`);
+            console.log(`Cannot read provider: ${consumerAddress}`);
             throw new HttpException(400, error.message);
         }
     }
 
     public async requestLicense(consumerAddress: string, subscriptionId: string, walletAddress: string): Promise<string | Error> {
         try {
-            const response = await sendRequestProvider(consumerAddress, subscriptionId, walletAddress);
+            const response = await requestLicense(consumerAddress, subscriptionId, walletAddress);
             return response;
         } catch (error: any) {
             console.log("Cannot request for price index.");
@@ -71,12 +80,12 @@ class ChainlinkFunctionsService {
         }
     }
 
-    public async readLicense(walletAddress: string): Promise<string | Error> {
+    public async readLicense(consumerAddress: string): Promise<string | Error> {
         try {
-            const response = await readResponse(walletAddress);
+            const response = await readResponse(consumerAddress);
             return response;
         } catch (error: any) {
-            console.log(`Cannot license number from: ${walletAddress}`);
+            console.log(`Cannot license number from: ${consumerAddress}`);
             throw new HttpException(400, error.message);
         }
     }
@@ -104,7 +113,7 @@ class ChainlinkFunctionsService {
 
     public async readPrompt(): Promise<string | Error> {
         try {
-            const response = await readResponsePrompt("0x3BB97a03624120336E035Ac9705c4281404953BF");
+            const response = await readResponse("0x3BB97a03624120336E035Ac9705c4281404953BF");
             return response;
         } catch (error: any) {
             console.log("Cannot response the prompt.");
