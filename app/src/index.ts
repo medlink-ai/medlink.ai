@@ -5,7 +5,6 @@ import ChainlinkFunctionsController from '@/resources/chainlink_functions/cf.con
 
 import App from './app';
 
-
 validateEnv();
 const port = Number(process.env.PORT || 8080);
 const appInstance = new App([new ChainlinkFunctionsController()], port);

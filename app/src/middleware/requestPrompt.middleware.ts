@@ -4,9 +4,8 @@ import * as path from "path";
 import "dotenv/config";
 import { signer } from '@/utils/connection';
 import { abi } from '@/utils/contracts/abi/FunctionsConsumerAI.json';
-import { Location, simulateScript, ReturnType } from "@chainlink/functions-toolkit";
+import { Location } from "@chainlink/functions-toolkit";
 import HttpException from '@/utils/exceptions/http.exception';
-import ethers from 'ethers';
 
 const sendRequestPrompt = async (consumerAddress: string, subscriptionId: string, encryptedSecretsRef: string, prompt: string): Promise<string> => {
     try {

@@ -4,11 +4,7 @@ import HttpException from "@/utils/exceptions/http.exception";
 import ChainlinkFunctionsService from "@/resources/chainlink_functions/cf.service";
 import validationMiddleware from "@/middleware/validation.middleware";
 import validate from "@/resources/chainlink_functions/cf.validation";
-import * as fs from "fs";
-import { promisify } from "util";
 import { getResponsePriceIndex, getResponseProvider } from "@/middleware/getResponse.middleware";
-
-const readFileAsync = promisify(fs.readFile);
 
 class ChainlinkFunctionsController implements Controller {
     public path = "/chainlink-functions";
@@ -105,20 +101,6 @@ class ChainlinkFunctionsController implements Controller {
             const linkAmount = "5";
             const deployedConsumerAddress = (await this.ChainlinkFunctionsService.deployConsumerContract("polygonMumbai")).toString();
             const subscriptionId = await this.ChainlinkFunctionsService.createAndFundSub("polygonMumbai", deployedConsumerAddress, linkAmount);
-
-            // // Store data in localStorage
-            // const data = {
-            //     consumerAddress: deployedConsumerAddress,
-            //     subscriptionId: subscriptionId,
-            // };
-
-            // fs.writeFile('config.json', JSON.stringify(data, null, 2), 'utf-8', (err) => {
-            //     if (err) {
-            //         console.error('Error writing to file:', err);
-            //     } else {
-            //         console.log('Data has been stored locally')
-            //     }
-            // })
 
             res.status(200).json({ consumerAddress: deployedConsumerAddress, subscriptionId: subscriptionId });
 

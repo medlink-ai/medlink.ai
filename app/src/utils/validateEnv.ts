@@ -10,7 +10,8 @@ function configEnv(): void {
         PRIVATE_KEY: str(),
         FRONTEND_URL: str(),
         HOSTED_SERVER_URL: str(),
-        VERIFIER_DID: str()
+        VERIFIER_DID: str(),
+        GPT_API_KEY: str()
     })
 }
 
