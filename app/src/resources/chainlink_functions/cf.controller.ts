@@ -39,7 +39,7 @@ class ChainlinkFunctionsController implements Controller {
 
         this.router.post(
             `${this.path}/post-functions-response`,
-            this.postFunctionsResponse
+            this.functionsResponsePiceIndex
         )
 
         this.router.post(
@@ -49,7 +49,7 @@ class ChainlinkFunctionsController implements Controller {
 
         this.router.post(
             `${this.path}/functions-request-response`,
-            this.functionsRequest
+            this.functionsRequestPriceIndex
         )
 
         this.router.post(
@@ -61,6 +61,16 @@ class ChainlinkFunctionsController implements Controller {
         this.router.post(
             `${this.path}/function-response-provider`,
             this.functionsResponseProvider
+        )
+
+        this.router.post(
+            `${this.path}/function-request-license`,
+            this.functionRequestLicense
+        )
+
+        this.router.post(
+            `${this.path}/function-response-license`,
+            this.functionResponseLicense
         )
     }
 
@@ -130,7 +140,7 @@ class ChainlinkFunctionsController implements Controller {
         }
     };
 
-    private functionsRequest = async (req: Request, res: Response, next: NextFunction): Promise<string | void> => {
+    private functionsRequestPriceIndex = async (req: Request, res: Response, next: NextFunction): Promise<string | void> => {
         try {
             const { consumerAddress, subscriptionId, drug_details } = req.body;
             const result = await this.ChainlinkFunctionsService.request(consumerAddress, subscriptionId, drug_details);
@@ -141,7 +151,7 @@ class ChainlinkFunctionsController implements Controller {
         }
     };
 
-    private postFunctionsResponse = async (req: Request, res: Response, next: NextFunction): Promise<string | void> => {
+    private functionsResponsePiceIndex = async (req: Request, res: Response, next: NextFunction): Promise<string | void> => {
         try {
             await new Promise(resolve => setTimeout(resolve, 5000));
 
@@ -197,6 +207,40 @@ class ChainlinkFunctionsController implements Controller {
         next(new HttpException(400, error));
         }
     };
+
+    private functionRequestLicense = async (req: Request, res: Response, next: NextFunction): Promise<any[] | string | void> => {
+        try {
+            const { consumerAddress, subscriptionId, walletAddress } = req.body;
+            const result = await this.ChainlinkFunctionsService.requestLicense(consumerAddress, subscriptionId, walletAddress);
+            
+            res.status(200).json(result.toString());
+
+        } catch (error: any) {
+            console.log('Functions consumer for provider request failed.');
+            next(new HttpException(400, error));
+        }
+    };
+
+    private functionResponseLicense = async (req: Request, res: Response, next: NextFunction): Promise<number | void> => {
+        try {
+            await new Promise(resolve => setTimeout(resolve, 5000));
+
+            const { consumerAddress } = req.body;
+
+            const response = await this.ChainlinkFunctionsService.readLicense(consumerAddress);
+
+            const responseString = response as string;
+            const responseObject = JSON.parse(responseString);
+            const licenseNumber = parseFloat(responseObject.license_number);
+
+            res.status(200).json(licenseNumber);
+            return licenseNumber;
+        } catch (error: any) {
+            console.log('Read response failed.');
+            next(new HttpException(400, error));
+        }
+    };
+
 
 }
 

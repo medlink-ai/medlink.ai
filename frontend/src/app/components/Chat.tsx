@@ -7,19 +7,53 @@ import { useAccount } from "wagmi";
 import PolygonIDMedVerifier from "./PolygonIDMedVerifier";
 import { Message, getSavedMessages, saveMessage, clearLocalStorageKey } from "../utils/utils";
 import Image from "next/image";
+import axios from 'axios';
+
+
 
 function VerifyDoctor() {
     const [provedPrescription, setProvedPrescription] = useState(false);
+    const [licenseNumber, setLicenseNumber] = useState<number | undefined>();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            if (!licenseNumber) {
+                // Make request to obtain licenseNumber
+                try {
+                    const requestParams = {
+                        consumerAddress: '0xc78c81c16621eb4ae4244b8f79e5c059f775ecc2',
+                        subscriptionId: '1148',
+                        walletAddress: '0xbdA087c59180Ee0E6e660591e907F59DcC30f0EF',
+                    };
+
+                    await axios.post('http://localhost:8080/api/chainlink-functions/function-request-license', requestParams);
+                    await new Promise(resolve => setTimeout(resolve, 5000));
+
+                    const data = {
+                        consumerAddress: '0xc78c81c16621eb4ae4244b8f79e5c059f775ecc2',
+                    };
+
+                    const response = await axios.post(`http://localhost:8080/api/chainlink-functions/function-response-license`, data);
+                    setLicenseNumber(response.data);
+                } catch (error) {
+                    console.error('Error fetching or processing data:', error);
+                }
+            }
+        };
+
+        fetchData();
+    }, [licenseNumber]);
+
     return (
         <div className="flex flex-col h-full w-full justify-center items-center p-8 gap-6">
             <h1 className="font-bold font-sans text-xl w-[50%] text-center">
-                To verify your credential as licensed medical practitioner, please use your Polygon ID Wallet app to scan this QR code.
+                To verify your credential as a licensed medical practitioner, please use your Polygon ID Wallet app to scan this QR code.
             </h1>
             <div>
                 <PolygonIDMedVerifier
                     onVerificationResult={setProvedPrescription}
-                    walletAddress={"0xbdA087c59180Ee0E6e660591e907F59DcC30f0EF"}
-                    licenseNumber={123456789}
+                    walletAddress={'0xbdA087c59180Ee0E6e660591e907F59DcC30f0EF'}
+                    licenseNumber={licenseNumber as number}
                 />
             </div>
             <h3 className="text-center w-[50%] text-base">

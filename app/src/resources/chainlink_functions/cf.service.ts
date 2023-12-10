@@ -5,6 +5,8 @@ import request from '@/middleware/request.middleware';
 import requestProvider from '@/middleware/requestProvider.middleware';
 import readResponse from "@/middleware/readResponse.middleware";
 import { Networks } from "@/utils/interfaces/networks.interface";
+import { wallet } from "@/utils/connection";
+import sendRequestProvider from "@/middleware/requestLicense.middleware";
 
 class ChainlinkFunctionsService {
     public async deployConsumerContract(NETWORK: keyof Networks): Promise<string | Error> {
@@ -47,12 +49,32 @@ class ChainlinkFunctionsService {
         }
     }
 
-    public async readResponse(consumerAddress: string): Promise<string | Error> {
+    public async readResponse(walletAddress: string): Promise<string | Error> {
         try {
-            const response = await readResponse(consumerAddress);
+            const response = await readResponse(walletAddress);
             return response;
         } catch (error: any) {
-            console.log(`Cannot read price index from consumerAddress: ${consumerAddress}`);
+            console.log(`Cannot license number from: ${walletAddress}`);
+            throw new HttpException(400, error.message);
+        }
+    }
+
+    public async requestLicense(consumerAddress: string, subscriptionId: string, walletAddress: string): Promise<string | Error> {
+        try {
+            const response = await sendRequestProvider(consumerAddress, subscriptionId, walletAddress);
+            return response;
+        } catch (error: any) {
+            console.log('Cannot request for price index.');
+            throw new HttpException(400, error.message);
+        }
+    }
+
+    public async readLicense(walletAddress: string): Promise<string | Error> {
+        try {
+            const response = await readResponse(walletAddress);
+            return response;
+        } catch (error: any) {
+            console.log(`Cannot license number from: ${walletAddress}`);
             throw new HttpException(400, error.message);
         }
     }
