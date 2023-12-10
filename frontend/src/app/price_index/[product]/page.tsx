@@ -8,11 +8,12 @@ import { Input, Breadcrumbs, BreadcrumbItem, Button, Spinner, Switch } from "@ne
 import axios from "axios";
 import { delay, isUndefined, set } from "lodash";
 import { useRouter } from "next/navigation";
-import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 import { useAccount } from "wagmi";
 import { ethers } from "ethers";
 import aggregatorV3InterfaceABI from "./AggregatorV3Interface.json";
+import { parse } from "path";
 
 function Budget({
     product,
@@ -281,34 +282,33 @@ function Breadcrumb({ product, confirmation = false, onNavigateBack }: { product
 }
 
 function ConfirmOrder({ product, onCancel, budget }: { product: string; onCancel: () => void; budget: string }) {
-    const provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL as string);
-    const priceFeed = new ethers.Contract(process.env.NEXT_PUBLIC_PRICE_FEED_CONTRACT_ADDRESS as string, aggregatorV3InterfaceABI.abi, provider);
-
     const [USDtoMaticRate, setUSDtoMaticRate] = useState(0);
 
     useEffect(() => {
         const getUSDtoMatic = async () => {
-            const data: any = await priceFeed.latestRoundData().then((roundData) => {
+            const provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL as string);
+            const priceFeed = new ethers.Contract(
+                process.env.NEXT_PUBLIC_PRICE_FEED_CONTRACT_ADDRESS as string,
+                aggregatorV3InterfaceABI.abi,
+                provider
+            );
+
+            const data: string = await priceFeed.latestRoundData().then((roundData: any) => {
                 return ethers.formatUnits(roundData.answer, "wei");
             });
 
-            const maticToUSD = 1 / parseFloat(data);
+            const maticToUSD = 1 / (parseFloat(data) * Math.pow(10, -8));
             setUSDtoMaticRate(maticToUSD);
         };
+
         getUSDtoMatic();
     }, []);
 
     const [quantity, setQuantity] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
 
-    // Placeholder for medicine details
-    const medicineDetails = {
-        name: product,
-        priceUSD: parseFloat(budget),
-    };
-
-    const totalPriceUSD = parseFloat((quantity * medicineDetails.priceUSD).toFixed(2));
-    const totalPriceMatic = parseFloat((totalPriceUSD * USDtoMaticRate).toFixed(4));
+    const totalPriceUSD = useMemo(() => parseFloat((quantity * parseFloat(budget)).toFixed(2)), [quantity]);
+    const totalPriceMatic = useMemo(() => (totalPriceUSD * USDtoMaticRate).toFixed(4), [totalPriceUSD, USDtoMaticRate]);
 
     const handleIncrement = () => {
         setQuantity((prevQuantity) => prevQuantity + 1);
@@ -325,7 +325,7 @@ function ConfirmOrder({ product, onCancel, budget }: { product: string; onCancel
         setIsLoading(true);
         // Simulating payment process with a delay
         setTimeout(() => {
-            alert(`Order confirmed for ${quantity} ${medicineDetails.name}`);
+            alert(`Order confirmed for ${quantity} ${product}`);
             setIsLoading(false);
         }, 2000);
     };
@@ -341,7 +341,7 @@ function ConfirmOrder({ product, onCancel, budget }: { product: string; onCancel
                 <div className="flex justify-between items-start gap-10 w-full">
                     <div className="flex flex-col w-96 text-left items-start gap-2">
                         <p className="font-bold text-md">Medicine</p>
-                        <p className="font-bold text-green-1100 dark:text-green-1000">{medicineDetails.name}</p>
+                        <p className="font-bold text-green-1100 dark:text-green-1000">{product}</p>
                     </div>
 
                     <div className="flex flex-col w-fit items-start text-left gap-2">
@@ -385,8 +385,9 @@ function ConfirmOrder({ product, onCancel, budget }: { product: string; onCancel
                         className="bg-green-1100 dark:bg-green-1000 text-white rounded-lg px-4 py-2 w-[70%]"
                         onClick={handlePay}
                         disabled={isLoading}
+                        isLoading={isLoading}
                     >
-                        {isLoading ? <Spinner /> : "Confirm Order"}
+                        Confirm Order
                     </Button>
                 </div>
             </div>
@@ -396,8 +397,8 @@ function ConfirmOrder({ product, onCancel, budget }: { product: string; onCancel
 
 export default function Page({ params }: { params: { product: string } }) {
     const decodedProducts = decodeURIComponent(params.product);
-    const [provedPrescription, setProvedPrescription] = useState(false);
-    const [budget, setBudget] = useState<string | undefined>();
+    const [provedPrescription, setProvedPrescription] = useState(true);
+    const [budget, setBudget] = useState<string | undefined>("15");
     const [isProviderLoading, setIsProviderLoading] = useState(false);
 
     return (
