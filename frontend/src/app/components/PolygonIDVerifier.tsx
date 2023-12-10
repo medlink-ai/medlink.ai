@@ -132,7 +132,7 @@ export default function PolygonIDVerifier({
 
                         <ModalBody className="flex justify-center text-sm">
                             {isHandlingVerification && (
-                                <div>
+                                <div className="flex flex-col w-full justify-center items-center gap-2">
                                     <p style={{ fontSize: "16px", fontFamily: "sans-serif" }}>Authenticating...</p>
                                     <Spinner className="my-2" size="lg" color="primary" />
                                 </div>
@@ -165,7 +165,7 @@ export default function PolygonIDVerifier({
                             )}
 
                             {qrCodeData.body.message && (
-                                <p style={{ fontSize: "16px", fontFamily: "sans-serif",  textAlign: "center" }}>
+                                <p style={{ fontSize: "16px", fontFamily: "sans-serif", textAlign: "center" }}>
                                     <span style={{ fontWeight: "bold" }}>Verifier:</span> {qrCodeData.body.message}
                                 </p>
                             )}
