@@ -283,9 +283,11 @@ function Breadcrumb({ product, confirmation = false, onNavigateBack }: { product
 
 function ConfirmOrder({ product, onCancel, budget }: { product: string; onCancel: () => void; budget: string }) {
     const [USDtoMaticRate, setUSDtoMaticRate] = useState(0);
+    const [isLoadingRate, setIsLoadingRate] = useState(false);
 
     useEffect(() => {
         const getUSDtoMatic = async () => {
+            setIsLoadingRate(true);
             const provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL as string);
             const priceFeed = new ethers.Contract(
                 process.env.NEXT_PUBLIC_PRICE_FEED_CONTRACT_ADDRESS as string,
@@ -299,6 +301,7 @@ function ConfirmOrder({ product, onCancel, budget }: { product: string; onCancel
 
             const maticToUSD = 1 / (parseFloat(data) * Math.pow(10, -8));
             setUSDtoMaticRate(maticToUSD);
+            setIsLoadingRate(false);
         };
 
         getUSDtoMatic();
@@ -370,7 +373,17 @@ function ConfirmOrder({ product, onCancel, budget }: { product: string; onCancel
                     <div className="flex flex-col w-28 items-start text-left gap-2">
                         <p className="font-bold text-md">Total Prices</p>
                         <div className="flex flex-col text-left space-y-1">
-                            <p className="font-bold text-md whitespace-nowrap">{totalPriceMatic} MATIC</p>
+                            <p className="font-bold text-md whitespace-nowrap">
+                                {isLoadingRate ? (
+                                    <div className="flex gap-2">
+                                        <Spinner size="sm" />
+                                        <p className="text-sm">Loading Price Feed...</p>
+                                    </div>
+                                ) : (
+                                    totalPriceMatic
+                                )}{" "}
+                                MATIC
+                            </p>
                             <p className="text-xs">(${totalPriceUSD} USD)</p>
                         </div>
                     </div>
@@ -396,8 +409,8 @@ function ConfirmOrder({ product, onCancel, budget }: { product: string; onCancel
 
 export default function Page({ params }: { params: { product: string } }) {
     const decodedProducts = decodeURIComponent(params.product);
-    const [provedPrescription, setProvedPrescription] = useState(true);
-    const [budget, setBudget] = useState<string | undefined>("15");
+    const [provedPrescription, setProvedPrescription] = useState(false);
+    const [budget, setBudget] = useState<string | undefined>();
     const [isProviderLoading, setIsProviderLoading] = useState(false);
 
     return (
